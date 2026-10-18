@@ -1557,6 +1557,16 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
 @media(max-width:760px){.part-btn{order:2;padding:6px 11px;font-size:13px}.sinais-btn + .part-btn{margin-left:0}}
 @media(max-width:600px){.part-btn{gap:5px;padding:6px 10px}}
 @media(max-width:379px){.part-btn{padding:0;width:34px;height:34px;justify-content:center}.part-btn .pt{display:none}.part-btn svg{width:17px;height:17px}}
+
+.parcas-btn{display:inline-flex;align-items:center;padding:7px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,.75);color:#fff;text-decoration:none;font-weight:800;font-size:14px;white-space:nowrap}
+.parcas-btn:hover{background:rgba(255,255,255,.18);border-color:#fff}
+.parcas-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.sinais-btn + .parcas-btn{margin-left:-6px}
+.parcas-btn + .part-btn{margin-left:-6px}
+.topbar .part-btn{padding:0;width:36px;height:36px;justify-content:center;gap:0}
+.topbar .part-btn .pt{display:none}
+.topbar .part-btn svg{width:18px;height:18px}
+@media(max-width:760px){.parcas-btn{order:2;padding:6px 11px;font-size:13px}.sinais-btn + .parcas-btn,.parcas-btn + .part-btn{margin-left:0}.topbar .part-btn{width:34px;height:34px}}
 .disc-line{margin:12px 0 0;font-size:15px;color:var(--muted)}
 .tag.note.disc{background:var(--ground);color:var(--ink);border:1px dashed var(--line)}
 .col.pro .tag.note.disc{background:var(--ground);color:var(--ink)}
@@ -1601,6 +1611,7 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
       <a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener" data-participe>Participe</a>
     </nav>
     <a class="sinais-btn" href="#noticias" aria-label="Ir para Sinais"><span class="dot" aria-hidden="true"></span>Sinais</a>
+    <a class="parcas-btn" href="#parcas" aria-label="Ir para Quem são os parças">Parças</a>
     <a class="part-btn" href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener" data-participe aria-label="Participe: receber atualizações, reportar um erro ou destacar um acerto" title="Receber atualizações, reportar um erro ou destacar um acerto"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.5-4.8A8 8 0 1 1 21 12z"/></svg><span class="pt">Participe</span></a>
     <a class="totop" id="totop" href="#topo" data-top aria-label="Voltar ao topo" hidden><span class="ic" aria-hidden="true">↑</span><span class="tt">Voltar ao topo</span></a>
     <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
