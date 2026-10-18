@@ -4302,7 +4302,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     var items = pick(state.c, state.g, A), nd = items.filter(function(i){ return i.disc; }).length;
     var cc=null; ALLC.forEach(function(x){ if(x.k===state.c) cc=x; });
     var pauta = state.g==='all' ? 'Todas as pautas' : gname(state.g);
-    var who = !cc ? 'Os 7 parças do Flávio, somados' : (cc.ctrl ? 'Governo Lula, 2023 a 2025' : (cc.n+' · '+cc.p+', '+cc.s));
+    var who = !cc ? 'Soma de todos os Parças' : (cc.ctrl ? 'Governo Lula, 2023 a 2025' : (cc.n+' · '+cc.p+', '+cc.s));
     var note = nd ? '* '+nd+(nd===1?' ação discutível: veja os dois lados no painel':' ações discutíveis: veja os dois lados no painel') : '';
     var mc = document.createElement('canvas').getContext('2d');
     function fit(ctx, txt, weight, size, min, fam, maxW){ ctx.font=weight+' '+size+'px '+fam; while(ctx.measureText(txt).width>maxW && size>min){ size--; ctx.font=weight+' '+size+'px '+fam; } return size; }
@@ -4310,7 +4310,12 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     var fs=fit(mc,pauta,'800',112,56,HEAD,maxW);
     var ws=fit(mc,who,'600',40,28,SANS,maxW);
     /* alturas dos blocos, de cima para baixo */
-    var TOP=72, KICK=58, GAP1=fs+22, GAP2=ws+26, NUM=300, LAB=74, GAPT=50, BAR=44, NOTE=note?88:0, BOT=note?52:72;
+    /* tamanho único para os dois números, cabendo cada um (com asterisco) na sua metade */
+    var dC=items.some(function(i){ return i.disc && i.s!=='pro'; }), dP=items.some(function(i){ return i.disc && i.s==='pro'; });
+    var NS=300, half=maxW/2;
+    function need(v, star, sz){ mc.font='800 '+sz+'px '+HEAD; var w=mc.measureText(String(v)).width; if(star){ mc.font='800 '+Math.round(sz*.47)+'px '+HEAD; w+=mc.measureText('*').width; } return w; }
+    while(NS>120 && (need(t.contra,dC,NS)>half-40 || need(t.pro,dP,NS)>half-40)) NS-=4;
+    var TOP=72, KICK=58, GAP1=fs+22, GAP2=ws+26, NUM=Math.round(NS*.76)+72, LAB=74, GAPT=50, BAR=44, NOTE=note?88:0, BOT=note?52:72;
     var H = HEADH+TOP+KICK+GAP1+GAP2+NUM+LAB+GAPT+BAR+NOTE+BOT+FOOTH;
     var c=document.createElement('canvas'); c.width=W; c.height=H;
     var g=c.getContext('2d');
@@ -4330,9 +4335,8 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     y+=KICK+fs; g.fillStyle=INK; g.font='800 '+fs+'px '+HEAD; g.fillText(pauta, x, y);
     y+=GAP2+4; g.fillStyle=MUT; g.font='600 '+ws+'px '+SANS; g.fillText(who, x, y);
     /* números */
-    y+=NUM; var half=maxW/2;
-    var dC=items.some(function(i){ return i.disc && i.s!=='pro'; }), dP=items.some(function(i){ return i.disc && i.s==='pro'; });
-    function big(v, xx, col, star){ g.font='800 300px '+HEAD; g.fillStyle=col; g.fillText(String(v), xx-8, y); if(star){ var w=g.measureText(String(v)).width; g.font='800 140px '+HEAD; g.fillText('*', xx+w, y-140); } }
+    y+=NUM;
+    function big(v, xx, col, star){ g.font='800 '+NS+'px '+HEAD; g.fillStyle=col; g.fillText(String(v), xx-8, y); if(star){ var w=g.measureText(String(v)).width; g.font='800 '+Math.round(NS*.47)+'px '+HEAD; g.fillText('*', xx+w-8, y-Math.round(NS*.47)); } }
     big(t.contra, x, CONI, dC); big(t.pro, x+half, PRO, dP);
     y+=LAB-10; g.font='700 52px '+SANS; g.fillStyle=CONI; g.fillText(t.contra===1?'ação contra':'ações contra', x, y);
     g.fillStyle=PRO; g.fillText(t.pro===1?'ação a favor':'ações a favor', x+half, y);
