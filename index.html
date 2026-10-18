@@ -35,16 +35,16 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --ground:#11181F; --surface:#1A232D; --ink:#E8EDF2; --muted:#A9B5C1; --line:#2E3A46;
+    --ground:#171715; --surface:#21211F; --ink:#EEEEEA; --muted:#B4B3AC; --line:#383733;
     --contra:#E8873F; --contra-ink:#F2A66A; --contra-soft:#2B1D12;
     --pro:#4DB3D6; --pro-ink:#7CCBE6; --pro-soft:#12303D;
     --on-ink:#11181F;
-    --eco:#B28DE0; --eco-ink:#CDB3F2; --eco-soft:#241A33; --vs:#222D39;
+    --eco:#B28DE0; --eco-ink:#CDB3F2; --eco-soft:#241A33; --vs:#292826;
   }
 }
 :root[data-theme="dark"]{
-  --eco:#B28DE0; --eco-ink:#CDB3F2; --eco-soft:#241A33; --vs:#222D39;
-  --ground:#11181F; --surface:#1A232D; --ink:#E8EDF2; --muted:#A9B5C1; --line:#2E3A46;
+  --eco:#B28DE0; --eco-ink:#CDB3F2; --eco-soft:#241A33; --vs:#292826;
+  --ground:#171715; --surface:#21211F; --ink:#EEEEEA; --muted:#B4B3AC; --line:#383733;
   --contra:#E8873F; --contra-ink:#F2A66A; --contra-soft:#2B1D12;
   --pro:#4DB3D6; --pro-ink:#7CCBE6; --pro-soft:#12303D;
   --on-ink:#11181F;
@@ -1584,6 +1584,10 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
 .tag.note.disc{background:var(--ground);color:var(--ink);border:1px dashed var(--line)}
 .col.pro .tag.note.disc{background:var(--ground);color:var(--ink)}
 .counts .n .ast{font-size:.5em;vertical-align:super;margin-left:2px;line-height:0}
+
+/* v139 fundo escuro neutro, contínuo com a capa */
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header.hero-x::after{display:none}}
+:root[data-theme="dark"] header.hero-x::after{display:none}
 </style>
 </head>
 <body>
