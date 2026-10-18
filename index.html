@@ -3345,7 +3345,11 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
       var la = el('a','parca-link',subC.n); la.href = '#parca-'+subC.k; la.title = 'Ver quem é '+subC.n+' e a ligação com Flávio';
       ss.appendChild(la);
       ss.appendChild(document.createTextNode(sub.slice(ix+subC.n.length)));
-    } else ss.textContent = sub || 'Soma dos sete líderes';
+    } else if(!subC){
+      ss.appendChild(document.createTextNode('Soma dos '));
+      var lp = el('a','parca-link','sete líderes'); lp.href = '#parcas'; lp.title = 'Ver quem são os parças e a ligação de cada um com Flávio';
+      ss.appendChild(lp);
+    } else ss.textContent = sub;
     $('n-contra').textContent = t.contra; (function(){ [['go-contra',t.contra],['go-pro',t.pro]].forEach(function(x){ var a=$(x[0]); if(!a) return; if(x[1]>0){ a.removeAttribute('aria-disabled'); a.setAttribute('title','Ver as ações'); } else { a.setAttribute('aria-disabled','true'); a.removeAttribute('title'); } }); })();
     $('n-pro').textContent = t.pro;
     (function(){ var dd=pick(state.c,state.g,A).filter(function(i){ return i.disc; }), n=dd.length, dl=$('disc-line'); [['n-contra','contra'],['n-pro','pro']].forEach(function(x){ var e=$(x[0]); if(!e) return; if(dd.some(function(i){ return (i.s==='pro'?'pro':'contra')===x[1]; })){ var a=document.createElement('span'); a.className='ast'; a.textContent='*'; a.setAttribute('aria-label','inclui ação discutível'); e.appendChild(a); } }); if(!dl) return; dl.textContent = n ? '* Inclui '+n+(n===1?' ação discutível, marcada na lista com os dois lados.':' ações discutíveis, marcadas na lista com os dois lados.') : ''; dl.hidden = !n; })();
