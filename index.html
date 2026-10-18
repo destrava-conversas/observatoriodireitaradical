@@ -3525,7 +3525,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     function w(v){ return v>0 ? Math.max(2, v/sc*50) : 0; }
     var cLab = state.c==='all' ? 'Parças do Flávio' : cname(state.c);
     $('rank-sel').textContent = cLab;
-    $('rank-sub').textContent = (state.c==='all' ? 'Soma dos sete líderes. ' : '') + 'Barras: ações contra (laranja) e a favor (azul).';
+    $('rank-sub').textContent = (state.c==='all' ? 'Soma de todos os Parças. ' : '') + 'Barras: ações contra (laranja) e a favor (azul).';
     rows.innerHTML = '';
     data.forEach(function(d,i){
       var b = document.createElement('button');
@@ -4105,7 +4105,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     g.fillStyle='#fff'; g.font="700 50px 'Times New Roman', Times, serif"; g.textBaseline='middle'; g.fillText('Flávio e os Parças', P, 57);
     var cc=null; ALLC.forEach(function(x){ if(x.k===state.c) cc=x; });
     var ttl = cc ? cc.n : 'Todos os parças do Flávio';
-    var sub = cc ? (cc.ctrl ? 'Brasil, 2023 a 2025 · comparação' : (cc.k==='pl' ? 'Polônia sob o PiS, 2015 a 2023' : cc.p+', '+cc.s)) : 'Soma dos sete líderes';
+    var sub = cc ? (cc.ctrl ? 'Brasil, 2023 a 2025 · comparação' : (cc.k==='pl' ? 'Polônia sob o PiS, 2015 a 2023' : cc.p+', '+cc.s)) : 'Soma de todos os Parças';
     g.textBaseline='alphabetic';
     g.fillStyle='#4A5663'; g.font='700 20px '+SANS; g.fillText('RANKING DAS PAUTAS', P, 152);
     var tfs=52; g.font='800 '+tfs+'px '+HEAD; while(g.measureText(ttl).width>W-2*P && tfs>30){ tfs--; g.font='800 '+tfs+'px '+HEAD; }
