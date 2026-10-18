@@ -1174,6 +1174,12 @@ header.hero-x::after{content:"";position:absolute;left:0;right:0;bottom:0;height
 #px-flavio .fx-o{margin-top:8px !important;font-size:14.5px;color:var(--muted)}
 #px-flavio .fx-s{margin-top:6px !important;font-size:13.5px;color:var(--muted)}
 #px-flavio .fx-s a{color:inherit}
+.imgsh{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.imgmsg{font-size:13px;color:var(--muted)}
+.ifoot .imgsh{margin-left:6px}
+.item .meta .cp.imgbt,.ifoot .cp.imgbt{margin-left:0}
+.px-act .cp.imgbt{appearance:none;display:inline-flex;align-items:center;min-height:40px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.item .ifoot .cp.imgbt{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E")}
 .px-sec{scroll-margin-top:136px}
 .px-sec h3{font-family:'Bricolage Grotesque','Public Sans',system-ui,sans-serif;font-size:24px;font-weight:800;margin:0 0 8px;padding-top:22px;border-top:1px solid var(--line)}
 .px-sec:first-of-type h3{border-top:0;padding-top:0}
@@ -1969,6 +1975,7 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
         <li><span class="fx-yr">2026</span><p>Votou a favor do fim da escala 6x1 nos dois turnos, uma semana depois de chamar de “oportunista” o apoio de Lula à proposta.</p><p class="fx-s">Fonte: <a href="https://exame.com/brasil/como-flavio-bolsonaro-votou-sobre-o-fim-da-escala-6x1-no-senado/" target="_blank" rel="noopener noreferrer">Exame</a></p></li>
       </ul>
       <p class="px-key">Onde ele concentrou o mandato: segurança pública é a principal bandeira, nos projetos, relatorias e emendas. Há poucos registros nas demais pautas.</p>
+      <div class="px-act" id="fx-share"></div>
     </section>
   </div>
     </div>
@@ -3951,6 +3958,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     var act=el('div','px-act');
     var a=el('button','px-map','Ver no mapa'); a.type='button'; a.onclick=function(){ cxPick(k); var w=$('cx-wrap'); if(w) w.scrollIntoView({behavior:'smooth',block:'start'}); }; act.appendChild(a);
     var bk=el('button','px-map px-back','↑ Voltar à lista dos parças'); bk.type='button'; bk.onclick=function(){ d.open=false; var l=$('px-fichas'); if(l) l.scrollIntoView({behavior:'smooth',block:'start'}); }; act.appendChild(bk);
+    act.appendChild(imgBtn('Compartilhar imagem', function(){ return fichaCanvas(k); }, 'parca-'+k+'.png', n.full+' e Flávio'));
     body.appendChild(act);
     d.addEventListener('toggle', function(){ if(d.open){ [].slice.call(document.querySelectorAll('#px-fichas details.px-f')).forEach(function(o){ if(o!==d && o.open) o.open=false; }); } pxWho(); });
     d.appendChild(body); return d;
@@ -3985,7 +3993,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
   }
   window.addEventListener('scroll', function(){ pxBarUpdate(); }, {passive:true});
   window.addEventListener('resize', function(){ pxBarUpdate(); });
-  function cxInit(){ pxInit(); pxBarUpdate(); }
+  function cxInit(){ pxInit(); pxBarUpdate(); var fs=$('fx-share'); if(fs && !fs.firstChild) fs.appendChild(imgBtn('Compartilhar imagem', flavioCanvas, 'flavio-mandatos.png', 'O que Flávio fez nos mandatos')); }
   var cxZ = {k:1, x:500, y:345};
   function cxView(){
     var svg=$('cx-map'); if(!svg) return;
@@ -4040,7 +4048,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
       if(n.why){ var w=el('p','news-w'); w.appendChild(el('b','','Por que ler: ')); w.appendChild(document.createTextNode(n.why)); li.appendChild(w); }
       var ft=el('div','ifoot'); var sp=el('span','srcs', n.tipo==='Vídeo' ? 'Assistir em: ' : (n.tipo==='Podcast' ? 'Ouvir em: ' : 'Ler em: '));
       n.src.forEach(function(sr,ix){ if(ix) sp.appendChild(document.createTextNode('; ')); var a=el('a','',sr[0]); a.href=sr[1]; a.target='_blank'; a.rel='noopener noreferrer'; sp.appendChild(a); });
-      ft.appendChild(sp); ft.appendChild(copyBtn(function(){ return newsText(n); })); li.appendChild(ft); ul.appendChild(li);
+      ft.appendChild(sp); ft.appendChild(copyBtn(function(){ return newsText(n); })); ft.appendChild(imgBtn('Imagem', function(){ return newsCanvas(n); }, 'sinal-'+n.d+'-'+slug(n.t)+'.png', n.t)); li.appendChild(ft); ul.appendChild(li);
     });
     var tz=$('tz-noticias');
     if(tz){ var last=NEWS.slice().sort(function(a,b){ return a.d<b.d?1:(a.d>b.d?-1:0); })[0]; tz.textContent = 'Últimas notícias que devem chamar nossa atenção.'; }
@@ -4323,6 +4331,143 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     });
   }
   window.__sumCanvas = sumCanvas;
+
+  /* ---------- Imagens para compartilhar: Sinais, fichas dos parças e Flávio ---------- */
+  function shareCanvasOut(makeCanvas, fname, title, say){
+    var mobile = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+    function download(blob){
+      var dlp = (window.claude && window.claude.use) ? window.claude.use('downloads') : Promise.resolve(null);
+      Promise.resolve(dlp).then(function(dl){
+        if(dl){ return dl.save({filename: fname, data: blob}).then(function(){ say('Imagem salva.'); }).catch(function(err){ if(err && err.code==='declined') return; say('Não foi possível salvar a imagem aqui.'); }); }
+        var u=URL.createObjectURL(blob), a=document.createElement('a'); a.href=u; a.download=fname;
+        document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(u); }, 2000);
+        say('Imagem baixada.');
+      });
+    }
+    var go=function(){
+      makeCanvas().toBlob(function(blob){
+        if(!blob){ say('Não foi possível gerar a imagem.'); return; }
+        var file; try{ file=new File([blob], fname, {type:'image/png'}); }catch(e){}
+        if(mobile && file && navigator.canShare && navigator.canShare({files:[file]})){
+          navigator.share({files:[file], title:title, text:'Flávio e os Parças: '+PANEL_URL}).then(function(){ say('Imagem compartilhada.'); }).catch(function(err){ if(err && err.name==='AbortError') return; download(blob); });
+          return;
+        }
+        if(navigator.clipboard && window.ClipboardItem && window.isSecureContext){
+          navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(function(){ say('Imagem copiada. É só colar.'); }).catch(function(){ download(blob); });
+        } else download(blob);
+      }, 'image/png');
+    };
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(go); else go();
+  }
+  function imgBtn(label, makeCanvas, fname, title){
+    var wrap=el('span','imgsh');
+    var b=el('button','cp imgbt',label); b.type='button';
+    var mobile = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+    b.setAttribute('aria-label', (mobile?'Compartilhar':'Copiar')+' como imagem');
+    var msg=el('span','imgmsg',''); msg.setAttribute('aria-live','polite');
+    function say(t){ msg.textContent=t; clearTimeout(say.t); say.t=setTimeout(function(){ msg.textContent=''; }, 4000); }
+    b.addEventListener('click', function(){ shareCanvasOut(makeCanvas, typeof fname==='function'?fname():fname, title, say); });
+    wrap.appendChild(b); wrap.appendChild(msg); return wrap;
+  }
+  var CARD = {W:1080, P:72, HEAD:"'Bricolage Grotesque','Public Sans','Segoe UI',Arial,sans-serif", SANS:"'Public Sans', 'Segoe UI', Arial, sans-serif", INK:'#1A2430', MUT:'#4A5663', NAVY:'#0F2440', BLUE:'#1A73C8', CON:'#A64A08', BG:'#EEF1F4'};
+  function wrapLines(g, txt, maxW){
+    var words=String(txt||'').split(/\s+/), lines=[], cur='';
+    words.forEach(function(w){ var t=cur?cur+' '+w:w; if(g.measureText(t).width>maxW && cur){ lines.push(cur); cur=w; } else cur=t; });
+    if(cur) lines.push(cur); return lines;
+  }
+  /* blocks: [{t:'kicker'|'title'|'text'|'label'|'chips'|'nums'|'small', ...}] */
+  function cardCanvas(blocks){
+    var W=CARD.W, P=CARD.P, maxW=W-2*P, HEADH=136, FOOTH=118, MAXH=1350;
+    var m=document.createElement('canvas').getContext('2d');
+    var plan=[], y=HEADH+70;
+    function add(item,h){ plan.push({it:item,y:y}); y+=h; }
+    blocks.forEach(function(b){
+      if(b.t==='kicker'){ add(b, 58+22); }
+      else if(b.t==='title'){ m.font='800 '+(b.size||64)+'px '+CARD.HEAD; b.lines=wrapLines(m,b.v,maxW).slice(0,b.max||4); var lh=Math.round((b.size||64)*1.12); add(b, b.lines.length*lh+26); b.lh=lh; }
+      else if(b.t==='text'||b.t==='small'||b.t==='label'){ var sz=b.size||(b.t==='small'?28:(b.t==='label'?30:34)); var wt=b.t==='label'?'800':(b.weight||'500'); m.font=wt+' '+sz+'px '+CARD.SANS; var pre=b.lead?b.lead+' ':''; b.lines=wrapLines(m,pre+b.v,maxW); b.sz=sz; b.wt=wt; b.lh=Math.round(sz*1.42); add(b, 0); }
+      else if(b.t==='chips'){ m.font='700 28px '+CARD.SANS; var x=0, rows=1; b.v.forEach(function(c){ var w=m.measureText(c.v).width+40; if(x+w>maxW){ rows++; x=0; } x+=w+12; }); add(b, rows*58+18); }
+      else if(b.t==='nums'){ add(b, 190); }
+      else if(b.t==='gap'){ y+=(b.v||20); }
+    });
+    /* texto: limitar ao espaço restante */
+    var free = MAXH - FOOTH - 50;
+    y=HEADH+70; plan.forEach(function(p){ p.y=y; var b=p.it;
+      if(b.t==='text'||b.t==='small'||b.t==='label'){ var room=Math.floor((free-y)/b.lh); if(b.maxl) room=Math.min(room,b.maxl); if(b.lines.length>room){ b.lines=b.lines.slice(0,Math.max(room,0)); if(b.lines.length){ var L=b.lines.length-1; b.lines[L]=b.lines[L].replace(/[,.;:]?\s*\S*$/,'')+'…'; } } y+=b.lines.length*b.lh+(b.t==='label'?6:22); }
+      else if(b.t==='kicker') y+=80; else if(b.t==='title') y+=b.lines.length*b.lh+26; else if(b.t==='chips'){ m.font='700 28px '+CARD.SANS; var x=0, rows=1; b.v.forEach(function(c){ var w=m.measureText(c.v).width+40; if(x+w>maxW){ rows++; x=0; } x+=w+12; }); y+=rows*58+18; } else if(b.t==='nums') y+=190; else if(b.t==='gap') y+=(b.v||20);
+    });
+    var H=Math.max(1080, Math.min(MAXH, y+40+FOOTH));
+    var c=document.createElement('canvas'); c.width=W; c.height=H; var g=c.getContext('2d');
+    g.fillStyle=CARD.BG; g.fillRect(0,0,W,H);
+    g.fillStyle=CARD.NAVY; g.fillRect(0,0,W,HEADH);
+    g.textBaseline='middle'; g.fillStyle='#fff'; g.font='800 60px '+CARD.HEAD; g.fillText('Flávio e os Parças', P, HEADH/2+2);
+    var upd=((document.querySelector('.upd')||{}).textContent||'').replace('Atualizado em ','').trim();
+    if(upd){ g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+CARD.SANS; g.fillText(upd.replace(/ de (\d{4})$/,' $1'), W-P, HEADH/2+4); g.textAlign='left'; }
+    plan.forEach(function(p){ var b=p.it, yy=p.y;
+      if(b.t==='kicker'){ g.font='800 30px '+CARD.SANS; var kw=g.measureText(b.v).width; g.fillStyle=b.color||CARD.BLUE; roundRect(g,P-14,yy,kw+28,52,10); g.fill(); g.fillStyle='#fff'; g.fillText(b.v,P,yy+27); }
+      else if(b.t==='title'){ g.textBaseline='alphabetic'; g.fillStyle=CARD.INK; g.font='800 '+(b.size||64)+'px '+CARD.HEAD; b.lines.forEach(function(l,i){ g.fillText(l,P,yy+(i+1)*b.lh-Math.round(b.lh*0.18)); }); g.textBaseline='middle'; }
+      else if(b.t==='text'||b.t==='small'||b.t==='label'){ g.textBaseline='alphabetic'; g.fillStyle=b.color||(b.t==='text'?CARD.INK:CARD.MUT); g.font=b.wt+' '+b.sz+'px '+CARD.SANS;
+        b.lines.forEach(function(l,i){ var by=yy+(i+1)*b.lh-Math.round(b.lh*0.28);
+          if(i===0 && b.lead && l.indexOf(b.lead)===0){ g.font='800 '+b.sz+'px '+CARD.SANS; g.fillText(b.lead,P,by); var lw=g.measureText(b.lead+' ').width; g.font=b.wt+' '+b.sz+'px '+CARD.SANS; g.fillText(l.slice(b.lead.length+1),P+lw,by); }
+          else g.fillText(l,P,by); });
+        g.textBaseline='middle'; }
+      else if(b.t==='chips'){ g.font='700 28px '+CARD.SANS; var x=P, y2=yy; b.v.forEach(function(ch){ var w=g.measureText(ch.v).width+40; if(x+w>W-P){ x=P; y2+=58; } if(ch.fill){ g.fillStyle=ch.color||CARD.CON; roundRect(g,x,y2,w,46,23); g.fill(); g.fillStyle='#fff'; } else { g.strokeStyle=ch.color||CARD.CON; g.lineWidth=3; roundRect(g,x+1.5,y2+1.5,w-3,43,21.5); g.stroke(); g.fillStyle=ch.color||CARD.CON; } g.fillText(ch.v,x+20,y2+24); x+=w+12; }); }
+      else if(b.t==='nums'){ var n=b.v.length, cw=(W-2*P-(n-1)*16)/n; b.v.forEach(function(it,i){ var x=P+i*(cw+16); g.fillStyle='#fff'; roundRect(g,x,yy,cw,170,16); g.fill(); g.fillStyle=CARD.INK; g.font='800 54px '+CARD.HEAD; g.textBaseline='alphabetic'; g.fillText(it.n,x+22,yy+72); g.fillStyle=CARD.MUT; g.font='600 23px '+CARD.SANS; wrapLines(g,it.l,cw-40).slice(0,3).forEach(function(l,j){ g.fillText(l,x+22,yy+108+j*28); }); g.textBaseline='middle'; }); }
+    });
+    g.fillStyle=CARD.NAVY; g.fillRect(0,H-FOOTH,W,FOOTH);
+    g.textBaseline='middle'; g.fillStyle='#fff'; g.font='800 40px '+CARD.SANS;
+    g.fillText(PANEL_URL.replace('https://','').replace(/\/$/,''), P, H-FOOTH/2);
+    g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+CARD.SANS; g.fillText('fontes no painel', W-P, H-FOOTH/2+2); g.textAlign='left';
+    return c;
+  }
+  function slug(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50); }
+  function newsCanvas(n){
+    var tags=(n.tags||[]).join(' · ');
+    return cardCanvas([
+      {t:'kicker', v:'SINAL · '+fdate(n.d).toUpperCase(), color:CARD.CON},
+      {t:'small', v:(n.tipo?n.tipo+(tags?' · ':''):'')+tags, weight:'700'},
+      {t:'gap', v:6},
+      {t:'title', v:n.t, size:60, max:4},
+      {t:'text', v:n.s, size:31, maxl:8},
+      n.why ? {t:'text', v:n.why, lead:'Por que importa:', size:28, color:CARD.MUT, maxl:4} : {t:'gap',v:0},
+      {t:'small', v:'Fontes: '+n.src.map(function(x){ return x[0]; }).join('; '), size:24, maxl:2}
+    ]);
+  }
+
+  function fichaCanvas(k){
+    var n=cxNode(k), L=null; PX.mx.lideres.forEach(function(x){ if(x.k===k) L=x; });
+    var atos=PX.mx.pilares.filter(function(p){ return pxCell((L.celulas||{})[p])==='ato'; });
+    var disc=PX.mx.pilares.filter(function(p){ return pxCell((L.celulas||{})[p])==='discurso'; });
+    var chips=atos.map(function(p){ return {v:PXP[p], fill:true}; }).concat(disc.map(function(p){ return {v:PXP[p], fill:false}; }));
+    var withF=CX_E.filter(function(e){ return (e.a==='fl'&&e.b===k)||(e.b==='fl'&&e.a===k); }).sort(function(a,b){ return a.d<b.d?1:-1; });
+    var ex=atos.slice(0,1).map(function(p){ return L.celulas[p]; })[0];
+    var bl=[
+      {t:'kicker', v:'QUEM SÃO OS PARÇAS', color:CARD.BLUE},
+      {t:'title', v:n.full, size:72, max:2},
+      {t:'small', v:(L.periodo||n.bio||''), size:30, weight:'600', maxl:2},
+      {t:'gap', v:14},
+      {t:'label', v:atos.length+' de 8 pilares da extrema direita com ato de governo'+(disc.length?' · '+disc.length+' só em discurso':''), color:CARD.INK},
+      {t:'chips', v:chips},
+      {t:'small', v:'Cheio: ato de governo. Contorno: só discurso.', size:22}
+    ];
+    if(ex) bl.push({t:'text', v:ex.ex, lead:'Exemplo:', size:28, color:CARD.MUT});
+    if(withF.length) bl.push({t:'text', v:withF[0].ti+'. '+(withF[0].txt||''), lead:'Ligação com Flávio:', size:28});
+    else bl.push({t:'text', v:'Sem ligação direta com Flávio documentada.', size:28});
+    return cardCanvas(bl);
+  }
+  function flavioCanvas(){
+    return cardCanvas([
+      {t:'kicker', v:'E O PRÓPRIO FLÁVIO?', color:'#B83280'},
+      {t:'title', v:'O que Flávio fez em 24 anos de mandato', size:62, max:3},
+      {t:'small', v:'Deputado estadual no Rio (2003 a 2018) e senador desde 2019. Mandato legislativo, não governo.', size:28, weight:'600'},
+      {t:'gap', v:10},
+      {t:'nums', v:[{n:'51 de 208',l:'propostas viraram lei na Alerj'},{n:'2',l:'leis no Senado em que foi coautor, nenhuma de segurança'},{n:'R$ 271 mi',l:'em emendas, 16% para a Justiça'}]},
+      {t:'text', v:'Segurança pública é a principal bandeira. Foi o único deputado da Alerj a votar contra a CPI das Milícias (2007) e deu a maior honraria da casa a um PM preso por homicídio. No Senado, relatou o fim das “saidinhas”.', size:28},
+      {t:'text', v:'denunciado na “rachadinha” (arquivada sem julgamento do mérito, após anulação de provas) e investigado no STF no caso Dark Horse, sobre dinheiro de Daniel Vorcaro. Ele nega irregularidades.', lead:'Na Justiça:', size:28, color:CARD.MUT},
+      {t:'small', v:'Fontes: Folhapress, Agência O Globo, DW, Estadão Conteúdo, CNN Brasil.', size:23}
+    ]);
+  }
+  window.__fichaCanvas=fichaCanvas; window.__flavioCanvas=flavioCanvas;
+  window.__newsCanvas = function(i){ var l=NEWS.slice().sort(function(a,b){ return a.d<b.d?1:(a.d>b.d?-1:0); }); return newsCanvas(l[i||0]); };
   imgShare('rank-img','rank-img-msg', rankCanvas, function(){ return 'ranking-parcas-do-flavio'+(state.c==='all'?'':'-'+state.c)+'.png'; }, function(){ return 'Ranking das pautas'; });
 
   /* ---------- Participe (Tally, carregado só sob demanda) ---------- */
