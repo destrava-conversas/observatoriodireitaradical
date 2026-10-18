@@ -1308,6 +1308,13 @@ header.hero-x::after{content:"";position:absolute;left:0;right:0;bottom:0;height
 :root[data-theme="dark"] .pxw[aria-pressed="true"]{color:#11181F}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pxw[aria-pressed="true"]{color:#11181F}}
 .pxw:focus-visible,.pxbar-nav a:focus-visible{outline:3px solid var(--fil);outline-offset:2px}
+.pxbar{background:#1A73C8;border-bottom-color:#1662AD}
+.pxbar-nav a{color:rgba(255,255,255,.88)}
+.pxbar-nav a:hover{color:#fff;border-color:rgba(255,255,255,.6)}
+.pxbar-nav a[aria-current="true"]{color:#1A73C8;background:#fff}
+.pxbar .pxw{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.55);color:#fff}
+.pxbar .pxw[aria-pressed="true"]{background:#fff;border-color:#fff;color:#1A73C8}
+.pxbar .pxw:focus-visible,.pxbar-nav a:focus-visible{outline-color:#fff}
 body.in-px .pickbar{display:none!important}
 .px-sec{scroll-margin-top:64px}
 .px-f{scroll-margin-top:104px}
@@ -1587,7 +1594,7 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
 </div>
 <div class="pxbar" id="pxbar" hidden>
   <div class="pxbar-in">
-    <nav class="pxbar-nav" aria-label="Partes de Quem são os parças"><a href="#px-espectro" data-s="px-espectro">O que é extrema direita</a><a href="#px-pilares" data-s="px-pilares">Os pilares</a><a href="#px-matriz" data-s="px-matriz">Por que são parças</a><a href="#px-rede" data-s="px-rede">Como se conectam</a><a href="#px-quem" data-s="px-quem">Quem é quem</a></nav>
+    <nav class="pxbar-nav" aria-label="Partes de Quem são os parças"><a href="#px-espectro" data-s="px-espectro">O que é extrema direita</a><a href="#px-pilares" data-s="px-pilares">Os pilares</a><a href="#px-matriz" data-s="px-matriz">Por que são parças</a><a href="#px-rede" data-s="px-rede">Como se conectam</a><a href="#px-quem" data-s="px-quem">Quem é quem</a><a href="#px-flavio" data-s="px-flavio">E o próprio Flávio?</a></nav>
     <div class="pxbar-who" id="pxbar-who" role="group" aria-label="Escolher um parça" hidden></div>
   </div>
 </div>
@@ -3971,7 +3978,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     bar.hidden=!on; document.body.classList.toggle('in-px', on);
     if(!on) return;
     var bh=bar.offsetHeight, cur='px-espectro';
-    ['px-espectro','px-pilares','px-matriz','px-rede','px-quem'].forEach(function(id){ var e=$(id); if(e && e.getBoundingClientRect().top < h+bh+170) cur=id; });
+    ['px-espectro','px-pilares','px-matriz','px-rede','px-quem','px-flavio'].forEach(function(id){ var e=$(id); if(e && e.getBoundingClientRect().top < h+bh+170) cur=id; });
     [].slice.call(bar.querySelectorAll('.pxbar-nav a')).forEach(function(a){ if(a.getAttribute('data-s')===cur){ a.setAttribute('aria-current','true'); if(a.scrollIntoView && bar.dataset.cur!==cur){ var nav=a.parentNode; nav.scrollLeft = a.offsetLeft - 12; } } else a.removeAttribute('aria-current'); });
     bar.dataset.cur=cur;
     var who=$('pxbar-who'); if(who) who.hidden = cur!=='px-quem';
