@@ -1599,6 +1599,11 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
 .px-legend .lvl{text-align:center;flex:none}
 #px-matriz .px-legend{margin-bottom:20px}
 @media(max-width:760px){#px-matriz .px-legend{flex-direction:column;gap:8px}.px-legend .lvl{min-width:78px}}
+#px-flavio .fx-act{display:flex;justify-content:flex-end;margin-top:8px}
+#px-flavio .fx-act .cp.imgbt{appearance:none;display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:4px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+#px-flavio .fx-act .cp.imgbt{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E")}
+#px-flavio .fx-act .cp.imgbt::before{content:"";width:14px;height:14px;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+#px-flavio .fx-act .cp.imgbt:hover{color:var(--ink);border-color:var(--ink)}
 </style>
 </head>
 <body>
@@ -4065,7 +4070,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
   }
   window.addEventListener('scroll', function(){ pxBarUpdate(); }, {passive:true});
   window.addEventListener('resize', function(){ pxBarUpdate(); });
-  function cxInit(){ pxInit(); pxBarUpdate(); var fs=$('fx-share'); if(fs && !fs.firstChild) fs.appendChild(imgBtn('Compartilhar imagem', flavioCanvas, 'flavio-mandatos.png', 'O que Flávio fez nos mandatos')); }
+  function cxInit(){ pxInit(); pxBarUpdate(); var fs=$('fx-share'); if(fs && !fs.firstChild) fs.appendChild(imgBtn('Compartilhar imagem', flavioCanvas, 'flavio-mandatos.png', 'O que Flávio fez nos mandatos')); fxItemButtons(); }
   var cxZ = {k:1, x:500, y:345};
   function cxView(){
     var svg=$('cx-map'); if(!svg) return;
@@ -4519,6 +4524,39 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     return cardCanvas(bl);
   }
   window.__actionCanvas=actionCanvas;
+  function fitCardTitle(txt, room){
+    var mc=document.createElement('canvas').getContext('2d'), size=76;
+    for(;size>34;size-=2){ mc.font='800 '+size+'px '+CARD.HEAD; if(wrapLines(mc,txt,CARD.W-2*CARD.P).length*Math.round(size*1.12)<=room) break; }
+    return size;
+  }
+  function fxItemCanvas(li){
+    var h=li.closest('ul'); while(h && h.tagName!=='H4') h=h.previousElementSibling;
+    var pauta=h?h.textContent.trim():'';
+    var yr=(li.querySelector('.fx-yr')||{}).textContent||'';
+    var txt=''; li.querySelectorAll('p').forEach(function(p){ if(!txt && !p.classList.contains('fx-o') && !p.classList.contains('fx-s')) txt=p.textContent.trim(); });
+    var o=li.querySelector('.fx-o'), ot=o?o.textContent.replace(/^\s*Outro lado:\s*/,'').trim():'';
+    var srcs=[].map.call(li.querySelectorAll('.fx-s a'), function(a){ return baseName(a.textContent.trim()); });
+    var uniq=[]; srcs.forEach(function(x){ if(x && uniq.indexOf(x)<0) uniq.push(x); });
+    var bl=[
+      {t:'kicker', v:'E O PRÓPRIO FLÁVIO?'+(pauta?' · '+pauta.toUpperCase():''), color:'#B83280'},
+      {t:'small', v:'Flávio Bolsonaro'+(yr?' · '+yr:''), size:32, weight:'700', color:CARD.INK},
+      {t:'gap', v:8},
+      {t:'title', v:txt, size:fitCardTitle(txt, ot?600:720), max:30}
+    ];
+    if(ot) bl.push({t:'text', v:ot, lead:'Outro lado:', size:28, color:CARD.MUT, maxl:4});
+    bl.push({t:'small', v:(uniq.length>1?'Fontes: ':'Fonte: ')+uniq.join('; ')+'. Mandato legislativo: fora do placar.', size:24, maxl:2});
+    return cardCanvas(bl);
+  }
+  function fxItemButtons(){
+    document.querySelectorAll('#px-flavio .fx-list > li').forEach(function(li, k){
+      if(li.querySelector('.fx-act')) return;
+      var d=el('div','fx-act');
+      var t=(li.querySelector('p')||{}).textContent||'';
+      d.appendChild(imgBtn('Imagem', function(){ return fxItemCanvas(li); }, 'flavio-'+(k+1)+'-'+slug(t)+'.png', t.slice(0,90)));
+      li.appendChild(d);
+    });
+  }
+  window.__fxItemCanvas=fxItemCanvas;
   function newsCanvas(n){
     var tags=(n.tags||[]).join(' · ');
     return cardCanvas([
