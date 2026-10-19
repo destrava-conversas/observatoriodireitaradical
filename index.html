@@ -1588,6 +1588,8 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
 /* v139 fundo escuro neutro, contínuo com a capa */
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header.hero-x::after{display:none}}
 :root[data-theme="dark"] header.hero-x::after{display:none}
+.ifoot .iacts{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px;margin-left:auto}
+.ifoot .iacts .cp,.ifoot .iacts .imgsh{margin-left:0}
 </style>
 </head>
 <body>
@@ -3314,7 +3316,9 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     li.appendChild(m);
     var ft = el('div','ifoot');
     ft.appendChild(srcNode(i));
-    ft.appendChild(copyBtn(i));
+    var acts = el('div','iacts'); ft.appendChild(acts);
+    acts.appendChild(copyBtn(i));
+    acts.appendChild(imgBtn('Imagem', function(){ return actionCanvas(i); }, function(){ return 'acao-'+i.c+'-'+i.g+'-'+slug(i.t)+'.png'; }, i.t));
     li.appendChild(ft);
     return li;
   }
@@ -4481,6 +4485,29 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     return c;
   }
   function slug(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50); }
+  function actionCanvas(i){
+    var cc=null; ALLC.forEach(function(x){ if(x.k===i.c) cc=x; });
+    var pro=i.s==='pro', col=pro?'#0B6B8F':CARD.CON;
+    var gs=(i.gs||[i.g]).map(gname).join(' · ');
+    var who=!cc ? cname(i.c) : (cc.ctrl ? 'Governo Lula (comparação)' : cc.n+' · '+cc.p);
+    var note=i.note||'', lead='Outro lado:';
+    if(i.disc){ lead='* Discutível:'; note=note.replace(/^Discut[íi]vel[:.,]?\s*/i,''); note=note.charAt(0).toUpperCase()+note.slice(1); }
+    var srcs=splitSrc(i.src).map(function(x){ return baseName(x.trim()); }).filter(Boolean);
+    var uniq=[]; srcs.forEach(function(x){ if(uniq.indexOf(x)<0) uniq.push(x); });
+    /* maior fonte em que o texto inteiro cabe no espaço do card */
+    var mc=document.createElement('canvas').getContext('2d'), room=note?600:720, size=76, lines;
+    for(;size>34;size-=2){ mc.font='800 '+size+'px '+CARD.HEAD; lines=wrapLines(mc,i.t,CARD.W-2*CARD.P).length; if(lines*Math.round(size*1.12)<=room) break; }
+    var bl=[
+      {t:'kicker', v:(pro?'AÇÃO A FAVOR':'AÇÃO CONTRA')+' · '+gs.toUpperCase(), color:col},
+      {t:'small', v:who+(i.y?' · '+i.y:''), size:32, weight:'700', color:CARD.INK},
+      {t:'gap', v:8},
+      {t:'title', v:i.t, size:size, max:30}
+    ];
+    if(note) bl.push({t:'text', v:note, lead:lead, size:28, color:CARD.MUT, maxl:4});
+    bl.push({t:'small', v:(uniq.length>1?'Fontes: ':'Fonte: ')+uniq.join('; '), size:24, maxl:2});
+    return cardCanvas(bl);
+  }
+  window.__actionCanvas=actionCanvas;
   function newsCanvas(n){
     var tags=(n.tags||[]).join(' · ');
     return cardCanvas([
