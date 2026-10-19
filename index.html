@@ -1590,6 +1590,13 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
 :root[data-theme="dark"] header.hero-x::after{display:none}
 .ifoot .iacts{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px;margin-left:auto}
 .ifoot .iacts .cp,.ifoot .iacts .imgsh{margin-left:0}
+.px-legend{list-style:none;margin:10px 0 14px;padding:0;display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14.5px;color:var(--muted)}
+#px-matriz .px-legend{padding:0;margin-left:0}
+#px-matriz .px-legend li{display:flex;align-items:center;gap:10px;margin:0;padding:0}
+#px-matriz .px-legend li::before{content:none}
+.px-legend .lvl{text-align:center;flex:none}
+#px-matriz .px-legend{margin-bottom:20px}
+@media(max-width:760px){#px-matriz .px-legend{flex-direction:column;gap:8px}.px-legend .lvl{min-width:78px}}
 </style>
 </head>
 <body>
@@ -1906,7 +1913,8 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
 
     <section class="px-sec" id="px-matriz">
       <h3>Por que eles são parças</h3>
-      <p class="px-intro">Cada célula traz uma evidência com fonte. <span class="lvl ato">ato</span> é ato de governo (lei, decreto, medida). <span class="lvl discurso">discurso</span> é declaração, sem ato. <span class="lvl nao">—</span> é não encontrado, o que não é o mesmo que ausente. Toque numa célula para ver o exemplo.</p>
+      <p class="px-intro">Cada célula traz uma evidência com fonte. Toque numa célula para ver o exemplo.</p>
+      <ul class="px-legend"><li><span class="lvl ato">ato</span> ato de governo: lei, decreto, medida</li><li><span class="lvl discurso">discurso</span> declaração, sem ato</li><li><span class="lvl nao">—</span> não encontrado, o que não é o mesmo que ausente</li></ul>
       <div class="px-scroll"><table class="px-mx" id="px-mx"></table></div>
       <div class="px-mxd" id="px-mxd" aria-live="polite"><p class="px-small">Toque numa célula para ver o exemplo e a fonte.</p></div>
     </section>
