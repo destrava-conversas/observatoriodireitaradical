@@ -1183,7 +1183,9 @@ header.hero-x::after{content:"";position:absolute;left:0;right:0;bottom:0;height
 .px-sec{scroll-margin-top:136px}
 .px-sec h3{font-family:'Bricolage Grotesque','Public Sans',system-ui,sans-serif;font-size:24px;font-weight:800;margin:0 0 8px;padding-top:22px;border-top:1px solid var(--line)}
 .px-sec:first-of-type h3{border-top:0;padding-top:0}
-.px-intro{margin:0 0 14px;max-width:78ch;line-height:1.6}
+.px-intro{margin:0 0 14px;max-width:78ch;line-height:1.6;text-wrap:pretty}
+.px-intro + .px-intro{margin-top:-6px}
+#px-pilares .px-intro{max-width:none}
 .px-small{font-size:14px;color:var(--muted);margin:6px 0 0;line-height:1.5}
 .px-key{margin:14px 0 0;padding:12px 16px;border-left:4px solid var(--fil);background:color-mix(in srgb,var(--fil) 8%,var(--surface));border-radius:0 10px 10px 0;line-height:1.55}
 .px-ressalva{margin:0 0 14px;padding:12px 16px;border:1px dashed color-mix(in srgb,var(--contra) 60%,var(--line));background:color-mix(in srgb,var(--contra) 7%,var(--surface));border-radius:10px;line-height:1.55}
@@ -1906,7 +1908,8 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
 
     <section class="px-sec" id="px-pilares">
       <h3>Os pilares</h3>
-      <p class="px-intro">O que a literatura usa para reconhecer a extrema direita e a direita radical. Os quatro primeiros são o núcleo; os demais são frequentes, mas não obrigatórios. Toque num pilar para ver como reconhecê-lo.</p>
+      <p class="px-intro">O que a literatura usa para reconhecer a extrema direita e a direita radical.</p>
+      <p class="px-intro">Os quatro primeiros pilares são o núcleo. Os demais são frequentes, mas não obrigatórios. Toque num pilar para ver como reconhecê-lo.</p>
       <div class="px-pil" id="px-pil"></div>
       <p class="px-key" id="px-eco"></p>
     </section>
