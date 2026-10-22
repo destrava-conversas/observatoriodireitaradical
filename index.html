@@ -1604,6 +1604,7 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
 #px-flavio .fx-act .cp.imgbt{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E")}
 #px-flavio .fx-act .cp.imgbt::before{content:"";width:14px;height:14px;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
 #px-flavio .fx-act .cp.imgbt:hover{color:var(--ink);border-color:var(--ink)}
+.news-k.vs{background:#1A73C8}
 </style>
 </head>
 <body>
@@ -1676,7 +1677,7 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
         <label class="tf-f tf-sub"><span class="tf-l">2. Parça <span class="tf-opt">(opcional)</span></span><select id="top-pais" aria-label="Parça (opcional)"></select></label>
         <button type="button" class="reset-pauta tf-reset" id="top-clear" disabled aria-label="Reiniciar pauta: limpar os filtros e voltar ao início" title="Limpar os filtros"><span aria-hidden="true">↺</span><span class="rp-t">Reiniciar<span class="rp-long"> pauta</span></span></button>
       </div>
-      <p class="upd">Atualizado em 20 de outubro de 2026</p>
+      <p class="upd">Atualizado em 22 de outubro de 2026</p>
     </div>
 
     <div class="res-card" id="resumo">
@@ -3353,7 +3354,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
   }
   function newsText(n){
     var out = n.src.map(function(sr){ return sr[0] + ': ' + sr[1]; });
-    return 'Sinal · ' + fdate(n.d) + '\n' + n.t + '\n\n' + n.s + (n.why ? '\n\nPor que ler: ' + n.why : '') + '\n\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + out[0]) + '\n\nVia painel "Flávio e os Parças": ' + PANEL_URL;
+    return (n.tipo==='Você sabia?' ? 'Você sabia?' : 'Sinal · ' + fdate(n.d)) + '\n' + n.t + '\n\n' + n.s + (n.why ? '\n\n' + (n.wl||'Por que ler:') + ' ' + n.why : '') + '\n\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + out[0]) + '\n\nVia painel "Flávio e os Parças": ' + PANEL_URL;
   }
   function doCopy(txt){
     if(navigator.clipboard && window.isSecureContext){
@@ -4096,6 +4097,9 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
 
   /* ---------- últimas notícias (mais recente primeiro) ---------- */
   var NEWS = [
+    {tipo:'Você sabia?', d:'2026-10-22', t:'Quem acabou com a saidinha?', s:'O Congresso, em 2024. A saída temporária de presos existe desde a Lei de Execução Penal de 1984, do governo Figueiredo, e passou por todos os governos desde então. Em 2019, o Pacote Anticrime, sancionado por Bolsonaro, só a proibiu para condenados por crime hediondo com morte. Em 2024, o Congresso acabou com as saídas em feriados, com Flávio como relator no Senado. Lula sancionou, mas vetou o fim das visitas à família; o Congresso derrubou o veto por 314 a 126 na Câmara e 52 a 11 no Senado.', why:'O governo justificou o veto com a proteção à família, prevista na Constituição. A regra atravessou quatro décadas e governos de todos os lados.', wl:'Outro lado:', tags:['Segurança'], src:[['Lei 7.210/1984 (Planalto)','https://www.planalto.gov.br/ccivil_03/leis/l7210.htm'],['Lei 13.964/2019 (Planalto)','https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/lei/l13964.htm'],['SBT News','https://sbtnews.sbt.com.br/noticia/politica/congresso-derruba-veto-de-lula-a-trecho-do-projeto-das-saidinhas-de-presos'],['InfoMoney','https://www.infomoney.com.br/politica/em-nova-derrota-de-lula-congresso-derruba-veto-e-proibe-saidinha-de-presos/']]},
+    {tipo:'Você sabia?', d:'2026-10-22', t:'Preso vota?', s:'Só quem ainda não tem condenação definitiva, e adolescentes internados a partir dos 16 anos: a Constituição suspende os direitos políticos de quem foi condenado. E são poucos os que conseguem votar: cerca de 13 mil estavam aptos em 2022 e cerca de 6 mil em 2024, entre mais de 200 mil presos provisórios. As seções eleitorais em presídios também recebem agentes e mesários.', why:'No debate da Band, Flávio disse que 73% dos presos votaram em Lula. O número existe: Lula teve 72,6% dos votos válidos nessas seções no 1º turno. Mas são alguns milhares de votos num eleitorado de mais de 150 milhões.', wl:'De onde veio a dúvida:', tags:['Eleições'], src:[['Agência Brasil','https://agenciabrasil.ebc.com.br/justica/noticia/2026-04/direito-voto-entre-pessoas-reclusas-nao-e-efetivo-no-brasil'],['Folha Vitória','https://www.folhavitoria.com.br/eleicoes/presidiario-pode-votar-veja-quais-presos-tem-direito-a-participar-das-eleicoes/'],['Aos Fatos','https://www.aosfatos.org/noticias/checamos-lula-flavio-bolsonaro-debate-band/']]},
+    {tipo:'Você sabia?', d:'2026-10-22', t:'Quanto custa um filme brasileiro?', s:'“Ainda Estou Aqui”, que deu ao Brasil o Oscar de filme internacional, e “O Agente Secreto” custaram cerca de R$ 45 milhões cada. “Dark Horse”, o filme sobre Jair Bolsonaro, tem orçamento negociado de R$ 134 milhões. Segundo reportagens, R$ 61 milhões vieram de Daniel Vorcaro, ex-dono do Banco Master, hoje preso. Flávio é investigado no STF pelo dinheiro que pediu a ele para o filme.', why:'Eduardo Bolsonaro diz que o valor é “até barato para os padrões de Hollywood”. Flávio diz que o dinheiro era privado, lícito e sem contrapartida.', wl:'Outro lado:', tags:['Flávio','Vorcaro'], src:[['Folhapress (via Bem Paraná)','https://www.bemparana.com.br/cultura/dark-horse-longa-metragem-sobre-bolsonaro-custou-mais-que-filmes-brasileiros-indicados-ao-oscar/'],['Metrópoles','https://www.metropoles.com/entretenimento/cinema/eduardo-bolsonaro-defende-orcamento-de-dark-horse-ate-barato'],['CNN Brasil','https://www.cnnbrasil.com.br/eleicoes/o-grande-debate-qual-o-impacto-do-inquerito-sobre-dark-horse-para-flavio/']]},
     {tipo:'Notícia', d:'2026-10-19', t:'No Pará, Flávio promete acabar com “entraves ambientais ideológicos”', s:'Em carreata em Marabá, Flávio prometeu “a maior regularização fundiária que o Pará já viu” e disse que os “entraves ambientais por razões ideológicas” vão acabar: “Você vai poder plantar, criar gado, vai fazer o que quiser na sua terra”. Não detalhou quais regras mudaria. Ele apresenta a promessa como respeito à propriedade privada e segurança jurídica para o produtor.', why:'O Pará tem 75 terras indígenas, que ocupam 25% do estado, e fortes conflitos agrários. A promessa repete o discurso do governo do pai, que no painel tem 9 ações contra o meio ambiente.', tags:['Flávio','Meio ambiente'], src:[['Folhapress (via O Tempo)','https://www.otempo.com.br/eleicoes/2026/presidentes/2026/10/19/flavio-bolsonaro-promete-fim-de-entraves-ambientais-e-diz-que-produtor-vai-fazer-o-que-quiser'],['Lusa (via Observador)','https://observador.pt/2026/10/20/flavio-bolsonaro-promete-no-para-maior-regularizacao-fundiaria-do-estado-e-fim-dos-entraves-ambientais-ideologicos/']]},
     {tipo:'Notícia', d:'2026-10-18', t:'Debate na Band: checagem aponta 7 falas falsas ou enganosas de Flávio em 15', s:'No primeiro debate do 2º turno, o Estadão Verifica checou 15 falas de Flávio e classificou 7 como falsas ou enganosas, contra 2 enganosas em 13 falas de Lula. Entre as de Flávio: que Lula empregou condenados do Mensalão no governo (não há registro), que não apoiou o fim da marcação de munições (ele apoiou o PL 3.723/2019) e que Lula e Janja gastaram R$ 7 bilhões em viagens (o valor soma viagens de cerca de 475 mil servidores de 34 órgãos). O Aos Fatos também apontou como falsas as afirmações de que a PF não investiga Lulinha e de que o governo trata abuso sexual infantil como doença. Do lado de Lula, as duas checagens corrigiram a fala de que o país só voltou a crescer acima de 3% com ele e a de que foi dele a decisão de prender Vorcaro.', why:'É a terceira checagem em uma semana, depois da sabatina da Globo, que encontra afirmações de Flávio que os dados não confirmam.', tags:['Flávio','Debate'], src:[['Estadão Verifica (via Terra)','https://www.terra.com.br/noticias/eleicoes/checamos-o-debate-entre-lula-e-flavio-na-band-veja-o-resultado,d86be66f67083e785565c6df22ba9a1a4pyzk8ac.html'],['Aos Fatos','https://www.aosfatos.org/noticias/checamos-lula-flavio-bolsonaro-debate-band/']]},
     {tipo:'Notícia', d:'2026-10-18', t:'Flávio promete comprar e congelar dívidas; nas redes, a proposta é comparada ao Plano Collor', s:'No debate, Flávio disse que o governo vai “comprar a sua dívida dos bancos” e que ela fica “seis meses parada” para pessoas físicas e um ano para empresas: “Você não vai pagar boleto nenhum”. Disse ainda que parcelas de R$ 100 a R$ 200 poderiam cair para R$ 10 ou R$ 20. A campanha não detalhou de onde viria o dinheiro nem quais dívidas entram. Nas redes, a promessa foi comparada ao Plano Collor de 1990. A diferença: Collor bloqueou o dinheiro das pessoas, e a proposta de Flávio prevê o governo comprando as dívidas.', why:'A proposta amplia o papel do Estado, na contramão da linha liberal da própria equipe econômica de Flávio, e o custo para as contas públicas não foi estimado. Lula propõe ampliar o Desenrola, com leilão de dívidas antigas.', tags:['Flávio','Economia'], src:[['Correio Braziliense','https://www.correiobraziliense.com.br/politica/2026/10/7523016-flavio-promete-comprar-e-congelar-dividas-por-ate-um-ano.html'],['InfoMoney','https://www.infomoney.com.br/politica/lula-ou-flavio-quais-sao-as-propostas-para-tirar-os-brasileiros-das-dividas/'],['Bnews','https://www.bnews.com.br/noticias/economia-e-mercado/flavio-promete-reduzir-dividas-da-populacao-de-r-100-para-r-20-e-vira-alvo-de-comparacao-com-plano-collor.html']]},
@@ -4120,15 +4124,15 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     ul.innerHTML='';
     NEWS.slice().sort(function(a,b){ return a.d<b.d?1:(a.d>b.d?-1:0); }).forEach(function(n){
       var li=el('li','item news');
-      var hd=el('div','news-hd'); if(n.tipo) hd.appendChild(el('span','news-k',n.tipo)); hd.appendChild(el('time','news-d',fdate(n.d))); hd.lastChild.setAttribute('datetime',n.d);
+      var hd=el('div','news-hd'); if(n.tipo) hd.appendChild(el('span','news-k'+(n.tipo==='Você sabia?'?' vs':''),n.tipo)); hd.appendChild(el('time','news-d',fdate(n.d))); hd.lastChild.setAttribute('datetime',n.d);
       (n.tags||[]).forEach(function(t){ hd.appendChild(el('span','tag',t)); });
       li.appendChild(hd);
       li.appendChild(el('p','news-t',n.t));
       li.appendChild(el('p','news-s',n.s));
-      if(n.why){ var w=el('p','news-w'); w.appendChild(el('b','','Por que ler: ')); w.appendChild(document.createTextNode(n.why)); li.appendChild(w); }
+      if(n.why){ var w=el('p','news-w'); w.appendChild(el('b','',(n.wl||'Por que ler:')+' ')); w.appendChild(document.createTextNode(n.why)); li.appendChild(w); }
       var ft=el('div','ifoot'); var sp=el('span','srcs', n.tipo==='Vídeo' ? 'Assistir em: ' : (n.tipo==='Podcast' ? 'Ouvir em: ' : 'Ler em: '));
       n.src.forEach(function(sr,ix){ if(ix) sp.appendChild(document.createTextNode('; ')); var a=el('a','',sr[0]); a.href=sr[1]; a.target='_blank'; a.rel='noopener noreferrer'; sp.appendChild(a); });
-      ft.appendChild(sp); ft.appendChild(copyBtn(function(){ return newsText(n); })); ft.appendChild(imgBtn('Imagem', function(){ return newsCanvas(n); }, 'sinal-'+n.d+'-'+slug(n.t)+'.png', n.t)); li.appendChild(ft); ul.appendChild(li);
+      ft.appendChild(sp); var acts=el('div','iacts'); ft.appendChild(acts); acts.appendChild(copyBtn(function(){ return newsText(n); })); acts.appendChild(imgBtn('Imagem', function(){ return newsCanvas(n); }, 'sinal-'+n.d+'-'+slug(n.t)+'.png', n.t)); li.appendChild(ft); ul.appendChild(li);
     });
     var tz=$('tz-noticias');
     if(tz){ var last=NEWS.slice().sort(function(a,b){ return a.d<b.d?1:(a.d>b.d?-1:0); })[0]; tz.textContent = 'Últimas notícias que devem chamar nossa atenção.'; }
@@ -4563,12 +4567,12 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
   function newsCanvas(n){
     var tags=(n.tags||[]).join(' · ');
     return cardCanvas([
-      {t:'kicker', v:'SINAL · '+fdate(n.d).toUpperCase(), color:CARD.CON},
-      {t:'small', v:(n.tipo?n.tipo+(tags?' · ':''):'')+tags, weight:'700'},
+      n.tipo==='Você sabia?' ? {t:'kicker', v:'VOCÊ SABIA?', color:CARD.BLUE} : {t:'kicker', v:'SINAL · '+fdate(n.d).toUpperCase(), color:CARD.CON},
+      {t:'small', v:(n.tipo&&n.tipo!=='Você sabia?'?n.tipo+(tags?' · ':''):'')+tags, weight:'700'},
       {t:'gap', v:6},
       {t:'title', v:n.t, size:60, max:4},
-      {t:'text', v:n.s, size:31, maxl:8},
-      n.why ? {t:'text', v:n.why, lead:'Por que importa:', size:28, color:CARD.MUT, maxl:4} : {t:'gap',v:0},
+      {t:'text', v:n.s, size:(n.tipo==='Você sabia?'?30:31), maxl:(n.tipo==='Você sabia?'?12:8)},
+      n.why ? {t:'text', v:n.why, lead:(n.wl||'Por que importa:'), size:28, color:CARD.MUT, maxl:4} : {t:'gap',v:0},
       {t:'small', v:'Fontes: '+n.src.map(function(x){ return x[0]; }).join('; '), size:24, maxl:2}
     ]);
   }
