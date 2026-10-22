@@ -1685,8 +1685,8 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
       <h4 class="selpill" id="sel-pill"></h4>
       <p class="sub" id="sel-sub"></p>
       <div class="counts">
-        <a class="c-contra c-go" href="#col-contra" id="go-contra"><span class="n" id="n-contra">0</span><span class="l">ações contra</span></a>
-        <a class="c-pro c-go" href="#col-pro" id="go-pro"><span class="n" id="n-pro">0</span><span class="l">ações a favor</span></a>
+        <a class="c-contra c-go" href="#col-contra" id="go-contra"><span class="n" id="n-contra">0</span><span class="l">medidas que pioraram</span></a>
+        <a class="c-pro c-go" href="#col-pro" id="go-pro"><span class="n" id="n-pro">0</span><span class="l">medidas que melhoraram</span></a>
       </div>
       <div class="therm">
         <div class="track" role="img" id="track" aria-label="Termômetro">
@@ -1694,7 +1694,7 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
           <div class="fill r" id="fill-r"></div>
           <div class="mid"></div>
         </div>
-        <div class="ends"><span class="a">Ações contra</span><span class="b">Ações a favor</span></div>
+        <div class="ends"><span class="a">Pioraram</span><span class="b">Melhoraram</span></div>
       </div>
       <p class="disc-line" id="disc-line" hidden></p>
       <div class="img-row sum-img-row"><button type="button" class="imgbtn" id="sum-img">Copiar resumo como imagem</button><span class="img-msg" id="sum-img-msg" role="status" aria-live="polite"></span></div>
@@ -1708,12 +1708,12 @@ a.c-go[aria-disabled="true"] .l{text-decoration:none}
       <p class="copy-hint">Você pode copiar e enviar cada ação para alguém ou para uma IA, inclusive para verificar a veracidade da informação.</p>
       <div class="lists" id="lists">
         <div class="col contra" id="col-contra">
-          <h3>Ações contra<span id="cnt-contra"></span></h3>
+          <h3>O que piorou<span id="cnt-contra"></span></h3>
           <ul class="list" id="list-contra"></ul>
           <button type="button" class="more" id="more-contra" aria-expanded="false" aria-controls="list-contra" hidden>Ver mais</button>
         </div>
         <div class="col pro" id="col-pro">
-          <h3>Ações a favor<span id="cnt-pro"></span></h3>
+          <h3>O que melhorou<span id="cnt-pro"></span></h3>
           <ul class="list" id="list-pro"></ul>
           <button type="button" class="more" id="more-pro" aria-expanded="false" aria-controls="list-pro" hidden>Ver mais</button>
         </div>
@@ -3049,6 +3049,9 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
   R = R.filter(function(i){ return i.c!=='it'; });
   CONST_EV = CONST_EV.filter(function(i){ return i.c!=='it'; });
   var state = {c:'all', g:'all', picked:false};
+  var PAUTA_ORDER = ['saude','aposentados','trabalhadores','renda','seguranca','educacao','criancas','pobres','cidades','religiao','ambiente','instituicoes','mulheres','lgbt','etnicas'];
+  function byOrder(a,b){ return PAUTA_ORDER.indexOf(a.k)-PAUTA_ORDER.indexOf(b.k); }
+  var PARA = {saude:'na saúde',aposentados:'para aposentados',trabalhadores:'para trabalhadores',renda:'na renda e no custo de vida',seguranca:'na segurança pública',educacao:'na educação e na ciência',criancas:'para crianças e adolescentes',pobres:'para pessoas pobres',cidades:'nas cidades, no transporte e na moradia',religiao:'na liberdade religiosa',ambiente:'no meio ambiente',instituicoes:'nas instituições e na imprensa',mulheres:'para mulheres',lgbt:'para pessoas LGBTQIA+',etnicas:'para minorias étnicas'};
   var GROUP_KEYS = GROUPS.map(function(x){ return x.k; });
   var THEME_KEYS = THEMES.map(function(x){ return x.k; });
   var $ = function(id){ return document.getElementById(id); };
@@ -3084,11 +3087,11 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     if(!t.total){
       out.push(cap(onde) + ', não há ações de ' + quem + ' registradas neste painel. Isso não quer dizer que não existam: só que não apareceram nas fontes consultadas.');
     } else {
-      out.push(cap(onde) + ', ' + quem + (allC ? ' somam ' : ' soma ') + '<b>' + plural(t.contra,'ação contra','ações contra') + '</b> e <b>' + plural(t.pro,'a favor','a favor') + '</b>.');
-      if(t.contra && !t.pro) out.push('Nenhuma ação a favor foi registrada.');
-      else if(t.pro && !t.contra) out.push('Nenhuma ação contra foi registrada.');
-      else if(t.contra >= t.pro*1.5) out.push('São ' + nfmt(t.contra/t.pro) + ' ações contra para cada uma a favor.');
-      else if(t.pro >= t.contra*1.5) out.push('As ações a favor superam as contra.');
+      out.push(cap(onde) + ', ' + quem + (allC ? ' somam ' : ' soma ') + '<b>' + plural(t.contra,'medida que piorou','medidas que pioraram') + '</b> e <b>' + plural(t.pro,'que melhorou','que melhoraram') + '</b>.');
+      if(t.contra && !t.pro) out.push('Nenhuma medida que melhorou foi registrada.');
+      else if(t.pro && !t.contra) out.push('Nenhuma medida que piorou foi registrada.');
+      else if(t.contra >= t.pro*1.5) out.push('São ' + nfmt(t.contra/t.pro) + ' medidas que pioraram para cada uma que melhorou.');
+      else if(t.pro >= t.contra*1.5) out.push('As medidas que melhoraram superam as que pioraram.');
       else out.push('Os dois lados aparecem em quantidade parecida.');
       if(allC){
         var tops = COUNTRIES.map(function(c){ return {n:c.n, v:tally(c.k, state.g).contra}; }).filter(function(x){ return x.v>0; }).sort(function(a,b){ return b.v-a.v; });
@@ -3142,8 +3145,8 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
       });
       g.appendChild(ul); box.appendChild(g);
     }
-    group(con, 'contra', con.length > 3 ? 'Algumas das ações contra' : (con.length===1 ? 'A ação contra' : 'As ações contra'), 3);
-    group(pro, 'pro', pro.length > 2 ? 'Algumas das ações a favor' : (pro.length===1 ? 'A ação a favor' : 'As ações a favor'), 2);
+    group(con, 'contra', con.length > 3 ? 'Algumas das que pioraram' : (con.length===1 ? 'A que piorou' : 'As que pioraram'), 3);
+    group(pro, 'pro', pro.length > 2 ? 'Algumas das que melhoraram' : (pro.length===1 ? 'A que melhorou' : 'As que melhoraram'), 2);
     var a = el('a','ex-all','Ver todas as ' + items.length + ' ações, com fontes ↓'); a.href = '#acoes';
     box.appendChild(a);
   }
@@ -3261,7 +3264,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     COUNTRIES.forEach(function(c){ tp.appendChild(opt(c.k, c.n)); });
     var ph2 = opt('','Escolha a pauta'); ph2.disabled = true; tf.appendChild(ph2);
     tf.appendChild(opt('all','Todas as pautas'));
-    GROUPS.concat(THEMES).sort(function(a,b){ return a.n.localeCompare(b.n,'pt-BR'); }).forEach(function(x){ tf.appendChild(opt(x.k,x.n)); });
+    GROUPS.concat(THEMES).sort(byOrder).forEach(function(x){ tf.appendChild(opt(x.k,x.n)); });
     var mq = window.matchMedia ? window.matchMedia('(max-width:760px)') : null;
     function topLabels(){
       var narrow = false;
@@ -3522,8 +3525,9 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     $('n-pro').textContent = t.pro;
     (function(){ var dd=pick(state.c,state.g,A).filter(function(i){ return i.disc; }), n=dd.length, dl=$('disc-line'); [['n-contra','contra'],['n-pro','pro']].forEach(function(x){ var e=$(x[0]); if(!e) return; if(dd.some(function(i){ return (i.s==='pro'?'pro':'contra')===x[1]; })){ var a=document.createElement('span'); a.className='ast'; a.textContent='*'; a.setAttribute('aria-label','inclui ação discutível'); e.appendChild(a); } }); if(!dl) return; dl.textContent = n ? '* Inclui '+n+(n===1?' ação discutível, marcada na lista com os dois lados.':' ações discutíveis, marcadas na lista com os dois lados.') : ''; dl.hidden = !n; })();
     var lc0 = document.querySelector('.c-contra .l'), lp0 = document.querySelector('.c-pro .l');
-    if(lc0) lc0.textContent = t.contra===1 ? 'ação contra' : 'ações contra';
-    if(lp0) lp0.textContent = t.pro===1 ? 'ação a favor' : 'ações a favor';
+    if(lc0) lc0.textContent = t.contra===1 ? 'medida que piorou' : 'medidas que pioraram';
+    var rt=$('res-title'); if(rt) rt.textContent = state.g==='all' ? 'O que eles fizeram' : 'O que mudou '+(PARA[state.g]||'');
+    if(lp0) lp0.textContent = t.pro===1 ? 'medida que melhorou' : 'medidas que melhoraram';
 
     function shareW(v){ return (t.total && v>0) ? Math.max(2, v/t.total*50) : 0; }
     $('fill-l').style.width = shareW(t.contra).toFixed(1)+'%';
@@ -3750,8 +3754,8 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     });
     if(!nc) lc.appendChild(el('li','empty',noneC));
     if(!np) lp.appendChild(el('li','empty',noneP));
-    $(ids.hc).textContent = 'Ações contra ('+nc+')';
-    $(ids.hp).textContent = 'Ações a favor ('+np+')';
+    $(ids.hc).textContent = 'O que piorou ('+nc+')';
+    $(ids.hp).textContent = 'O que melhorou ('+np+')';
     setupCollapse(lc, $(ids.mc), nc);
     setupCollapse(lp, $(ids.mp), np);
   }
@@ -3803,7 +3807,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     m.innerHTML='';
     m.appendChild(el('div','hd',''));
     var cols = [{k:'all',n:'Todos',kind:'consolidado'}]
-      .concat(GROUPS.concat(THEMES).sort(function(a,b){ return a.n.localeCompare(b.n,'pt-BR'); }).map(function(x){ return {k:x.k,n:x.n,kind:'assunto'}; }));
+      .concat(GROUPS.concat(THEMES).sort(byOrder).map(function(x){ return {k:x.k,n:x.n,kind:'assunto'}; }));
     var fc = window.innerWidth < 640 ? 112 : 170;
     m.style.gridTemplateColumns = fc+'px repeat('+cols.length+',minmax(92px,1fr))';
     m.style.minWidth = (fc + cols.length*100) + 'px';
@@ -4362,7 +4366,7 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     if(upd){ g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+SANS; g.fillText(upd.replace(/ de (\d{4})$/,' $1'), W-P, HEADH/2+4); g.textAlign='left'; }
     var x=P, y=HEADH+TOP;
     /* "O que eles fizeram", com destaque na cor do lado que predomina */
-    var kick='O QUE ELES FIZERAM', kcol = t.contra>t.pro ? CONI : (t.pro>t.contra ? PRO : null);
+    var kick=(state.g==='all'?'O QUE ELES FIZERAM':'O QUE MUDOU'), kcol = t.contra>t.pro ? CONI : (t.pro>t.contra ? PRO : null);
     g.font='800 34px '+SANS; var kw=g.measureText(kick).width;
     if(kcol){ g.fillStyle=kcol; roundRect(g, x-14, y-6, kw+28, 52, 10); g.fill(); }
     g.fillStyle = kcol ? '#fff' : MUT; g.fillText(kick, x, y+21);
@@ -4373,8 +4377,8 @@ LK_R.push(["pl", "educacao", "A reforma de 2017 extinguiu ", [["Polen-Analysen",
     y+=NUM;
     function big(v, xx, col, star){ g.font='800 '+NS+'px '+HEAD; g.fillStyle=col; g.fillText(String(v), xx-8, y); if(star){ var w=g.measureText(String(v)).width; g.font='800 '+Math.round(NS*.47)+'px '+HEAD; g.fillText('*', xx+w-8, y-Math.round(NS*.47)); } }
     big(t.contra, x, CONI, dC); big(t.pro, x+half, PRO, dP);
-    y+=LAB-10; g.font='700 52px '+SANS; g.fillStyle=CONI; g.fillText(t.contra===1?'ação contra':'ações contra', x, y);
-    g.fillStyle=PRO; g.fillText(t.pro===1?'ação a favor':'ações a favor', x+half, y);
+    y+=LAB-10; g.font='700 52px '+SANS; g.fillStyle=CONI; g.fillText(t.contra===1?'piorou':'pioraram', x, y);
+    g.fillStyle=PRO; g.fillText(t.pro===1?'melhorou':'melhoraram', x+half, y);
     /* termômetro */
     y+=GAPT+10; var bh=BAR, mid=x+maxW/2;
     g.fillStyle='#DDE3E9'; roundRect(g,x,y,maxW,bh,bh/2); g.fill();
