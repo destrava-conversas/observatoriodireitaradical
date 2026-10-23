@@ -1765,8 +1765,10 @@
     }
     var tmr;
     inp.addEventListener('input', function(){ clearTimeout(tmr); tmr=setTimeout(run,180); });
-    function open(){ box.hidden=false; document.documentElement.classList.add('bs-open'); btn.setAttribute('aria-expanded','true'); setTimeout(function(){ inp.focus(); },20); if(inp.value) run(); else run(); }
-    function close(){ box.hidden=true; document.documentElement.classList.remove('bs-open'); btn.setAttribute('aria-expanded','false'); }
+    function open(){ inp.value=''; res.innerHTML=''; LAST=[]; box.hidden=false; box.scrollTop=0; document.documentElement.classList.add('bs-open'); btn.setAttribute('aria-expanded','true'); setTimeout(function(){ inp.focus(); },20); run(); }
+    function close(){ if(box.hidden) return; box.hidden=true; document.documentElement.classList.remove('bs-open'); btn.setAttribute('aria-expanded','false'); clearTimeout(tmr); inp.value=''; res.innerHTML=''; LAST=[]; }
+    /* clique fora da busca (topo, menu, logo) fecha a busca e deixa o clique seguir */
+    document.addEventListener('click', function(e){ if(box.hidden) return; var t=e.target; if(box.contains(t) || btn.contains(t)) return; close(); }, true);
     btn.addEventListener('click', function(e){ e.preventDefault(); box.hidden?open():close(); });
     cl.addEventListener('click', close);
     document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !box.hidden) close(); if(e.key==='/' && box.hidden && !/input|textarea|select/i.test((document.activeElement||{}).tagName||'')){ e.preventDefault(); open(); } });
