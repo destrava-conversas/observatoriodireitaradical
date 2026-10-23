@@ -12,14 +12,14 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="E a Economia? Brasil em Dados">
 <meta property="og:description" content="Mais de 20 anos de dados oficiais da economia brasileira, governo por governo, comparados a 12 países emergentes.">
-<meta property="og:url" content="https://destrava-conversas.com.br/eoflavio/economia/">
-<meta property="og:image" content="https://destrava-conversas.com.br/eoflavio/economia/og-economia.jpg">
+<meta property="og:url" content="https://destrava-conversas.com.br/observatorio/economia/">
+<meta property="og:image" content="https://destrava-conversas.com.br/observatorio/economia/og-economia.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Gráfico do PIB por habitante do Brasil e de 12 países emergentes, de 2003 a 2025, com as faixas de cada governo.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://destrava-conversas.com.br/eoflavio/economia/og-economia.jpg">
-<link rel="canonical" href="https://destrava-conversas.com.br/eoflavio/economia/">
+<meta name="twitter:image" content="https://destrava-conversas.com.br/observatorio/economia/og-economia.jpg">
+<link rel="canonical" href="https://destrava-conversas.com.br/observatorio/economia/">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -261,7 +261,7 @@ html{scroll-padding-top:5.5rem}
     <a class="part-btn" href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener" data-participe aria-label="Participe: receber atualizações, reportar um erro ou destacar um acerto" title="Receber atualizações, reportar um erro ou destacar um acerto"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.5-4.8A8 8 0 1 1 21 12z"/></svg><span class="pt">Participe</span></a>
     <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span></span><span></span><span></span></button>
     <nav class="menu" id="menu" aria-label="Menu" hidden>
-      <a class="mext" href="../">Flávio e os Parças <span aria-hidden="true">→</span></a>
+      <a class="mext" href="../">Observatório <span aria-hidden="true">→</span></a>
       <span class="msep" role="separator" aria-hidden="true"></span>
       <a href="#hook">Pergunta rápida</a>
       <a href="#temas">Explore por tema</a>
@@ -375,7 +375,7 @@ html{scroll-padding-top:5.5rem}
 <script>
 const fmt=(v,d=1,sg=false)=>{ if(v==null||isNaN(v)) return '–'; const r=Math.round(v*Math.pow(10,d))/Math.pow(10,d);
   let s=Math.abs(r).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}); return (r<0?'−':(sg&&r>0?'+':''))+s; };
-const LINK='https://destrava-conversas.com.br/eoflavio/economia/';
+const LINK='https://destrava-conversas.com.br/observatorio/economia/';
 const Y0=2003, Y1=2025, YRS=Array.from({length:Y1-Y0+1},(_,i)=>Y0+i);
 const GOVS=[['Lula',2002.5,2010.5],['Dilma',2010.5,2016.6],['Temer',2016.6,2018.5],['Bolsonaro',2018.5,2022.5],['Lula',2022.5,2025.5]];
 const pad=(start,arr)=>{ const o=Array(YRS.length).fill(null); arr.forEach((v,i)=>{o[start-Y0+i]=v;}); return o; };
@@ -712,7 +712,7 @@ async function makePNG(c){
   x.fillStyle=ink; x.font='400 28px '+F; sl.forEach(l=>{ y+=30; x.fillText(l,P,y); y+=10; }); y+=16;
   x.fillStyle=muted; x.font='400 20px '+F; fl.forEach(l=>{ y+=21; x.fillText(l,P,y); y+=7; });
   x.fillStyle='#1B5FA8'; x.fillRect(0,H-70,Wc,70); x.fillStyle='#fff'; x.font='800 28px '+FT; x.fillText('Brasil em Dados',P,H-25);
-  x.font='400 20px '+F; const lk='destrava-conversas.com.br/eoflavio/economia'; x.fillText(lk,Wc-P-x.measureText(lk).width,H-27);
+  x.font='400 20px '+F; const lk='destrava-conversas.com.br/observatorio/economia'; x.fillText(lk,Wc-P-x.measureText(lk).width,H-27);
   return await new Promise((res,rej)=>cv.toBlob(bl=>bl?res(bl):rej(new Error('png')),'image/png'));
 }
 const fname=c=>'brasil-em-dados-'+c.id+'.png';
