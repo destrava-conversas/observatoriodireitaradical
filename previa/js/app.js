@@ -1689,6 +1689,21 @@
         n.parentNode.replaceChild(f,n);
       });
     }
+    function verNoPainel(i){
+      close();
+      var f=$('top-foco'), q=$('top-pais'), ctrl=i.c==='br';
+      f.value=i.g; f.dispatchEvent(new Event('change',{bubbles:true}));
+      q.value=ctrl?'all':i.c; q.dispatchEvent(new Event('change',{bubbles:true}));
+      setTimeout(function(){
+        if(ctrl){ var c=$('comparacao'); if(c){ openFor(c); c.scrollIntoView({block:'start'}); } return; }
+        if(BLK.acoes) setBlk('acoes', true);
+        var lis=[].slice.call(document.querySelectorAll('#list-contra > li.item, #list-pro > li.item')), hit=null;
+        lis.forEach(function(li){ var p=li.querySelector('p'); if(!hit && p && p.textContent===i.t) hit=li; });
+        if(!hit){ var r=$('resumo'); if(r) r.scrollIntoView({block:'start'}); return; }
+        var ul=hit.parentNode; if(ul.classList.contains('collapsed')){ var mb=$(ul.id==='list-contra'?'more-contra':'more-pro'); if(mb && !mb.hidden) mb.click(); }
+        setTimeout(function(){ hit.scrollIntoView({block:'center'}); hit.classList.remove('bs-flash'); void hit.offsetWidth; hit.classList.add('bs-flash'); },80);
+      }, 350);
+    }
     function hits(list, terms){ return list.filter(function(x){ return terms.every(function(t){ return x.h.indexOf(t)>=0; }); }); }
     function sec(title, n){ var d=el('section','bs-sec'); d.appendChild(el('h3','bs-h',title+' ('+n+')')); return d; }
     function more(ul, n, cap){ if(n<=cap) return null; var b=el('button','more','Ver mais ('+(n-cap)+')'); b.type='button'; return b; }
@@ -1706,7 +1721,7 @@
       var a=hits(IDX.a,terms), r=hits(IDX.r,terms), n=hits(IDX.n,terms), f=hits(IDX.f,terms);
       var tot=a.length+r.length+n.length+f.length;
       st.textContent = tot ? (tot===1?'1 resultado':tot+' resultados')+' para “'+inp.value.trim()+'”.' : 'Nada encontrado para “'+inp.value.trim()+'”. Tente outra palavra, sem acento ou mais curta.';
-      if(a.length){ var s1=sec('Ações',a.length); res.appendChild(s1); renderList(s1,a,function(x){ var i=x.o, pro=i.s==='pro', li=itemNode(i,true,true); li.classList.add(pro?'bs-pro':'bs-con'); var bd=el('span','bs-lado '+(pro?'pro':'con'),(pro?'Melhorou ':'Piorou ')+(PARA[i.g]||'')); li.insertBefore(bd, li.firstChild); return li; },12); }
+      if(a.length){ var s1=sec('Ações',a.length); res.appendChild(s1); renderList(s1,a,function(x){ var i=x.o, pro=i.s==='pro', li=itemNode(i,true,true); li.classList.add(pro?'bs-pro':'bs-con'); var top=el('div','bs-top'); top.appendChild(el('span','bs-lado '+(pro?'pro':'con'),(pro?'Melhorou ':'Piorou ')+(PARA[i.g]||''))); var sv=el('a','bs-see','Ver no painel →'); sv.href='#resumo'; sv.title='Abrir '+gname(i.g)+(i.c==='br'?'':' · '+cname(i.c))+' no painel'; sv.addEventListener('click',function(e){ e.preventDefault(); verNoPainel(i); }); top.appendChild(sv); li.insertBefore(top, li.firstChild); return li; },12); }
       if(n.length){ var s2=sec('Sinais',n.length); res.appendChild(s2); renderList(s2,n,function(x){ var o=x.o, li=el('li','item news bs-news');
           var hd=el('div','news-hd'); if(o.tipo) hd.appendChild(el('span','news-k'+(o.tipo==='Você sabia?'?' vs':''),o.tipo)); hd.appendChild(el('time','news-d',fdate(o.d))); li.appendChild(hd);
           li.appendChild(el('p','news-t',o.t)); li.appendChild(el('p','news-s',o.s));
