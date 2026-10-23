@@ -345,7 +345,7 @@
     var li = el('li','item');
     li.appendChild(el('p','',i.t));
     var m = el('div','meta');
-    var lt=legendTag(i.c, (i.gs||[i.g]).map(gname)); lt.setAttribute('data-pc',i.c); pillA(lt,'Ver '+cname(i.c)+' · '+gname(i.g)+' no painel'); lt.setAttribute('data-pg',i.g); m.appendChild(lt);
+    var lt=legendTag(i.c, (i.gs||[i.g]).map(gname)); lt.setAttribute('data-pc',i.c); pillA(lt,'Ver o resumo de '+gname(i.g)+(i.c==='br'?'':' · '+cname(i.c))); lt.setAttribute('data-pg',i.g); m.appendChild(lt);
     if(i.y) m.appendChild(el('span','',i.y));
     if(i.note) m.appendChild(el('span','tag note'+(i.disc?' disc':''),(i.disc?'* ':'')+i.note));
     li.appendChild(m);
@@ -484,7 +484,7 @@
     var tx = r.t.replace(/^Economia:\s*/,''); tx = tx.charAt(0).toUpperCase() + tx.slice(1);
     body.appendChild(el('p','', stripEco ? tx.charAt(0).toUpperCase()+tx.slice(1) : tx));
     var m = el('div','meta');
-    var lt=legendTag(r.c, [gname(r.g)]); lt.setAttribute('data-pc',r.c); pillA(lt,'Ver '+cname(r.c)+' · '+gname(r.g)+' no painel'); lt.setAttribute('data-pg',r.g); m.appendChild(lt);
+    var lt=legendTag(r.c, [gname(r.g)]); lt.setAttribute('data-pc',r.c); pillA(lt,'Ver o resumo de '+gname(r.g)+(r.c==='br'?'':' · '+cname(r.c))); lt.setAttribute('data-pg',r.g); m.appendChild(lt);
     body.appendChild(m);
     var ft = el('div','ifoot');
     ft.appendChild(srcNode(r));
@@ -1768,7 +1768,9 @@
       var pe=e.target.closest && e.target.closest('[data-pc],[data-ptag],[data-palerta]'); if(!pe) return;
       if(pe.closest('.bs-chip')) return;
       e.preventDefault(); e.stopImmediatePropagation();
-      if(pe.hasAttribute('data-pc')){ var i={c:pe.getAttribute('data-pc'), g:pe.getAttribute('data-pg'), t:''}; var li=pe.closest('li.item'); var p0=li&&li.querySelector('p'); if(p0) i.t=p0.textContent; verNoPainel(i); return; }
+      if(pe.hasAttribute('data-pc')){ var pc=pe.getAttribute('data-pc'), pg=pe.getAttribute('data-pg'), ctrl=pc==='br'; close();
+        var f0=$('top-foco'), q0=$('top-pais'); f0.value=pg; f0.dispatchEvent(new Event('change',{bubbles:true})); q0.value=ctrl?'all':pc; q0.dispatchEvent(new Event('change',{bubbles:true}));
+        setTimeout(function(){ var t=$(ctrl?'comparacao':'resumo'); if(t){ openFor(t); t.scrollIntoView({block:'start'}); var h=$('res-title'); if(!ctrl && h){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); } } },300); return; }
       var f=filtFrom(pe); if(box.hidden) open(); FILT=f; inp.value=''; run(); box.scrollTop=0; setTimeout(function(){ inp.blur(); },30);
     }, true);
     document.addEventListener('keydown', function(e){ if(e.key!=='Enter'&&e.key!==' ') return; var pe=e.target.closest && e.target.closest('[data-pc],[data-ptag],[data-palerta]'); if(pe){ e.preventDefault(); pe.click(); } });
