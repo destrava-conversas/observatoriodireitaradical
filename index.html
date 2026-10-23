@@ -1625,6 +1625,13 @@ html.bs-open{overflow:hidden}
 .bs-hl{background:#FFE58A;color:inherit;border-radius:3px;padding:0 1px}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .bs-hl{background:#7A5C00;color:#fff}}
 :root[data-theme="dark"] .bs-hl{background:#7A5C00;color:#fff}
+.bs-lado{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.02em;color:#fff;border-radius:999px;padding:3px 10px;margin-bottom:8px}
+.bs-lado.con{background:var(--contra)}
+.bs-lado.pro{background:var(--pro)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .bs-lado{color:#11181F}}
+:root[data-theme="dark"] .bs-lado{color:#11181F}
+.bs-list .item.bs-con{border-left:4px solid var(--contra)}
+.bs-list .item.bs-pro{border-left:4px solid var(--pro)}
 .bs-go{display:inline-block;margin-top:8px;font-weight:700;font-size:14px;color:var(--pro-ink)}
 .bs-fx p{margin:6px 0 0;line-height:1.55}
 .bs-fx .fx-yr{display:block;font-size:13px;font-weight:800;color:var(--muted);margin-top:6px}

@@ -1675,7 +1675,7 @@
     var LAST=[];
     function mark(root){
       if(!LAST.length) return;
-      var w=document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode:function(n){ var p=n.parentNode; if(!p||/^(BUTTON|MARK|SCRIPT|STYLE)$/.test(p.nodeName)||p.closest('button')) return NodeFilter.FILTER_REJECT; return n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT; }});
+      var w=document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode:function(n){ var p=n.parentNode; if(!p||/^(BUTTON|MARK|SCRIPT|STYLE)$/.test(p.nodeName)||p.closest('button')||p.closest('.bs-lado')) return NodeFilter.FILTER_REJECT; return n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT; }});
       var nodes=[]; while(w.nextNode()) nodes.push(w.currentNode);
       nodes.forEach(function(n){
         var t=n.nodeValue, z=nz(t); if(z.length!==t.length) return;
@@ -1706,7 +1706,7 @@
       var a=hits(IDX.a,terms), r=hits(IDX.r,terms), n=hits(IDX.n,terms), f=hits(IDX.f,terms);
       var tot=a.length+r.length+n.length+f.length;
       st.textContent = tot ? (tot===1?'1 resultado':tot+' resultados')+' para “'+inp.value.trim()+'”.' : 'Nada encontrado para “'+inp.value.trim()+'”. Tente outra palavra, sem acento ou mais curta.';
-      if(a.length){ var s1=sec('Ações',a.length); res.appendChild(s1); renderList(s1,a,function(x){ return itemNode(x.o,true,true); },12); }
+      if(a.length){ var s1=sec('Ações',a.length); res.appendChild(s1); renderList(s1,a,function(x){ var i=x.o, pro=i.s==='pro', li=itemNode(i,true,true); li.classList.add(pro?'bs-pro':'bs-con'); var bd=el('span','bs-lado '+(pro?'pro':'con'),(pro?'Melhorou ':'Piorou ')+(PARA[i.g]||'')); li.insertBefore(bd, li.firstChild); return li; },12); }
       if(n.length){ var s2=sec('Sinais',n.length); res.appendChild(s2); renderList(s2,n,function(x){ var o=x.o, li=el('li','item news bs-news');
           var hd=el('div','news-hd'); if(o.tipo) hd.appendChild(el('span','news-k'+(o.tipo==='Você sabia?'?' vs':''),o.tipo)); hd.appendChild(el('time','news-d',fdate(o.d))); li.appendChild(hd);
           li.appendChild(el('p','news-t',o.t)); li.appendChild(el('p','news-s',o.s));
