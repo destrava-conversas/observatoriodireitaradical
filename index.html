@@ -1686,6 +1686,15 @@ aside.legend{position:relative}
 .bs-chip{display:inline-flex;align-items:center;gap:6px;flex:none;max-width:45%;padding:6px 6px 6px 12px;border-radius:999px;background:#1A73C8;color:#fff;font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bs-chip > span{overflow:hidden;text-overflow:ellipsis}
 .bs-chip-x{appearance:none;border:0;background:rgba(255,255,255,.22);color:#fff;width:24px;height:24px;border-radius:999px;font-size:17px;line-height:1;cursor:pointer;flex:none}
+
+/* destaque ao chegar num card: cor do lado */
+@keyframes flashCon{0%,60%{box-shadow:0 0 0 3px var(--contra);border-color:var(--contra)}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes flashPro{0%,60%{box-shadow:0 0 0 3px var(--pro);border-color:var(--pro)}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes flashNeu{0%,60%{box-shadow:0 0 0 3px #1E9E4A;border-color:#1E9E4A}100%{box-shadow:0 0 0 0 transparent}}
+.item.bs-flash,#px-flavio .fx-list li.bs-flash{animation:flashNeu 1.8s ease}
+#list-contra .item.bs-flash{animation:flashCon 1.8s ease}
+#list-pro .item.bs-flash{animation:flashPro 1.8s ease}
+@media (prefers-reduced-motion:reduce){.item.bs-flash,#px-flavio .fx-list li.bs-flash{animation:none;box-shadow:0 0 0 3px #1E9E4A}#list-contra .item.bs-flash{box-shadow:0 0 0 3px var(--contra)}#list-pro .item.bs-flash{box-shadow:0 0 0 3px var(--pro)}}
 </style>
 </head>
 <body>
@@ -2167,12 +2176,12 @@ aside.legend{position:relative}
   </footer>
 </main>
 
-<script src="data/base.js?v=20261023l"></script>
-<script src="data/acoes.js?v=20261023l"></script>
-<script src="data/fontes.js?v=20261023l"></script>
-<script src="data/sinais.js?v=20261023l"></script>
-<script src="data/rede.js?v=20261023l"></script>
-<script src="js/app.js?v=20261023l"></script>
+<script src="data/base.js?v=20261023m"></script>
+<script src="data/acoes.js?v=20261023m"></script>
+<script src="data/fontes.js?v=20261023m"></script>
+<script src="data/sinais.js?v=20261023m"></script>
+<script src="data/rede.js?v=20261023m"></script>
+<script src="js/app.js?v=20261023m"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
