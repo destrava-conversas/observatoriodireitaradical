@@ -841,6 +841,12 @@
   }
   /* ---------- blocos recolhíveis ---------- */
   var BLK = {};
+  var XSVG='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  function xBtn(bt, open, onLbl, offLbl){
+    bt.classList.toggle('x-close', open);
+    if(open){ bt.innerHTML=XSVG; bt.setAttribute('aria-label', onLbl); bt.title=onLbl; }
+    else { bt.textContent=offLbl; bt.removeAttribute('aria-label'); bt.removeAttribute('title'); }
+  }
   function makeBlock(id, headSel, openLbl){
     var box = $(id); if(!box) return;
     var head = box.querySelector(headSel); if(!head) return;
@@ -862,7 +868,7 @@
     b.body.hidden = !open;
     b.box.classList.toggle('blk-closed', !open);
     b.bt.setAttribute('aria-expanded', open ? 'true' : 'false');
-    b.bt.textContent = open ? 'Fechar' : b.lbl;
+    xBtn(b.bt, open, 'Fechar '+(((b.box.querySelector('h2')||{}).textContent||'').trim()), b.lbl);
     if(open){
       ['list-contra','list-pro','list-ctx'].forEach(function(lid){ var ul=$(lid); if(ul && b.body.contains(ul) && ul.classList.contains('collapsed')){ ul.style.maxHeight=''; fitCollapsed(ul); } });
       if(id==='visao-geral' && typeof mxFade==='function') setTimeout(mxFade,30);
@@ -1671,7 +1677,7 @@
     x.t.setAttribute('aria-expanded',open?'true':'false');
     x.b.hidden=!open; x.p.hidden=!open;
     x.a.classList.toggle('closed',!open);
-    x.t.textContent=open?x.on:x.off;
+    xBtn(x.t, open, x.on, x.off);
   }
   tabs.forEach(function(x){
     x.t.addEventListener('click',function(){
