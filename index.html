@@ -1646,6 +1646,20 @@ html.bs-open{overflow:hidden}
 .bs-fx p{margin:6px 0 0;line-height:1.55}
 .bs-fx .fx-yr{display:block;font-size:13px;font-weight:800;color:var(--muted);margin-top:6px}
 .bs-fx .fx-o,.bs-fx .fx-s{font-size:14px;color:var(--muted)}
+
+/* alertas democráticos */
+.alerta{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.02em;border-radius:999px;padding:2px 9px;background:#FDE2E2;color:#8A1C1C;border:1px solid #F2B8B8;white-space:nowrap}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .alerta{background:#3A1717;color:#F6B4B4;border-color:#6B2A2A}}
+:root[data-theme="dark"] .alerta{background:#3A1717;color:#F6B4B4;border-color:#6B2A2A}
+.news-alert{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px 16px;margin:4px 0 16px}
+.alert-legend{flex:1 1 320px;font-size:14.5px;color:var(--muted)}
+.alert-legend summary{cursor:pointer;font-weight:700;color:var(--ink)}
+.alert-legend p{margin:8px 0}
+.alert-defs{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.news-only{font:inherit;font-weight:700;font-size:14.5px;padding:9px 16px;border-radius:999px;border:1.5px solid #8A1C1C;background:var(--surface);color:#8A1C1C;cursor:pointer;white-space:nowrap}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .news-only{border-color:#F6B4B4;color:#F6B4B4}}
+:root[data-theme="dark"] .news-only{border-color:#F6B4B4;color:#F6B4B4}
+.news-only[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--surface)}
 </style>
 </head>
 <body>
@@ -2125,12 +2139,12 @@ html.bs-open{overflow:hidden}
   </footer>
 </main>
 
-<script src="data/base.js?v=20261023b"></script>
-<script src="data/acoes.js?v=20261023b"></script>
-<script src="data/fontes.js?v=20261023b"></script>
-<script src="data/sinais.js?v=20261023b"></script>
-<script src="data/rede.js?v=20261023b"></script>
-<script src="js/app.js?v=20261023b"></script>
+<script src="data/base.js?v=20261023c"></script>
+<script src="data/acoes.js?v=20261023c"></script>
+<script src="data/fontes.js?v=20261023c"></script>
+<script src="data/sinais.js?v=20261023c"></script>
+<script src="data/rede.js?v=20261023c"></script>
+<script src="js/app.js?v=20261023c"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

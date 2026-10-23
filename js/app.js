@@ -371,7 +371,7 @@
   }
   function newsText(n){
     var out = n.src.map(function(sr){ return sr[0] + ': ' + sr[1]; });
-    return (n.tipo==='Você sabia?' ? 'Você sabia?' : 'Sinal · ' + fdate(n.d)) + '\n' + n.t + '\n\n' + n.s + (n.why ? '\n\n' + (n.wl||'Por que ler:') + ' ' + n.why : '') + '\n\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + out[0]) + '\n\nVia painel "Flávio e os Parças": ' + PANEL_URL;
+    return (n.tipo==='Você sabia?' ? 'Você sabia?' : 'Sinal · ' + fdate(n.d)) + '\n' + n.t + ((n.alerta&&n.alerta.length) ? '\n⚠ Alerta democrático: ' + n.alerta.map(function(k){ return ALERTA[k]; }).join(' · ') : '') + '\n\n' + n.s + (n.why ? '\n\n' + (n.wl||'Por que ler:') + ' ' + n.why : '') + '\n\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + out[0]) + '\n\nVia painel "Flávio e os Parças": ' + PANEL_URL;
   }
   function doCopy(txt){
     if(navigator.clipboard && window.isSecureContext){
@@ -1100,13 +1100,36 @@
   var NEWS = PD.NEWS;
   var MESES=['jan.','fev.','mar.','abr.','maio','jun.','jul.','ago.','set.','out.','nov.','dez.'];
   function fdate(iso){ var p=iso.split('-'); return parseInt(p[2],10)+' '+MESES[parseInt(p[1],10)-1]+' '+p[0]; }
+  var ALERTA={regras:'Regras do jogo',inimigo:'Adversário como inimigo',violencia:'Violência',liberdades:'Liberdades'};
+  var newsOnlyAlert=false;
+  function alertChips(n, box){ (n.alerta||[]).forEach(function(k){ var c=el('span','alerta a-'+k,'⚠ '+ALERTA[k]); c.title='Sinal de alerta democrático: '+ALERTA[k]; box.appendChild(c); }); }
+  function newsFilterUI(){
+    var ul=$('news-list'); if(!ul || $('news-alert')) return;
+    var box=el('div','news-alert'); box.id='news-alert';
+    var n=NEWS.filter(function(x){ return x.alerta && x.alerta.length; }).length;
+    var d=document.createElement('details'); d.className='alert-legend';
+    var sm=document.createElement('summary'); sm.textContent='O que são os sinais de alerta democrático (⚠)'; d.appendChild(sm);
+    d.appendChild(el('p','','Quatro indicadores de comportamento autoritário usados na ciência política, a partir de Steven Levitsky e Daniel Ziblatt (“Como as democracias morrem”, 2018). Valem para qualquer governo ou lado político. Nem todo sinal recebe rótulo: só os que tocam um destes critérios.'));
+    var dl=el('ul','alert-defs');
+    [['regras','não aceitar eleições ou decisões da Justiça, sugerir ruptura, mudar as regras para controlar quem arbitra o jogo.'],
+     ['inimigo','tratar o oponente como criminoso, traidor ou ameaça, ou acusá-lo sem prova.'],
+     ['violencia','incentivar, tolerar ou glorificar a violência, inclusive a do Estado, ou enfraquecer o controle sobre ela.'],
+     ['liberdades','restringir imprensa, oposição, cultura, ciência ou crítica.']].forEach(function(x){ var li=el('li',''); li.appendChild(el('span','alerta a-'+x[0],'⚠ '+ALERTA[x[0]])); li.appendChild(document.createTextNode(' '+x[1])); dl.appendChild(li); });
+    d.appendChild(dl); box.appendChild(d);
+    var b=el('button','news-only','Só sinais de alerta ('+n+')'); b.type='button'; b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){ newsOnlyAlert=!newsOnlyAlert; b.setAttribute('aria-pressed',newsOnlyAlert?'true':'false'); b.textContent=newsOnlyAlert?'Ver todos os sinais':'Só sinais de alerta ('+n+')'; renderNews(); });
+    box.appendChild(b);
+    ul.parentNode.insertBefore(box, ul);
+  }
   function renderNews(){
     var ul=$('news-list'); if(!ul) return;
+    newsFilterUI();
     ul.innerHTML='';
-    NEWS.slice().sort(function(a,b){ return a.d<b.d?1:(a.d>b.d?-1:0); }).forEach(function(n){
+    NEWS.filter(function(n){ return !newsOnlyAlert || (n.alerta&&n.alerta.length); }).slice().sort(function(a,b){ return a.d<b.d?1:(a.d>b.d?-1:0); }).forEach(function(n){
       var li=el('li','item news');
       var hd=el('div','news-hd'); if(n.tipo) hd.appendChild(el('span','news-k'+(n.tipo==='Você sabia?'?' vs':''),n.tipo)); hd.appendChild(el('time','news-d',fdate(n.d))); hd.lastChild.setAttribute('datetime',n.d);
       (n.tags||[]).forEach(function(t){ hd.appendChild(el('span','tag',t)); });
+      alertChips(n, hd);
       li.appendChild(hd);
       li.appendChild(el('p','news-t',n.t));
       li.appendChild(el('p','news-s',n.s));
@@ -1543,6 +1566,7 @@
     return cardCanvas([
       n.tipo==='Você sabia?' ? {t:'kicker', v:'VOCÊ SABIA?', color:CARD.BLUE} : {t:'kicker', v:'SINAL · '+fdate(n.d).toUpperCase(), color:CARD.CON},
       {t:'small', v:(n.tipo&&n.tipo!=='Você sabia?'?n.tipo+(tags?' · ':''):'')+tags, weight:'700'},
+      (n.alerta&&n.alerta.length) ? {t:'small', v:'⚠ Alerta democrático: '+n.alerta.map(function(k){ return ALERTA[k]; }).join(' · '), weight:'800', color:'#8A1C1C', size:26} : {t:'gap',v:0},
       {t:'gap', v:6},
       {t:'title', v:n.t, size:60, max:4},
       {t:'text', v:n.s, size:(n.tipo==='Você sabia?'?30:31), maxl:(n.tipo==='Você sabia?'?12:8)},
@@ -1668,7 +1692,7 @@
         IDX.a.push({o:i, h:nz([i.t,i.note,i.src,cname(i.c),(i.gs||[i.g]).map(gname).join(' '),i.y,(i.links||[]).map(function(l){return l[0];}).join(' ')].join(' '))}); });
       var seenR={};
       R.forEach(function(r){ var k=r.c+'|'+r.t; if(seenR[k]) return; seenR[k]=1; IDX.r.push({o:r, h:nz([r.t,r.src,cname(r.c),gname(r.g)].join(' '))}); });
-      NEWS.forEach(function(n){ IDX.n.push({o:n, h:nz([n.tipo,n.t,n.s,n.why,(n.tags||[]).join(' '),(n.src||[]).map(function(x){return x[0];}).join(' ')].join(' '))}); });
+      NEWS.forEach(function(n){ IDX.n.push({o:n, h:nz([n.tipo,n.t,n.s,n.why,(n.tags||[]).join(' '),(n.alerta||[]).map(function(k){ return 'alerta '+ALERTA[k]; }).join(' '),(n.src||[]).map(function(x){return x[0];}).join(' ')].join(' '))}); });
       document.querySelectorAll('#px-flavio .fx-list > li').forEach(function(li){ var h=li.closest('ul'); while(h && h.tagName!=='H4') h=h.previousElementSibling;
         IDX.f.push({o:li, p:h?h.textContent.trim():'', h:nz('flavio bolsonaro '+(h?h.textContent:'')+' '+li.textContent)}); });
     }
@@ -1726,7 +1750,7 @@
       st.textContent = tot ? (tot===1?'1 resultado':tot+' resultados')+' para “'+inp.value.trim()+'”.' : 'Nada encontrado para “'+inp.value.trim()+'”. Tente outra palavra, sem acento ou mais curta.';
       if(a.length){ var s1=sec('Ações',a.length); res.appendChild(s1); renderList(s1,a,function(x){ var i=x.o, pro=i.s==='pro', li=itemNode(i,true,true); li.classList.add(pro?'bs-pro':'bs-con'); var top=el('div','bs-top'); top.appendChild(el('span','bs-lado '+(pro?'pro':'con'),(pro?'Melhorou ':'Piorou ')+(PARA[i.g]||''))); top.appendChild(see('Ver '+gname(i.g)+(i.c==='br'?'':' · '+cname(i.c))+' no painel', function(){ verNoPainel(i); })); li.insertBefore(top, li.firstChild); return li; },12); }
       if(n.length){ var s2=sec('Sinais',n.length); res.appendChild(s2); renderList(s2,n,function(x){ var o=x.o, li=el('li','item news bs-news');
-          var top=el('div','bs-top'); var hd=el('div','news-hd'); if(o.tipo) hd.appendChild(el('span','news-k'+(o.tipo==='Você sabia?'?' vs':''),o.tipo)); hd.appendChild(el('time','news-d',fdate(o.d))); top.appendChild(hd);
+          var top=el('div','bs-top'); var hd=el('div','news-hd'); if(o.tipo) hd.appendChild(el('span','news-k'+(o.tipo==='Você sabia?'?' vs':''),o.tipo)); hd.appendChild(el('time','news-d',fdate(o.d))); alertChips(o, hd); top.appendChild(hd);
           top.appendChild(see('Ver nos Sinais', function(){ close(); var nb=$('noticias'); if(nb) openFor(nb); setTimeout(function(){ var t=null; document.querySelectorAll('#noticias li.item.news .news-t').forEach(function(e){ if(!t && e.textContent===o.t) t=e.closest('li'); }); flashTo(t||nb); },150); })); li.appendChild(top);
           li.appendChild(el('p','news-t',o.t)); li.appendChild(el('p','news-s',o.s)); return li; },6); }
       if(f.length){ var s3=sec('E o próprio Flávio?',f.length); res.appendChild(s3); renderList(s3,f,function(x){ var li=el('li','item bs-fx'); var c=x.o.cloneNode(true); var ac=c.querySelector('.fx-act'); if(ac) ac.remove();
