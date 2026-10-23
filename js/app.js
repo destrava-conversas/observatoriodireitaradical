@@ -1689,6 +1689,9 @@
         n.parentNode.replaceChild(f,n);
       });
     }
+    var EYE='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+    function see(title, fn){ var a=el('a','bs-see',''); a.innerHTML=EYE; a.href='#'; a.title=title; a.setAttribute('aria-label',title); a.addEventListener('click',function(e){ e.preventDefault(); fn(); }); return a; }
+    function flashTo(t){ if(!t) return; setTimeout(function(){ t.scrollIntoView({block: t.classList&&t.classList.contains('item')?'center':'start'}); if(t.classList&&(t.classList.contains('item')||t.tagName==='LI')){ t.classList.remove('bs-flash'); void t.offsetWidth; t.classList.add('bs-flash'); } },60); }
     function verNoPainel(i){
       close();
       var f=$('top-foco'), q=$('top-pais'), ctrl=i.c==='br';
@@ -1721,15 +1724,19 @@
       var a=hits(IDX.a,terms), r=hits(IDX.r,terms), n=hits(IDX.n,terms), f=hits(IDX.f,terms);
       var tot=a.length+r.length+n.length+f.length;
       st.textContent = tot ? (tot===1?'1 resultado':tot+' resultados')+' para “'+inp.value.trim()+'”.' : 'Nada encontrado para “'+inp.value.trim()+'”. Tente outra palavra, sem acento ou mais curta.';
-      if(a.length){ var s1=sec('Ações',a.length); res.appendChild(s1); renderList(s1,a,function(x){ var i=x.o, pro=i.s==='pro', li=itemNode(i,true,true); li.classList.add(pro?'bs-pro':'bs-con'); var top=el('div','bs-top'); top.appendChild(el('span','bs-lado '+(pro?'pro':'con'),(pro?'Melhorou ':'Piorou ')+(PARA[i.g]||''))); var sv=el('a','bs-see','Ver no painel →'); sv.href='#resumo'; sv.title='Abrir '+gname(i.g)+(i.c==='br'?'':' · '+cname(i.c))+' no painel'; sv.addEventListener('click',function(e){ e.preventDefault(); verNoPainel(i); }); top.appendChild(sv); li.insertBefore(top, li.firstChild); return li; },12); }
+      if(a.length){ var s1=sec('Ações',a.length); res.appendChild(s1); renderList(s1,a,function(x){ var i=x.o, pro=i.s==='pro', li=itemNode(i,true,true); li.classList.add(pro?'bs-pro':'bs-con'); var top=el('div','bs-top'); top.appendChild(el('span','bs-lado '+(pro?'pro':'con'),(pro?'Melhorou ':'Piorou ')+(PARA[i.g]||''))); top.appendChild(see('Ver '+gname(i.g)+(i.c==='br'?'':' · '+cname(i.c))+' no painel', function(){ verNoPainel(i); })); li.insertBefore(top, li.firstChild); return li; },12); }
       if(n.length){ var s2=sec('Sinais',n.length); res.appendChild(s2); renderList(s2,n,function(x){ var o=x.o, li=el('li','item news bs-news');
-          var hd=el('div','news-hd'); if(o.tipo) hd.appendChild(el('span','news-k'+(o.tipo==='Você sabia?'?' vs':''),o.tipo)); hd.appendChild(el('time','news-d',fdate(o.d))); li.appendChild(hd);
-          li.appendChild(el('p','news-t',o.t)); li.appendChild(el('p','news-s',o.s));
-          var lk=el('a','bs-go','Ver nos Sinais →'); lk.href='#noticias'; lk.addEventListener('click',function(e){ e.preventDefault(); go('#noticias'); }); li.appendChild(lk); return li; },6); }
+          var top=el('div','bs-top'); var hd=el('div','news-hd'); if(o.tipo) hd.appendChild(el('span','news-k'+(o.tipo==='Você sabia?'?' vs':''),o.tipo)); hd.appendChild(el('time','news-d',fdate(o.d))); top.appendChild(hd);
+          top.appendChild(see('Ver nos Sinais', function(){ close(); var nb=$('noticias'); if(nb) openFor(nb); setTimeout(function(){ var t=null; document.querySelectorAll('#noticias li.item.news .news-t').forEach(function(e){ if(!t && e.textContent===o.t) t=e.closest('li'); }); flashTo(t||nb); },150); })); li.appendChild(top);
+          li.appendChild(el('p','news-t',o.t)); li.appendChild(el('p','news-s',o.s)); return li; },6); }
       if(f.length){ var s3=sec('E o próprio Flávio?',f.length); res.appendChild(s3); renderList(s3,f,function(x){ var li=el('li','item bs-fx'); var c=x.o.cloneNode(true); var ac=c.querySelector('.fx-act'); if(ac) ac.remove();
-          if(x.p) li.appendChild(el('span','tag',x.p)); while(c.firstChild) li.appendChild(c.firstChild);
-          var lk=el('a','bs-go','Ver em “E o próprio Flávio?” →'); lk.href='#px-flavio'; lk.addEventListener('click',function(e){ e.preventDefault(); close(); var tg=$('parcas-toggle'); if(tg && tg.getAttribute('aria-expanded')!=='true') tg.click(); setTimeout(function(){ var t=$('px-flavio'); if(t) t.scrollIntoView({block:'start'}); },150); }); li.appendChild(lk); return li; },6); }
-      if(r.length){ var s4=sec('Contexto',r.length); res.appendChild(s4); renderList(s4,r,function(x){ return ctxItem(x.o,true,true,false); },6); }
+          var top=el('div','bs-top'); top.appendChild(x.p ? el('span','tag',x.p) : el('span','',''));
+          top.appendChild(see('Ver em E o próprio Flávio?', function(){ close(); var tg=$('parcas-toggle'); if(tg && tg.getAttribute('aria-expanded')!=='true') tg.click(); setTimeout(function(){ flashTo(x.o); },200); })); li.appendChild(top);
+          while(c.firstChild) li.appendChild(c.firstChild); return li; },6); }
+      if(r.length){ var s4=sec('Contexto',r.length); res.appendChild(s4); renderList(s4,r,function(x){ var o=x.o, li=ctxItem(o,true,true,false); var top=el('div','bs-top'); top.appendChild(el('span','tag','Contexto'+(o.g?' · '+gname(o.g):'')));
+          top.appendChild(see('Ver '+gname(o.g)+(o.c==='br'?'':' · '+cname(o.c))+' no painel', function(){ close(); var f=$('top-foco'), q=$('top-pais'); f.value=o.g; f.dispatchEvent(new Event('change',{bubbles:true})); q.value=o.c==='br'?'all':o.c; q.dispatchEvent(new Event('change',{bubbles:true}));
+            setTimeout(function(){ var key=o.t.replace(/^Economia:\s*/,'').slice(0,40).toLowerCase(), t=null; document.querySelectorAll('#list-ctx > li.item').forEach(function(e){ if(!t && e.textContent.toLowerCase().indexOf(key)>=0) t=e; }); var cx=$('ctx'); if(t){ var ul=t.parentNode; if(ul.classList.contains('collapsed')){ var mb=ul.parentNode.querySelector('button.more'); if(mb && !mb.hidden) mb.click(); } } if(cx) openFor(cx); flashTo(t||cx||$('resumo')); },700); }));
+          var body=li.querySelector('.body')||li; body.insertBefore(top, body.firstChild); return li; },6); }
       LAST=terms; mark(res);
     }
     var tmr;
