@@ -1690,7 +1690,7 @@
       });
     }
     var EYE='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/></svg>';
-    function see(title, fn){ var a=el('a','bs-see',''); a.innerHTML=EYE; a.href='#'; a.title=title; a.setAttribute('aria-label',title); a.addEventListener('click',function(e){ e.preventDefault(); fn(); }); return a; }
+    function see(title, fn){ var a=el('a','bs-see','Ver mais'); a.href='#'; a.title=title; a.setAttribute('aria-label',title); a.addEventListener('click',function(e){ e.preventDefault(); fn(); }); return a; }
     function flashTo(t){ if(!t) return; setTimeout(function(){ t.scrollIntoView({block: t.classList&&t.classList.contains('item')?'center':'start'}); if(t.classList&&(t.classList.contains('item')||t.tagName==='LI')){ t.classList.remove('bs-flash'); void t.offsetWidth; t.classList.add('bs-flash'); } },60); }
     function verNoPainel(i){
       close();
