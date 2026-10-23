@@ -1672,6 +1672,23 @@
       document.querySelectorAll('#px-flavio .fx-list > li').forEach(function(li){ var h=li.closest('ul'); while(h && h.tagName!=='H4') h=h.previousElementSibling;
         IDX.f.push({o:li, p:h?h.textContent.trim():'', h:nz('flavio bolsonaro '+(h?h.textContent:'')+' '+li.textContent)}); });
     }
+    var LAST=[];
+    function mark(root){
+      if(!LAST.length) return;
+      var w=document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode:function(n){ var p=n.parentNode; if(!p||/^(BUTTON|MARK|SCRIPT|STYLE)$/.test(p.nodeName)||p.closest('button')) return NodeFilter.FILTER_REJECT; return n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT; }});
+      var nodes=[]; while(w.nextNode()) nodes.push(w.currentNode);
+      nodes.forEach(function(n){
+        var t=n.nodeValue, z=nz(t); if(z.length!==t.length) return;
+        var rg=[]; LAST.forEach(function(q){ var i=0; while((i=z.indexOf(q,i))>=0){ var e=i+q.length; while(e<t.length && /[0-9a-z]/.test(z[e])) e++; rg.push([i,e]); i=e; } });
+        if(!rg.length) return;
+        rg.sort(function(a,b){ return a[0]-b[0]; });
+        var m=[]; rg.forEach(function(r){ if(m.length && r[0]<=m[m.length-1][1]) m[m.length-1][1]=Math.max(m[m.length-1][1],r[1]); else m.push(r.slice()); });
+        var f=document.createDocumentFragment(), pos=0;
+        m.forEach(function(r){ if(r[0]>pos) f.appendChild(document.createTextNode(t.slice(pos,r[0]))); var mk=document.createElement('mark'); mk.className='bs-hl'; mk.textContent=t.slice(r[0],r[1]); f.appendChild(mk); pos=r[1]; });
+        if(pos<t.length) f.appendChild(document.createTextNode(t.slice(pos)));
+        n.parentNode.replaceChild(f,n);
+      });
+    }
     function hits(list, terms){ return list.filter(function(x){ return terms.every(function(t){ return x.h.indexOf(t)>=0; }); }); }
     function sec(title, n){ var d=el('section','bs-sec'); d.appendChild(el('h3','bs-h',title+' ('+n+')')); return d; }
     function more(ul, n, cap){ if(n<=cap) return null; var b=el('button','more','Ver mais ('+(n-cap)+')'); b.type='button'; return b; }
@@ -1679,7 +1696,7 @@
     function renderList(container, items, mk, cap){
       var ul=el('ul','list bs-list'); container.appendChild(ul);
       items.slice(0,cap).forEach(function(x){ ul.appendChild(mk(x)); });
-      if(items.length>cap){ var b=el('button','more','Ver mais ('+(items.length-cap)+')'); b.type='button'; b.addEventListener('click',function(){ items.slice(cap).forEach(function(x){ ul.appendChild(mk(x)); }); b.remove(); }); container.appendChild(b); }
+      if(items.length>cap){ var b=el('button','more','Ver mais ('+(items.length-cap)+')'); b.type='button'; b.addEventListener('click',function(){ items.slice(cap).forEach(function(x){ ul.appendChild(mk(x)); }); b.remove(); mark(ul); }); container.appendChild(b); }
     }
     function run(){
       var q=nz(inp.value).trim(); res.innerHTML='';
@@ -1698,6 +1715,7 @@
           if(x.p) li.appendChild(el('span','tag',x.p)); while(c.firstChild) li.appendChild(c.firstChild);
           var lk=el('a','bs-go','Ver em “E o próprio Flávio?” →'); lk.href='#px-flavio'; lk.addEventListener('click',function(e){ e.preventDefault(); close(); var tg=$('parcas-toggle'); if(tg && tg.getAttribute('aria-expanded')!=='true') tg.click(); setTimeout(function(){ var t=$('px-flavio'); if(t) t.scrollIntoView({block:'start'}); },150); }); li.appendChild(lk); return li; },6); }
       if(r.length){ var s4=sec('Contexto',r.length); res.appendChild(s4); renderList(s4,r,function(x){ return ctxItem(x.o,true,true,false); },6); }
+      LAST=terms; mark(res);
     }
     var tmr;
     inp.addEventListener('input', function(){ clearTimeout(tmr); tmr=setTimeout(run,180); });
