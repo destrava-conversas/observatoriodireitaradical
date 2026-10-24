@@ -104,7 +104,7 @@
   function renderSummary(t){
     var box = $('sel-sum'); if(!box) return;
     var allC = state.c==='all', allG = state.g==='all';
-    var quem = allC ? 'os parças do Flávio' : cname(state.c);
+    var quem = allC ? 'os governos observados' : cname(state.c);
     var onde = allG ? 'somando todas as pautas' : 'na pauta ' + gname(state.g);
     var out = [];
     function cap(x){ return x.charAt(0).toUpperCase()+x.slice(1); }
@@ -266,8 +266,8 @@
   function initSelects(){
     var tp=$('top-pais'), tf=$('top-foco');
     function opt(v,t){ var o=document.createElement('option'); o.value=v; o.textContent=t; return o; }
-    var ph1 = opt('','Filtrar por parça'); ph1.disabled = true; tp.appendChild(ph1);
-    tp.appendChild(opt('all','Todos os parças do Flávio'));
+    var ph1 = opt('','Filtrar por governo'); ph1.disabled = true; tp.appendChild(ph1);
+    tp.appendChild(opt('all','Todos os governos'));
     COUNTRIES.forEach(function(c){ tp.appendChild(opt(c.k, c.n)); });
     var ph2 = opt('','Escolha a pauta'); ph2.disabled = true; tf.appendChild(ph2);
     tf.appendChild(opt('all','Todas as pautas'));
@@ -276,7 +276,7 @@
     function topLabels(){
       var narrow = false;
       [].slice.call(tf.options).forEach(function(o){ if(o.value==='all') o.textContent = narrow ? 'Todas' : 'Todas as pautas'; });
-      [].slice.call(tp.options).forEach(function(o){ if(o.value==='all') o.textContent = narrow ? 'Todos os parças' : 'Todos os parças do Flávio'; });
+      [].slice.call(tp.options).forEach(function(o){ if(o.value==='all') o.textContent = 'Todos os governos'; });
     }
     topLabels();
     if(mq){ if(mq.addEventListener) mq.addEventListener('change', topLabels); else if(mq.addListener) mq.addListener(topLabels); }
@@ -357,7 +357,15 @@
     li.appendChild(ft);
     return li;
   }
-  var PANEL_URL = 'https://destrava-conversas.com.br/eoflavio/';
+  var BRAND_A='Observatório da ', BRAND_B='Direita Radical e Extrema', BRAND='Painel Observatório da Direita Radical e Extrema';
+  function brandHead(g, x, y, maxW, px, font){
+    var s1=Math.round(px*.62), s2=px;
+    g.font='800 '+s2+'px '+font; while(g.measureText(BRAND_B).width>maxW && s2>18){ s2-=2; g.font='800 '+s2+'px '+font; s1=Math.round(s2*.62); }
+    g.textBaseline='middle';
+    g.font='700 '+s1+'px '+font; g.fillStyle='#FFFFFF'; g.fillText('Painel '+BRAND_A.trim(), x, y-s2*.48);
+    g.font='800 '+s2+'px '+font; g.fillStyle='#A6F36A'; g.fillText(BRAND_B, x, y+s2*.36);
+  }
+  var PANEL_URL = 'https://destrava-conversas.com.br/observatoriodireitaradical/';
   function copyText(i){
     var who = cname(i.c) + (i.y ? ', ' + i.y : '');
     var parts = splitSrc(i.src).map(function(p){ return p.trim(); }).filter(Boolean);
@@ -368,11 +376,11 @@
       if(hit){ used[hit[1]] = 1; out.push(part + ': ' + hit[1]); } else out.push(part);
     });
     links.forEach(function(l){ if(!used[l[1]]){ used[l[1]] = 1; out.push(l[0] + ': ' + l[1]); } });
-    return i.t + ' (' + who + ')\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + (out[0]||'')) + '\n\nVia painel "Flávio e os Parças": ' + PANEL_URL;
+    return i.t + ' (' + who + ')\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + (out[0]||'')) + '\n\nVia '+BRAND+': ' + PANEL_URL;
   }
   function newsText(n){
     var out = n.src.map(function(sr){ return sr[0] + ': ' + sr[1]; });
-    return (n.tipo==='Você sabia?' ? 'Você sabia?' : 'Sinal · ' + fdate(n.d)) + '\n' + n.t + ((n.alerta&&n.alerta.length) ? '\n⚠ Alerta democrático: ' + n.alerta.map(function(k){ return ALERTA[k]; }).join(' · ') : '') + '\n\n' + n.s + (n.why ? '\n\n' + (n.wl||'Por que ler:') + ' ' + n.why : '') + '\n\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + out[0]) + '\n\nVia painel "Flávio e os Parças": ' + PANEL_URL;
+    return (n.tipo==='Você sabia?' ? 'Você sabia?' : 'Sinal · ' + fdate(n.d)) + '\n' + n.t + ((n.alerta&&n.alerta.length) ? '\n⚠ Alerta democrático: ' + n.alerta.map(function(k){ return ALERTA[k]; }).join(' · ') : '') + '\n\n' + n.s + (n.why ? '\n\n' + (n.wl||'Por que ler:') + ' ' + n.why : '') + '\n\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + out[0]) + '\n\nVia '+BRAND+': ' + PANEL_URL;
   }
   function doCopy(txt){
     if(navigator.clipboard && window.isSecureContext){
@@ -495,10 +503,10 @@
   }
   function renderResult(){
     var t = tally(state.c, state.g);
-    var cn = state.c==='all' ? 'Parças do Flávio' : cname(state.c);
+    var cn = state.c==='all' ? 'Todos os governos' : cname(state.c);
     var gn = state.g==='all' ? 'Todas as pautas' : gname(state.g);
     $('sel-pill').textContent = gn + ' · ' + cn;
-    var cLab = state.c==='all' ? 'Parças do Flávio' : cname(state.c);
+    var cLab = state.c==='all' ? 'Todos os governos' : cname(state.c);
     $('ctx-sel').textContent = gn + ' · ' + cLab;
     (function(){ var box=$('sel-crit'); box.innerHTML=''; var t = state.g==='all' ? '' : (CRITERIA[state.g] || ''); box.hidden = !t; if(!t) return;
       var m = t.match(/^A favor:\s*([\s\S]*?)\s*Contra:\s*([\s\S]*)$/);
@@ -521,7 +529,7 @@
       ss.appendChild(document.createTextNode(sub.slice(ix+subC.n.length)));
     } else if(!subC){
       ss.appendChild(document.createTextNode('Soma de '));
-      var lp = el('a','parca-link','todos os Parças'); lp.href = '#parcas'; lp.title = 'Ver quem são os parças e a ligação de cada um com Flávio';
+      var lp = el('a','parca-link','todos os governos'); lp.href = '#parcas'; lp.title = 'Ver quem são e como se ligam';
       ss.appendChild(lp);
     } else ss.textContent = sub;
     $('n-contra').textContent = t.contra; (function(){ [['go-contra',t.contra],['go-pro',t.pro]].forEach(function(x){ var a=$(x[0]); if(!a) return; if(x[1]>0){ a.removeAttribute('aria-disabled'); a.setAttribute('title','Ver as ações'); } else { a.setAttribute('aria-disabled','true'); a.removeAttribute('title'); } }); })();
@@ -585,7 +593,7 @@
     return {pro:p, contra:k, total:p+k};
   }
   function scopeText(c, g){
-    var who = c==='all' ? 'Parças do Flávio' : cname(c);
+    var who = c==='all' ? 'Todos os governos' : cname(c);
     var rec = g==='all' ? 'Todas as pautas' : gname(g);
     return who + ' & ' + rec;
   }
@@ -692,9 +700,9 @@
     data.sort(function(a,b){ return (b.contra-a.contra) || (a.pro-b.pro) || a.n.localeCompare(b.n,'pt-BR'); });
     var sc = 1; data.forEach(function(d){ sc = Math.max(sc, d.contra, d.pro); });
     function w(v){ return v>0 ? Math.max(2, v/sc*50) : 0; }
-    var cLab = state.c==='all' ? 'Parças do Flávio' : cname(state.c);
+    var cLab = state.c==='all' ? 'Todos os governos' : cname(state.c);
     $('rank-sel').textContent = cLab;
-    $('rank-sub').textContent = (state.c==='all' ? 'Soma de todos os Parças. ' : '') + 'Barras: ações contra (laranja) e a favor (azul).';
+    $('rank-sub').textContent = (state.c==='all' ? 'Soma de todos os governos. ' : '') + 'Barras: ações contra (laranja) e a favor (azul).';
     rows.innerHTML = '';
     data.forEach(function(d,i){
       var b = document.createElement('button');
@@ -722,7 +730,7 @@
     var tc = tally('br', state.g);
     var rows = $('vs-rows');
     rows.innerHTML = '';
-    var who = state.c==='all' ? 'Parças do Flávio' : cname(state.c);
+    var who = state.c==='all' ? 'Todos os governos' : cname(state.c);
     var scv = maxOf(t, tc);
     var rec = state.g==='all' ? 'Todas as pautas' : gname(state.g);
     $('vs-sel').textContent = who + ' & ' + rec;
@@ -882,13 +890,13 @@
   function teasers(){
     var tz;
     var nc = ($('cnt-contra')||{}).textContent||'', np = ($('cnt-pro')||{}).textContent||'';
-    if((tz=$('tz-acoes'))) tz.textContent = nc.replace(/[()]/g,'')+' contra · '+np.replace(/[()]/g,'')+' a favor, cada uma com fonte' + (state.c==='all' ? ', agrupadas por parça.' : '.');
+    if((tz=$('tz-acoes'))) tz.textContent = nc.replace(/[()]/g,'')+' contra · '+np.replace(/[()]/g,'')+' a favor, cada uma com fonte' + (state.c==='all' ? ', agrupadas por governo.' : '.');
     var r1 = document.querySelector('#rank-rows .rrow .nm');
     var rn = document.querySelector('#rank-rows .rrow .num.l');
     if((tz=$('tz-rank'))) tz.textContent = r1 ? 'Pauta com mais ações contra: ' + r1.firstChild.textContent + (rn ? ' (' + rn.textContent + ')' : '') + '.' : '';
     var nctx = ($('list-ctx')||{children:[]}).querySelectorAll ? $('list-ctx').querySelectorAll('li.item').length : 0;
     if((tz=$('tz-ctx'))) tz.textContent = nctx ? nctx + (nctx===1?' item':' itens') + ' com resultados medidos, como indicadores e estatísticas. Não entram no placar.' : 'Sem itens de contexto nesta seleção.';
-    if((tz=$('tz-visao-geral'))) tz.textContent = 'Todos os parças cruzados com todas as pautas, numa tabela. Toque numa célula para filtrar.';
+    if((tz=$('tz-visao-geral'))) tz.textContent = 'Todos os governos cruzados com todas as pautas, numa tabela. Toque numa célula para filtrar.';
     var top = [].slice.call(document.querySelectorAll('#crank-rows .rrow')).slice(0,2).map(function(b){ return b.querySelector('.nm').firstChild.textContent; });
     if((tz=$('tz-informacoes'))) tz.textContent = (function(){ var u=((document.querySelector('.upd')||{}).textContent||'').trim(); return (u ? u+'. ' : '') + 'Privacidade, licença, autoria e uso de IA, período coberto de cada governo e '+(window.__srcTotal ? 'as '+window.__srcTotal+' fontes usadas' : 'as fontes usadas')+', com o semáforo de confiabilidade.'; })();
     if((tz=$('tz-democracia'))) tz.textContent = top.length ? 'Intervenções em limites constitucionais ao poder. Lideram: ' + top.join(' e ') + '.' : '';
@@ -1031,7 +1039,7 @@
     if(L.economia && L.economia.tipo){ var e=el('p','px-small'); e.appendChild(el('b','','Economia: ')); e.appendChild(document.createTextNode(L.economia.tipo+'. '+(L.economia.ex||''))); body.appendChild(e); }
     var R=PX.regua[k]||{};
     if(R.vp||R.reg||R.acad){ var rg=el('div','px-rg'); rg.appendChild(el('b','','Régua externa')); if(R.vp) rg.appendChild(el('p','','Antipluralismo V-Party: '+String(R.vp.a).replace('.',',')+' ('+R.vp.p+', '+R.vp.e+'), numa escala de 0 a 1.')); if(R.reg){ var p=el('p','',R.reg.t+' ('+R.reg.ano+'). '); p.appendChild(pxSrc([R.reg.f],'')); rg.appendChild(p); } if(R.acad){ var p2=el('p','','Classificação acadêmica: '+R.acad.t+' ('+R.acad.ano+'). '); p2.appendChild(pxSrc([R.acad.f],'')); rg.appendChild(p2); } body.appendChild(rg); }
-    if(k==='pl'){ var pn=el('p','px-key','Parça de rede: não há ligação pessoal documentada entre Kaczyński e os Bolsonaros. O elo de governo foi com o presidente Andrzej Duda (2019–2021) e, hoje, passa por eurodeputados do PiS. Encaixe forte em Judiciário, mídia e gênero; fraco em personalismo e militarismo.'); body.appendChild(pn); }
+    if(k==='pl'){ var pn=el('p','px-key','Ligação de rede: não há ligação pessoal documentada entre Kaczyński e os Bolsonaros. O elo de governo foi com o presidente Andrzej Duda (2019–2021) e, hoje, passa por eurodeputados do PiS. Encaixe forte em Judiciário, mídia e gênero; fraco em personalismo e militarismo.'); body.appendChild(pn); }
     function sect(title, list, me){ if(!list.length) return; body.appendChild(el('p','px-sub',title+' ('+list.length+')')); var ul=el('ul','list cx-list'); list.sort(byDate).forEach(function(e){ ul.appendChild(cxItem(e,me)); }); body.appendChild(ul); }
     var withF=CX_E.filter(function(e){ return (e.a==='fl'&&e.b===k)||(e.b==='fl'&&e.a===k); });
     var fam=CX_E.filter(function(e){ return k!=='bb' && ((e.a===k&&(e.b==='bb'||e.b==='eb'))||(e.b===k&&(e.a==='bb'||e.a==='eb'))); });
@@ -1041,10 +1049,10 @@
     sect('Ligação com Flávio', withF, k);
     if(!withF.length) body.appendChild(el('p','px-small','Sem ligação direta com Flávio documentada.'));
     sect('Via Jair ou Eduardo Bolsonaro', fam, k);
-    sect('Com os outros parças', peers, k);
+    sect('Com os outros governos', peers, k);
     var act=el('div','px-act');
     var a=el('button','px-map','Ver no mapa'); a.type='button'; a.onclick=function(){ cxPick(k); var w=$('cx-wrap'); if(w) w.scrollIntoView({behavior:'smooth',block:'start'}); }; act.appendChild(a);
-    var bk=el('button','px-map px-back','↑ Voltar à lista dos parças'); bk.type='button'; bk.onclick=function(){ d.open=false; var l=$('px-fichas'); if(l) l.scrollIntoView({behavior:'smooth',block:'start'}); }; act.appendChild(bk);
+    var bk=el('button','px-map px-back','↑ Voltar à lista'); bk.type='button'; bk.onclick=function(){ d.open=false; var l=$('px-fichas'); if(l) l.scrollIntoView({behavior:'smooth',block:'start'}); }; act.appendChild(bk);
     act.appendChild(imgBtn('Compartilhar imagem', function(){ return fichaCanvas(k); }, 'parca-'+k+'.png', n.full+' e Flávio'));
     body.appendChild(act);
     d.addEventListener('toggle', function(){ if(d.open){ [].slice.call(document.querySelectorAll('#px-fichas details.px-f')).forEach(function(o){ if(o!==d && o.open) o.open=false; }); } pxWho(); });
@@ -1198,7 +1206,7 @@
   renderNews();
   function fitTitle(){
     var h = document.querySelector('header h1');
-    if(!h || !h.parentElement) return;
+    if(!h || !h.parentElement || h.classList.contains('hl-t')) return;
     var box = h.parentElement;
     h.style.display = 'inline-block';
     h.style.fontSize = '100px';
@@ -1257,7 +1265,7 @@
   })();
   var tabs=[
     {t:document.getElementById('legend-toggle'),b:document.getElementById('legend-body'),p:document.getElementById('legend-panel'),a:document.getElementById('legenda'),on:'Fechar legenda',off:'Abrir legenda'},
-    {t:document.getElementById('parcas-toggle'),b:document.getElementById('parcas-body'),p:document.getElementById('parcas-panel'),a:document.getElementById('parcas'),on:'Fechar parças',off:'Abrir parças'}
+    {t:document.getElementById('parcas-toggle'),b:document.getElementById('parcas-body'),p:document.getElementById('parcas-panel'),a:document.getElementById('parcas'),on:'Fechar',off:'Abrir'}
   ];
   cxInit();
   /* ---------- ranking como imagem ---------- */
@@ -1274,11 +1282,11 @@
     var g=c.getContext('2d');
     var SANS="'Public Sans', 'Segoe UI', Arial, sans-serif", HEAD="'Bricolage Grotesque','Public Sans','Segoe UI',Arial,sans-serif";
     g.fillStyle='#F4F6F8'; g.fillRect(0,0,W,H);
-    g.fillStyle='#1A73C8'; g.fillRect(0,0,W,110);
-    g.fillStyle='#fff'; g.font="700 50px 'Times New Roman', Times, serif"; g.textBaseline='middle'; g.fillText('Flávio e os Parças', P, 57);
+    g.fillStyle='#0A1A3F'; g.fillRect(0,0,W,110);
+    brandHead(g, P, 57, W-2*P-300, 40, HEAD);
     var cc=null; ALLC.forEach(function(x){ if(x.k===state.c) cc=x; });
-    var ttl = cc ? cc.n : 'Todos os parças do Flávio';
-    var sub = cc ? (cc.ctrl ? 'Brasil, 2023 a 2025 · comparação' : (cc.k==='pl' ? 'Polônia sob o PiS, 2015 a 2023' : cc.p+', '+cc.s)) : 'Soma de todos os Parças';
+    var ttl = cc ? cc.n : 'Todos os governos';
+    var sub = cc ? (cc.ctrl ? 'Brasil, 2023 a 2025 · comparação' : (cc.k==='pl' ? 'Polônia sob o PiS, 2015 a 2023' : cc.p+', '+cc.s)) : 'Soma de todos os governos';
     g.textBaseline='alphabetic';
     g.fillStyle='#4A5663'; g.font='700 20px '+SANS; g.fillText('RANKING DAS PAUTAS', P, 152);
     var tfs=52; g.font='800 '+tfs+'px '+HEAD; while(g.measureText(ttl).width>W-2*P && tfs>30){ tfs--; g.font='800 '+tfs+'px '+HEAD; }
@@ -1308,7 +1316,7 @@
     g.textBaseline='alphabetic'; g.fillStyle='#4A5663'; g.font='500 22px '+SANS;
     g.fillText('Cada ação vale 1, sem peso por gravidade. Uma ação pode valer para mais de uma pauta.', P, fy);
     g.fillText('Mede o que foi documentado. Fonte de cada ação no painel.', P, fy+34);
-    g.fillStyle='#1A73C8'; g.font='700 24px '+SANS; g.fillText('Flávio e os Parças · '+PANEL_URL.replace('https://',''), P, fy+92);
+    g.fillStyle='#1A73C8'; g.font='700 24px '+SANS; g.fillText(PANEL_URL.replace('https://',''), P, fy+92);
     return c;
   }
   function roundRect(g,x,y,w,h,r){
@@ -1334,7 +1342,7 @@
     var items = pick(state.c, state.g, A), nd = items.filter(function(i){ return i.disc; }).length;
     var cc=null; ALLC.forEach(function(x){ if(x.k===state.c) cc=x; });
     var pauta = state.g==='all' ? 'Todas as pautas' : gname(state.g);
-    var who = !cc ? 'Soma de todos os Parças' : (cc.ctrl ? 'Governo Lula, 2023 a 2025' : (cc.n+' · '+cc.p+', '+cc.s));
+    var who = !cc ? 'Soma de todos os governos' : (cc.ctrl ? 'Governo Lula, 2023 a 2025' : (cc.n+' · '+cc.p+', '+cc.s));
     var note = nd ? '* '+nd+(nd===1?' ação discutível: veja os dois lados no painel':' ações discutíveis: veja os dois lados no painel') : '';
     var mc = document.createElement('canvas').getContext('2d');
     function fit(ctx, txt, weight, size, min, fam, maxW){ ctx.font=weight+' '+size+'px '+fam; while(ctx.measureText(txt).width>maxW && size>min){ size--; ctx.font=weight+' '+size+'px '+fam; } return size; }
@@ -1353,8 +1361,8 @@
     var g=c.getContext('2d');
     g.fillStyle='#EEF1F4'; g.fillRect(0,0,W,H);
     /* cabeçalho */
-    g.fillStyle='#0F2440'; g.fillRect(0,0,W,HEADH);
-    g.textBaseline='middle'; g.fillStyle='#fff'; g.font='800 60px '+HEAD; g.fillText('Flávio e os Parças', P, HEADH/2+2);
+    g.fillStyle='#0A1A3F'; g.fillRect(0,0,W,HEADH);
+    brandHead(g, P, HEADH/2+2, W-2*P-290, 50, HEAD);
     var upd=((document.querySelector('.upd')||{}).textContent||'').replace('Atualizado em ','').trim();
     if(upd){ g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+SANS; g.fillText(upd.replace(/ de (\d{4})$/,' $1'), W-P, HEADH/2+4); g.textAlign='left'; }
     var x=P, y=HEADH+TOP;
@@ -1384,9 +1392,9 @@
     /* nota de ações discutíveis */
     if(note){ y+=NOTE-30; var ns=fit(g,note,'600',32,24,SANS,maxW); g.fillStyle=INK; g.font='600 '+ns+'px '+SANS; g.fillText(note, x, y); }
     /* rodapé */
-    g.fillStyle='#0F2440'; g.fillRect(0,H-FOOTH,W,FOOTH);
-    g.textBaseline='middle'; g.fillStyle='#fff'; g.font='800 40px '+SANS;
-    g.fillText(PANEL_URL.replace('https://','').replace(/\/$/,''), P, H-FOOTH/2);
+    g.fillStyle='#0A1A3F'; g.fillRect(0,H-FOOTH,W,FOOTH);
+    g.textBaseline='middle'; g.fillStyle='#fff'; var fu=PANEL_URL.replace('https://','').replace(/\/$/,''), fz=34; g.font='800 '+fz+'px '+SANS; while(g.measureText(fu).width>W-2*P-250 && fz>20){ fz-=1; g.font='800 '+fz+'px '+SANS; }
+    g.fillText(fu, P, H-FOOTH/2);
     g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+SANS; g.fillText('fontes no painel', W-P, H-FOOTH/2+2); g.textAlign='left';
     g.textBaseline='alphabetic';
     return c;
@@ -1412,7 +1420,7 @@
           if(!blob){ say('Não foi possível gerar a imagem.'); return; }
           var file; try{ file=new File([blob], fname(), {type:'image/png'}); }catch(e){}
           if(mobile && file && navigator.canShare && navigator.canShare({files:[file]})){
-            navigator.share({files:[file], title:title(), text:'Flávio e os Parças: '+PANEL_URL}).then(function(){ say('Imagem compartilhada.'); }).catch(function(err){ if(err && err.name==='AbortError') return; download(blob); });
+            navigator.share({files:[file], title:title(), text:BRAND+': '+PANEL_URL}).then(function(){ say('Imagem compartilhada.'); }).catch(function(err){ if(err && err.name==='AbortError') return; download(blob); });
             return;
           }
           if(navigator.clipboard && window.ClipboardItem && window.isSecureContext){
@@ -1441,7 +1449,7 @@
         if(!blob){ say('Não foi possível gerar a imagem.'); return; }
         var file; try{ file=new File([blob], fname, {type:'image/png'}); }catch(e){}
         if(mobile && file && navigator.canShare && navigator.canShare({files:[file]})){
-          navigator.share({files:[file], title:title, text:'Flávio e os Parças: '+PANEL_URL}).then(function(){ say('Imagem compartilhada.'); }).catch(function(err){ if(err && err.name==='AbortError') return; download(blob); });
+          navigator.share({files:[file], title:title, text:BRAND+': '+PANEL_URL}).then(function(){ say('Imagem compartilhada.'); }).catch(function(err){ if(err && err.name==='AbortError') return; download(blob); });
           return;
         }
         if(navigator.clipboard && window.ClipboardItem && window.isSecureContext){
@@ -1461,7 +1469,7 @@
     b.addEventListener('click', function(){ shareCanvasOut(makeCanvas, typeof fname==='function'?fname():fname, title, say); });
     wrap.appendChild(b); wrap.appendChild(msg); return wrap;
   }
-  var CARD = {W:1080, P:72, HEAD:"'Bricolage Grotesque','Public Sans','Segoe UI',Arial,sans-serif", SANS:"'Public Sans', 'Segoe UI', Arial, sans-serif", INK:'#1A2430', MUT:'#4A5663', NAVY:'#0F2440', BLUE:'#1A73C8', CON:'#A64A08', BG:'#EEF1F4'};
+  var CARD = {W:1080, P:72, HEAD:"'Bricolage Grotesque','Public Sans','Segoe UI',Arial,sans-serif", SANS:"'Public Sans', 'Segoe UI', Arial, sans-serif", INK:'#1A2430', MUT:'#4A5663', NAVY:'#0A1A3F', BLUE:'#1A73C8', CON:'#A64A08', BG:'#EEF1F4'};
   function wrapLines(g, txt, maxW){
     var words=String(txt||'').split(/\s+/), lines=[], cur='';
     words.forEach(function(w){ var t=cur?cur+' '+w:w; if(g.measureText(t).width>maxW && cur){ lines.push(cur); cur=w; } else cur=t; });
@@ -1491,7 +1499,7 @@
     var c=document.createElement('canvas'); c.width=W; c.height=H; var g=c.getContext('2d');
     g.fillStyle=CARD.BG; g.fillRect(0,0,W,H);
     g.fillStyle=CARD.NAVY; g.fillRect(0,0,W,HEADH);
-    g.textBaseline='middle'; g.fillStyle='#fff'; g.font='800 60px '+CARD.HEAD; g.fillText('Flávio e os Parças', P, HEADH/2+2);
+    brandHead(g, P, HEADH/2+2, W-2*P-290, 50, CARD.HEAD);
     var upd=((document.querySelector('.upd')||{}).textContent||'').replace('Atualizado em ','').trim();
     if(upd){ g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+CARD.SANS; g.fillText(upd.replace(/ de (\d{4})$/,' $1'), W-P, HEADH/2+4); g.textAlign='left'; }
     plan.forEach(function(p){ var b=p.it, yy=p.y;
@@ -1506,8 +1514,8 @@
       else if(b.t==='nums'){ var n=b.v.length, cw=(W-2*P-(n-1)*16)/n; b.v.forEach(function(it,i){ var x=P+i*(cw+16); g.fillStyle='#fff'; roundRect(g,x,yy,cw,170,16); g.fill(); g.fillStyle=CARD.INK; g.font='800 54px '+CARD.HEAD; g.textBaseline='alphabetic'; g.fillText(it.n,x+22,yy+72); g.fillStyle=CARD.MUT; g.font='600 23px '+CARD.SANS; wrapLines(g,it.l,cw-40).slice(0,3).forEach(function(l,j){ g.fillText(l,x+22,yy+108+j*28); }); g.textBaseline='middle'; }); }
     });
     g.fillStyle=CARD.NAVY; g.fillRect(0,H-FOOTH,W,FOOTH);
-    g.textBaseline='middle'; g.fillStyle='#fff'; g.font='800 40px '+CARD.SANS;
-    g.fillText(PANEL_URL.replace('https://','').replace(/\/$/,''), P, H-FOOTH/2);
+    g.textBaseline='middle'; g.fillStyle='#fff'; var fu=PANEL_URL.replace('https://','').replace(/\/$/,''), fz=34; g.font='800 '+fz+'px '+CARD.SANS; while(g.measureText(fu).width>W-2*P-250 && fz>20){ fz-=1; g.font='800 '+fz+'px '+CARD.SANS; }
+    g.fillText(fu, P, H-FOOTH/2);
     g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+CARD.SANS; g.fillText('fontes no painel', W-P, H-FOOTH/2+2); g.textAlign='left';
     return c;
   }
@@ -1520,7 +1528,7 @@
     var note=i.note||'', lead='Outro lado:';
     if(i.disc){ lead='* Discutível:'; note=note.replace(/^Discut[íi]vel[:.,]?\s*/i,''); note=note.charAt(0).toUpperCase()+note.slice(1); }
     var srcs=splitSrc(i.src).map(function(x){ return baseName(x.trim()); }).filter(Boolean);
-    var uniq=[]; srcs.forEach(function(x){ if(uniq.indexOf(x)<0) uniq.push(x); });
+    var uniq=[]; srcs.forEach(function(x){ if(uniq.indexOf(x)<0) uniq.push(x); }); if(!uniq.length) (i.links||[]).forEach(function(l){ var nm=l&&l[0]; if(nm && uniq.indexOf(nm)<0) uniq.push(nm); });
     /* maior fonte em que o texto inteiro cabe no espaço do card */
     var mc=document.createElement('canvas').getContext('2d'), room=note?600:720, size=76, lines;
     for(;size>34;size-=2){ mc.font='800 '+size+'px '+CARD.HEAD; lines=wrapLines(mc,i.t,CARD.W-2*CARD.P).length; if(lines*Math.round(size*1.12)<=room) break; }
@@ -1821,6 +1829,51 @@
     if(tq){ tq.addEventListener('input', function(){ var v=tq.value; if(!v) return; open(); inp.value=v; tq.value=''; run(); inp.focus(); try{ inp.setSelectionRange(v.length,v.length); }catch(e){} });
       tq.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); var v=tq.value; open(); inp.value=v; tq.value=''; run(); inp.focus(); } }); }
     window.__busca=function(q){ open(); inp.value=q; run(); return res.querySelectorAll('li').length; };
+  })();
+
+  /* ---------- Topo Lente: busca, pautas e escolher quem observar ---------- */
+  (function(){
+    var hero=document.querySelector('.hero-lente'); if(!hero) return;
+    var SHORT={saude:'Saúde',aposentados:'Aposentados',trabalhadores:'Trabalhadores',renda:'Renda',seguranca:'Segurança',educacao:'Educação'};
+    var nP=GROUPS.length+THEMES.length;
+    function reduce(){ return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+    function setSel(id, v){ var s=document.getElementById(id); if(!s) return; s.value=v; s.dispatchEvent(new Event('change',{bubbles:true})); }
+    /* pílulas de pauta */
+    var box=document.getElementById('hl-pills');
+    if(box){
+      Object.keys(SHORT).forEach(function(k){ var b=document.createElement('button'); b.type='button'; b.className='hl-pill'; b.textContent=SHORT[k]; b.title=gname(k); b.addEventListener('click', function(){ setSel('top-foco', k); }); box.appendChild(b); });
+      var all=document.createElement('button'); all.type='button'; all.className='hl-pill all'; all.innerHTML='Ver as '+nP+' <span aria-hidden="true">→</span>'; all.setAttribute('aria-label','Ver as '+nP+' pautas');
+      all.addEventListener('click', function(){ var r=document.getElementById('result'), tf=document.getElementById('top-foco'); if(r) r.scrollIntoView({behavior:reduce()?'auto':'smooth', block:'start'}); setTimeout(function(){ if(tf) tf.focus({preventScroll:true}); }, reduce()?0:450); });
+      box.appendChild(all);
+    }
+    /* busca */
+    var f=document.getElementById('hl-form'), q=document.getElementById('hl-q');
+    function toBusca(){ var v=q.value; if(typeof window.__busca==='function'){ window.__busca(v); q.value=''; var bi=document.getElementById('busca-q'); if(bi){ bi.focus(); try{ bi.setSelectionRange(v.length,v.length); }catch(e){} } } }
+    if(f) f.addEventListener('submit', function(e){ e.preventDefault(); toBusca(); });
+    if(q) q.addEventListener('input', function(){ if(q.value) toBusca(); });
+    /* folha de personagens */
+    var who=document.getElementById('hl-who'), sh=document.getElementById('hl-sheet'), list=document.getElementById('hs-list'), sq=document.getElementById('hs-q'), tabs=document.getElementById('hs-tabs'), empty=document.getElementById('hs-empty');
+    if(!who||!sh) return;
+    var ws=document.getElementById('hl-who-s'); if(ws) ws.textContent=COUNTRIES.length+' governos, por enquanto';
+    var TIERS=[{k:'gov',n:'Governos',items:COUNTRIES}];
+    var cur='gov', last=null;
+    function norm(t){ return (t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); }
+    function drawTabs(){ tabs.innerHTML=''; TIERS.filter(function(t){ return t.items.length; }).forEach(function(t){ var b=document.createElement('button'); b.type='button'; b.className='hs-tab'; b.setAttribute('aria-pressed', t.k===cur?'true':'false'); b.textContent=t.n+' · '+t.items.length; tabs.appendChild(b); }); }
+    function draw(){
+      var t=TIERS.filter(function(x){ return x.k===cur; })[0], v=norm(sq.value).trim();
+      var items=t.items.slice().sort(function(a,b){ return a.n.localeCompare(b.n,'pt'); }).filter(function(c){ return !v || norm(c.n+' '+c.p).indexOf(v)>=0; });
+      list.innerHTML='';
+      items.forEach(function(c){ var li=document.createElement('li'), b=document.createElement('button'); b.type='button'; b.innerHTML='<span><b></b><small></small></span><span class="chev" aria-hidden="true">›</span>'; b.querySelector('b').textContent=c.n; b.querySelector('small').textContent=c.p+' · '+c.s; b.addEventListener('click', function(){ close(); setSel('top-pais', c.k); }); li.appendChild(b); list.appendChild(li); });
+      empty.hidden=items.length>0;
+    }
+    function open(){ last=document.activeElement; sq.value=''; drawTabs(); draw(); sh.hidden=false; document.documentElement.classList.add('hs-open'); who.setAttribute('aria-expanded','true'); setTimeout(function(){ var fb=list.querySelector('button'); (window.matchMedia('(min-width:761px)').matches? sq : (fb||sq)).focus(); },30); }
+    function close(){ if(sh.hidden) return; sh.hidden=true; document.documentElement.classList.remove('hs-open'); who.setAttribute('aria-expanded','false'); if(last && last.focus) last.focus({preventScroll:true}); }
+    who.setAttribute('aria-expanded','false');
+    who.addEventListener('click', open);
+    sq.addEventListener('input', draw);
+    sh.addEventListener('click', function(e){ if(e.target.closest('[data-hs-close]')) close(); });
+    document.addEventListener('keydown', function(e){ if(sh.hidden) return; if(e.key==='Escape'){ e.preventDefault(); close(); return; }
+      if(e.key==='Tab'){ var fo=[].slice.call(sh.querySelectorAll('button,input')).filter(function(x){ return x.offsetParent!==null; }); if(!fo.length) return; var a=fo[0], z=fo[fo.length-1]; if(e.shiftKey && document.activeElement===a){ e.preventDefault(); z.focus(); } else if(!e.shiftKey && document.activeElement===z){ e.preventDefault(); a.focus(); } } });
   })();
 })();
 

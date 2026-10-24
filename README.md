@@ -1,9 +1,9 @@
-# Flávio e os Parças
+# Painel Observatório da Direita Radical e Extrema
 
-Painel cívico com fontes sobre o que fizeram no poder os líderes com quem Flávio Bolsonaro diz querer se alinhar (Bukele, Jair Bolsonaro, PiS, Kast, Milei, Orbán e Trump), com o governo Lula (2023 a 2025) como comparação.
+Observatório cívico, com fontes, sobre o que governos da direita radical e extrema fazem no poder (Bukele, Jair Bolsonaro, PiS, Kast, Milei, Orbán e Trump), com o governo Lula (2023 a 2025) como comparação. Nasceu em 2026 como o painel "Flávio e os Parças"; o endereço antigo `/eoflavio/` redireciona para cá.
 
-- **Site:** https://destrava-conversas.com.br/eoflavio/
-- **E a Economia?:** https://destrava-conversas.com.br/eoflavio/economia/
+- **Site:** https://destrava-conversas.com.br/observatoriodireitaradical/
+- **E a Economia?:** https://destrava-conversas.com.br/observatoriodireitaradical/economia/
 
 ## Princípios
 
