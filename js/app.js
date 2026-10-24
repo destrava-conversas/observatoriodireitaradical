@@ -365,7 +365,7 @@
     g.font='700 '+s1+'px '+font; g.fillStyle='#FFFFFF'; g.fillText('Painel '+BRAND_A.trim(), x, y-s2*.48);
     g.font='800 '+s2+'px '+font; g.fillStyle='#A6F36A'; g.fillText(BRAND_B, x, y+s2*.36);
   }
-  var PANEL_URL = 'https://destrava-conversas.com.br/observatorio/';
+  var PANEL_URL = 'https://destrava-conversas.com.br/observatoriodireitaradical/';
   function copyText(i){
     var who = cname(i.c) + (i.y ? ', ' + i.y : '');
     var parts = splitSrc(i.src).map(function(p){ return p.trim(); }).filter(Boolean);
@@ -1393,8 +1393,8 @@
     if(note){ y+=NOTE-30; var ns=fit(g,note,'600',32,24,SANS,maxW); g.fillStyle=INK; g.font='600 '+ns+'px '+SANS; g.fillText(note, x, y); }
     /* rodapé */
     g.fillStyle='#0A1A3F'; g.fillRect(0,H-FOOTH,W,FOOTH);
-    g.textBaseline='middle'; g.fillStyle='#fff'; g.font='800 34px '+SANS;
-    g.fillText(PANEL_URL.replace('https://','').replace(/\/$/,''), P, H-FOOTH/2);
+    g.textBaseline='middle'; g.fillStyle='#fff'; var fu=PANEL_URL.replace('https://','').replace(/\/$/,''), fz=34; g.font='800 '+fz+'px '+SANS; while(g.measureText(fu).width>W-2*P-250 && fz>20){ fz-=1; g.font='800 '+fz+'px '+SANS; }
+    g.fillText(fu, P, H-FOOTH/2);
     g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+SANS; g.fillText('fontes no painel', W-P, H-FOOTH/2+2); g.textAlign='left';
     g.textBaseline='alphabetic';
     return c;
@@ -1514,8 +1514,8 @@
       else if(b.t==='nums'){ var n=b.v.length, cw=(W-2*P-(n-1)*16)/n; b.v.forEach(function(it,i){ var x=P+i*(cw+16); g.fillStyle='#fff'; roundRect(g,x,yy,cw,170,16); g.fill(); g.fillStyle=CARD.INK; g.font='800 54px '+CARD.HEAD; g.textBaseline='alphabetic'; g.fillText(it.n,x+22,yy+72); g.fillStyle=CARD.MUT; g.font='600 23px '+CARD.SANS; wrapLines(g,it.l,cw-40).slice(0,3).forEach(function(l,j){ g.fillText(l,x+22,yy+108+j*28); }); g.textBaseline='middle'; }); }
     });
     g.fillStyle=CARD.NAVY; g.fillRect(0,H-FOOTH,W,FOOTH);
-    g.textBaseline='middle'; g.fillStyle='#fff'; g.font='800 34px '+CARD.SANS;
-    g.fillText(PANEL_URL.replace('https://','').replace(/\/$/,''), P, H-FOOTH/2);
+    g.textBaseline='middle'; g.fillStyle='#fff'; var fu=PANEL_URL.replace('https://','').replace(/\/$/,''), fz=34; g.font='800 '+fz+'px '+CARD.SANS; while(g.measureText(fu).width>W-2*P-250 && fz>20){ fz-=1; g.font='800 '+fz+'px '+CARD.SANS; }
+    g.fillText(fu, P, H-FOOTH/2);
     g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+CARD.SANS; g.fillText('fontes no painel', W-P, H-FOOTH/2+2); g.textAlign='left';
     return c;
   }

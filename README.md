@@ -2,8 +2,8 @@
 
 Observatório cívico, com fontes, sobre o que governos da direita radical e extrema fazem no poder (Bukele, Jair Bolsonaro, PiS, Kast, Milei, Orbán e Trump), com o governo Lula (2023 a 2025) como comparação. Nasceu em 2026 como o painel "Flávio e os Parças"; o endereço antigo `/eoflavio/` redireciona para cá.
 
-- **Site:** https://destrava-conversas.com.br/observatorio/
-- **E a Economia?:** https://destrava-conversas.com.br/observatorio/economia/
+- **Site:** https://destrava-conversas.com.br/observatoriodireitaradical/
+- **E a Economia?:** https://destrava-conversas.com.br/observatoriodireitaradical/economia/
 
 ## Princípios
 
