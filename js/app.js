@@ -1189,6 +1189,8 @@
     if(h) h.hidden = !over;
   }
   initSelects();
+  makeBlock('observatorio','h2','Ler o texto');
+  if($('tz-observatorio')) $('tz-observatorio').textContent='Por que o painel continua depois da eleição: como olhamos, o que observamos e o que não fazemos.';
   makeBlock('noticias','h2','Ver seleção');
   makeBlock('visao-geral','h2','Ver tabela');
   makeBlock('democracia','h2','Ver ranking');
