@@ -807,6 +807,7 @@
   }
   function renderMatrix(){
     var m = $('matrix');
+    if(!m) return;
     m.innerHTML='';
     m.appendChild(el('div','hd',''));
     var cols = [{k:'all',n:'Todos',kind:'consolidado'}]
@@ -1690,6 +1691,7 @@
     x.a.classList.toggle('closed',!open);
     xBtn(x.t, open, x.on, x.off);
   }
+  tabs = tabs.filter(function(x){ return x.t && x.b && x.p && x.a; });
   tabs.forEach(function(x){
     x.t.addEventListener('click',function(){
       var open=x.t.getAttribute('aria-expanded')==='true';
