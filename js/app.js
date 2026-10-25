@@ -365,6 +365,18 @@
     g.font='700 '+s1+'px '+font; g.fillStyle='#FFFFFF'; g.fillText('Painel '+BRAND_A.trim(), x, y-s2*.48);
     g.font='800 '+s2+'px '+font; g.fillStyle='#A6F36A'; g.fillText(BRAND_B, x, y+s2*.36);
   }
+  var BRANDF="'Montserrat','Bricolage Grotesque','Public Sans',Arial,sans-serif";
+  /* topo e rodapé comuns das imagens de compartilhar */
+  function shareHead(g, W, P, HEADH){ g.fillStyle='#0A1A3F'; g.fillRect(0,0,W,HEADH); brandHead(g, P, HEADH/2+8, W-2*P, 76, BRANDF); g.textBaseline='alphabetic'; }
+  function shareDate(g, W, P, y, sans){ var upd=((document.querySelector('.upd')||{}).textContent||'').replace('Atualizado em ','').trim(); if(!upd) return; g.textBaseline='middle'; g.textAlign='right'; g.fillStyle='#4A5663'; g.font='600 26px '+sans; g.fillText(upd.replace(/ de (\d{4})$/,' $1'), W-P, y); g.textAlign='left'; g.textBaseline='alphabetic'; }
+  function shareFoot(g, W, H, P, FOOTH, sans){
+    g.fillStyle='#0A1A3F'; g.fillRect(0,H-FOOTH,W,FOOTH);
+    g.textBaseline='middle'; g.fillStyle='#fff'; g.font='800 34px '+sans; g.fillText('destrava-conversas.com.br', P, H-FOOTH/2);
+    var cta='Veja as fontes no painel'; g.font='800 30px '+sans; var cw=g.measureText(cta).width;
+    g.fillStyle='#A6F36A'; roundRect(g, W-P-cw-36, H-FOOTH/2-30, cw+36, 60, 30); g.fill();
+    g.fillStyle='#0A1A3F'; g.fillText(cta, W-P-cw-18, H-FOOTH/2+1);
+    g.textBaseline='alphabetic';
+  }
   var PANEL_URL = 'https://destrava-conversas.com.br/observatoriodireitaradical/';
   function copyText(i){
     var who = cname(i.c) + (i.y ? ', ' + i.y : '');
@@ -1280,21 +1292,21 @@
   }
   function rankCanvas(){
     var d = rankData();
-    var W=1080, P=64, rowH=74, top=310, H=top + d.length*rowH + 210;
+    var W=1080, P=64, rowH=74, OFF=100, FOOTH=118, top=310+OFF, H=top + d.length*rowH + 120 + FOOTH;
     var c=document.createElement('canvas'); c.width=W; c.height=H;
     var g=c.getContext('2d');
     var SANS="'Public Sans', 'Segoe UI', Arial, sans-serif", HEAD="'Bricolage Grotesque','Public Sans','Segoe UI',Arial,sans-serif";
     g.fillStyle='#F4F6F8'; g.fillRect(0,0,W,H);
-    g.fillStyle='#0A1A3F'; g.fillRect(0,0,W,110);
-    brandHead(g, P, 57, W-2*P-300, 40, HEAD);
+    shareHead(g, W, P, 210);
+    shareDate(g, W, P, 145+OFF, SANS);
     var cc=null; ALLC.forEach(function(x){ if(x.k===state.c) cc=x; });
     var ttl = cc ? cc.n : 'Todos os governos';
-    var sub = cc ? (cc.ctrl ? 'Brasil, 2023 a 2025 · comparação' : (cc.k==='pl' ? 'Polônia sob o PiS, 2015 a 2023' : cc.p+', '+cc.s)) : 'Soma de todos os governos';
+    var sub = cc ? (cc.ctrl ? 'Brasil, 2023 a 2025 · comparação' : (cc.k==='pl' ? 'Polônia sob o PiS, 2015 a 2023' : cc.p+', '+cc.s)) : 'Ações de governos da direita radical e extrema';
     g.textBaseline='alphabetic';
-    g.fillStyle='#4A5663'; g.font='700 20px '+SANS; g.fillText('RANKING DAS PAUTAS', P, 152);
+    g.fillStyle='#4A5663'; g.font='700 20px '+SANS; g.fillText('RANKING DAS PAUTAS', P, 152+OFF);
     var tfs=52; g.font='800 '+tfs+'px '+HEAD; while(g.measureText(ttl).width>W-2*P && tfs>30){ tfs--; g.font='800 '+tfs+'px '+HEAD; }
-    g.fillStyle='#1A2430'; g.fillText(ttl, P, 204);
-    g.fillStyle='#4A5663'; g.font='500 27px '+SANS; g.fillText(sub, P, 244);
+    g.fillStyle='#1A2430'; g.fillText(ttl, P, 204+OFF);
+    g.fillStyle='#4A5663'; g.font='500 27px '+SANS; g.fillText(sub, P, 244+OFF);
     var nameW=390, bx=P+nameW, bw=W-P-bx, mid=bx+bw/2, sc=1;
     d.forEach(function(r){ sc=Math.max(sc,r.contra,r.pro); });
     g.font='700 22px '+SANS; g.fillStyle='#A64A08'; g.textAlign='left'; g.fillText('Ações contra', bx, top-20);
@@ -1319,7 +1331,7 @@
     g.textBaseline='alphabetic'; g.fillStyle='#4A5663'; g.font='500 22px '+SANS;
     g.fillText('Cada ação vale 1, sem peso por gravidade. Uma ação pode valer para mais de uma pauta.', P, fy);
     g.fillText('Mede o que foi documentado. Fonte de cada ação no painel.', P, fy+34);
-    g.fillStyle='#1A73C8'; g.font='700 24px '+SANS; g.fillText(PANEL_URL.replace('https://',''), P, fy+92);
+    shareFoot(g, W, H, P, FOOTH, SANS);
     return c;
   }
   function roundRect(g,x,y,w,h,r){
@@ -1338,14 +1350,14 @@
     return lines;
   }
   function sumCanvas(){
-    var W=1080, P=64, HEADH=136, FOOTH=118;
+    var W=1080, P=64, HEADH=210, FOOTH=118;
     var SANS="'Public Sans', 'Segoe UI', Arial, sans-serif", HEAD="'Bricolage Grotesque','Public Sans','Segoe UI',Arial,sans-serif";
     var INK='#1A2430', MUT='#4A5663', CON='#C2570C', CONI='#A64A08', PRO='#0B6B8F';
     var t = tally(state.c, state.g);
     var items = pick(state.c, state.g, A), nd = items.filter(function(i){ return i.disc; }).length;
     var cc=null; ALLC.forEach(function(x){ if(x.k===state.c) cc=x; });
     var pauta = state.g==='all' ? 'Todas as pautas' : gname(state.g);
-    var who = !cc ? 'Soma de todos os governos' : (cc.ctrl ? 'Governo Lula, 2023 a 2025' : (cc.n+' · '+cc.p+', '+cc.s));
+    var who = !cc ? 'Ações de governos da direita radical e extrema' : (cc.ctrl ? 'Ações do governo Lula, 2023 a 2025 (comparação)' : ('Ações '+(cc.k==='pl'?'do ':'de ')+cc.n+' · '+cc.p+', '+cc.s));
     var note = nd ? '* '+nd+(nd===1?' ação discutível: veja os dois lados no painel':' ações discutíveis: veja os dois lados no painel') : '';
     var mc = document.createElement('canvas').getContext('2d');
     function fit(ctx, txt, weight, size, min, fam, maxW){ ctx.font=weight+' '+size+'px '+fam; while(ctx.measureText(txt).width>maxW && size>min){ size--; ctx.font=weight+' '+size+'px '+fam; } return size; }
@@ -1364,16 +1376,14 @@
     var g=c.getContext('2d');
     g.fillStyle='#EEF1F4'; g.fillRect(0,0,W,H);
     /* cabeçalho */
-    g.fillStyle='#0A1A3F'; g.fillRect(0,0,W,HEADH);
-    brandHead(g, P, HEADH/2+2, W-2*P-290, 50, HEAD);
-    var upd=((document.querySelector('.upd')||{}).textContent||'').replace('Atualizado em ','').trim();
-    if(upd){ g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+SANS; g.fillText(upd.replace(/ de (\d{4})$/,' $1'), W-P, HEADH/2+4); g.textAlign='left'; }
+    shareHead(g, W, P, HEADH);
     var x=P, y=HEADH+TOP;
-    /* "O que eles fizeram", com destaque na cor do lado que predomina */
-    var kick=(state.g==='all'?'O QUE ELES FIZERAM':'O QUE MUDOU'), kcol = t.contra>t.pro ? CONI : (t.pro>t.contra ? PRO : null);
-    g.font='800 34px '+SANS; var kw=g.measureText(kick).width;
-    if(kcol){ g.fillStyle=kcol; roundRect(g, x-14, y-6, kw+28, 52, 10); g.fill(); }
-    g.fillStyle = kcol ? '#fff' : MUT; g.fillText(kick, x, y+21);
+    shareDate(g, W, P, y+21, SANS);
+    /* selo: piorou, melhorou ou indefinido, na cor do lado que predomina */
+    var kick = t.contra>t.pro ? 'PIOROU' : (t.pro>t.contra ? 'MELHOROU' : 'INDEFINIDO'), kcol = t.contra>t.pro ? CONI : (t.pro>t.contra ? PRO : MUT);
+    g.textBaseline='middle'; g.font='800 38px '+SANS; var kw=g.measureText(kick).width;
+    g.fillStyle=kcol; roundRect(g, x-14, y-8, kw+28, 58, 10); g.fill();
+    g.fillStyle='#fff'; g.fillText(kick, x, y+22);
     g.textBaseline='alphabetic';
     y+=KICK+fs; g.fillStyle=INK; g.font='800 '+fs+'px '+HEAD; g.fillText(pauta, x, y);
     y+=GAP2+4; g.fillStyle=MUT; g.font='600 '+ws+'px '+SANS; g.fillText(who, x, y);
@@ -1395,11 +1405,7 @@
     /* nota de ações discutíveis */
     if(note){ y+=NOTE-30; var ns=fit(g,note,'600',32,24,SANS,maxW); g.fillStyle=INK; g.font='600 '+ns+'px '+SANS; g.fillText(note, x, y); }
     /* rodapé */
-    g.fillStyle='#0A1A3F'; g.fillRect(0,H-FOOTH,W,FOOTH);
-    g.textBaseline='middle'; g.fillStyle='#fff'; var fu=PANEL_URL.replace('https://','').replace(/\/$/,''), fz=34; g.font='800 '+fz+'px '+SANS; while(g.measureText(fu).width>W-2*P-250 && fz>20){ fz-=1; g.font='800 '+fz+'px '+SANS; }
-    g.fillText(fu, P, H-FOOTH/2);
-    g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+SANS; g.fillText('fontes no painel', W-P, H-FOOTH/2+2); g.textAlign='left';
-    g.textBaseline='alphabetic';
+    shareFoot(g, W, H, P, FOOTH, SANS);
     return c;
   }
   function imgShare(btId, msgId, makeCanvas, fname, title){
@@ -1480,7 +1486,7 @@
   }
   /* blocks: [{t:'kicker'|'title'|'text'|'label'|'chips'|'nums'|'small', ...}] */
   function cardCanvas(blocks){
-    var W=CARD.W, P=CARD.P, maxW=W-2*P, HEADH=136, FOOTH=118, MAXH=1350;
+    var W=CARD.W, P=CARD.P, maxW=W-2*P, HEADH=210, FOOTH=118, MAXH=1420;
     var m=document.createElement('canvas').getContext('2d');
     var plan=[], y=HEADH+70;
     function add(item,h){ plan.push({it:item,y:y}); y+=h; }
@@ -1501,10 +1507,9 @@
     var H=Math.max(1080, Math.min(MAXH, y+40+FOOTH));
     var c=document.createElement('canvas'); c.width=W; c.height=H; var g=c.getContext('2d');
     g.fillStyle=CARD.BG; g.fillRect(0,0,W,H);
-    g.fillStyle=CARD.NAVY; g.fillRect(0,0,W,HEADH);
-    brandHead(g, P, HEADH/2+2, W-2*P-290, 50, CARD.HEAD);
-    var upd=((document.querySelector('.upd')||{}).textContent||'').replace('Atualizado em ','').trim();
-    if(upd){ g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+CARD.SANS; g.fillText(upd.replace(/ de (\d{4})$/,' $1'), W-P, HEADH/2+4); g.textAlign='left'; }
+    shareHead(g, W, P, HEADH);
+    (function(){ var kb=blocks.filter(function(b){ return b.t==='kicker'; })[0], kw=0; if(kb){ g.font='800 30px '+CARD.SANS; kw=g.measureText(kb.v).width+14; } g.font='600 26px '+CARD.SANS; var dw=g.measureText('24 de setembro 2026').width; if(P+kw+40+dw <= W-P) shareDate(g, W, P, HEADH+70+26, CARD.SANS); })();
+    g.textBaseline='middle';
     plan.forEach(function(p){ var b=p.it, yy=p.y;
       if(b.t==='kicker'){ g.font='800 30px '+CARD.SANS; var kw=g.measureText(b.v).width; g.fillStyle=b.color||CARD.BLUE; roundRect(g,P-14,yy,kw+28,52,10); g.fill(); g.fillStyle='#fff'; g.fillText(b.v,P,yy+27); }
       else if(b.t==='title'){ g.textBaseline='alphabetic'; g.fillStyle=CARD.INK; g.font='800 '+(b.size||64)+'px '+CARD.HEAD; b.lines.forEach(function(l,i){ g.fillText(l,P,yy+(i+1)*b.lh-Math.round(b.lh*0.18)); }); g.textBaseline='middle'; }
@@ -1516,10 +1521,7 @@
       else if(b.t==='chips'){ g.font='700 28px '+CARD.SANS; var x=P, y2=yy; b.v.forEach(function(ch){ var w=g.measureText(ch.v).width+40; if(x+w>W-P){ x=P; y2+=58; } if(ch.fill){ g.fillStyle=ch.color||CARD.CON; roundRect(g,x,y2,w,46,23); g.fill(); g.fillStyle='#fff'; } else { g.strokeStyle=ch.color||CARD.CON; g.lineWidth=3; roundRect(g,x+1.5,y2+1.5,w-3,43,21.5); g.stroke(); g.fillStyle=ch.color||CARD.CON; } g.fillText(ch.v,x+20,y2+24); x+=w+12; }); }
       else if(b.t==='nums'){ var n=b.v.length, cw=(W-2*P-(n-1)*16)/n; b.v.forEach(function(it,i){ var x=P+i*(cw+16); g.fillStyle='#fff'; roundRect(g,x,yy,cw,170,16); g.fill(); g.fillStyle=CARD.INK; g.font='800 54px '+CARD.HEAD; g.textBaseline='alphabetic'; g.fillText(it.n,x+22,yy+72); g.fillStyle=CARD.MUT; g.font='600 23px '+CARD.SANS; wrapLines(g,it.l,cw-40).slice(0,3).forEach(function(l,j){ g.fillText(l,x+22,yy+108+j*28); }); g.textBaseline='middle'; }); }
     });
-    g.fillStyle=CARD.NAVY; g.fillRect(0,H-FOOTH,W,FOOTH);
-    g.textBaseline='middle'; g.fillStyle='#fff'; var fu=PANEL_URL.replace('https://','').replace(/\/$/,''), fz=34; g.font='800 '+fz+'px '+CARD.SANS; while(g.measureText(fu).width>W-2*P-250 && fz>20){ fz-=1; g.font='800 '+fz+'px '+CARD.SANS; }
-    g.fillText(fu, P, H-FOOTH/2);
-    g.textAlign='right'; g.fillStyle='#B9C6D6'; g.font='600 28px '+CARD.SANS; g.fillText('fontes no painel', W-P, H-FOOTH/2+2); g.textAlign='left';
+    shareFoot(g, W, H, P, FOOTH, CARD.SANS);
     return c;
   }
   function slug(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50); }
