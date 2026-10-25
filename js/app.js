@@ -367,7 +367,14 @@
   }
   var BRANDF="'Montserrat','Bricolage Grotesque','Public Sans',Arial,sans-serif";
   /* topo e rodapé comuns das imagens de compartilhar */
-  function shareHead(g, W, P, HEADH){ g.fillStyle='#0A1A3F'; g.fillRect(0,0,W,HEADH); brandHead(g, P, HEADH/2+8, W-2*P, 76, BRANDF); g.textBaseline='alphabetic'; }
+  function eyeMark(g, cx, cy, w){
+    var h=w/2, lw=Math.max(3, w*0.045);
+    g.save(); g.strokeStyle='#A6F36A'; g.lineWidth=lw; g.beginPath(); g.ellipse(cx, cy, w/2-lw/2, h/2-lw/2, 0, 0, Math.PI*2); g.stroke();
+    g.fillStyle='#A6F36A'; g.beginPath(); g.arc(cx, cy, h*0.36, 0, Math.PI*2); g.fill();
+    g.fillStyle='#0A1A3F'; g.beginPath(); g.arc(cx, cy, h*0.16, 0, Math.PI*2); g.fill();
+    g.fillStyle='#FFFFFF'; g.beginPath(); g.arc(cx+h*0.08, cy-h*0.08, h*0.05, 0, Math.PI*2); g.fill(); g.restore();
+  }
+  function shareHead(g, W, P, HEADH){ g.fillStyle='#0A1A3F'; g.fillRect(0,0,W,HEADH); var ew=150; eyeMark(g, P+ew/2, HEADH/2, ew); brandHead(g, P+ew+30, HEADH/2+8, W-2*P-ew-30, 76, BRANDF); g.textBaseline='alphabetic'; }
   function shareDate(g, W, P, y, sans){ var upd=((document.querySelector('.upd')||{}).textContent||'').replace('Atualizado em ','').trim(); if(!upd) return; g.textBaseline='middle'; g.textAlign='right'; g.fillStyle='#4A5663'; g.font='600 26px '+sans; g.fillText(upd.replace(/ de (\d{4})$/,' $1'), W-P, y); g.textAlign='left'; g.textBaseline='alphabetic'; }
   function shareFoot(g, W, H, P, FOOTH, sans){
     g.fillStyle='#0A1A3F'; g.fillRect(0,H-FOOTH,W,FOOTH);
