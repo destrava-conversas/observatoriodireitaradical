@@ -27,9 +27,11 @@ PD.THEMES = [
   {"k":"educacao","n":"Educação e ciência"},
   {"k":"renda","n":"Renda e custo de vida"},
   {"k":"religiao","n":"Liberdade religiosa"},
-  {"k":"cidades","n":"Cidades, transporte e moradia"}
+  {"k":"cidades","n":"Cidades, transporte e moradia"},
+  {"k":"soberania","n":"Soberania e interferência externa"}
 ];
 PD.CRITERIA = {
+  "soberania": "A favor: protege as instituições, as eleições e a economia do país contra pressão estrangeira e não interfere nas de outros países. Contra: pede, aceita ou troca por apoio político interferência estrangeira nas instituições, nas eleições ou na economia do próprio país, entrega o controle de ativo estratégico a um Estado estrangeiro, abre mão da jurisdição do país em contratos estratégicos, ou interfere em outros países.",
   "cidades": "A favor: amplia ou melhora o transporte público, a moradia, o saneamento e a segurança no trânsito, ou reduz o custo para quem usa. Contra: corta ou paralisa investimentos e subsídios, encarece o transporte público ou a moradia, afrouxa regras de segurança no trânsito ou corta verbas de cidades governadas pela oposição.",
   "criancas": "A favor: amplia renda, alimentação, saúde, educação e proteção de crianças e adolescentes, inclusive contra a violência. Contra: corta programas e verbas voltados a eles, retira proteções, atrasa vacinas ou os expõe a violência do Estado, como a separação de famílias e a prisão de menores junto com adultos.",
   "renda": "A favor: eleva a renda real ou alivia o custo de vida e os impostos de quem ganha menos. Contra: corrói o poder de compra ou concentra renda, como cortes de impostos concentrados nos mais ricos, retirada de subsídios que eleva preços ou tarifas que encarecem o consumo.",
