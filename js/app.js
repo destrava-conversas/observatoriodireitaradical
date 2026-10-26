@@ -1883,6 +1883,7 @@
     if(tq){ tq.addEventListener('input', function(){ var v=tq.value; if(!v) return; open(); inp.value=v; tq.value=''; run(); inp.focus(); try{ inp.setSelectionRange(v.length,v.length); }catch(e){} });
       tq.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); var v=tq.value; open(); inp.value=v; tq.value=''; run(); inp.focus(); } }); }
     window.__busca=function(q){ open(); inp.value=q; run(); return res.querySelectorAll('li').length; };
+    (function(){ var sp=null; try{ sp=new URLSearchParams(location.search); }catch(e){} if(!sp) return; var q=sp.get('q'); if(q){ setTimeout(function(){ window.__busca(q); },60); } else if(sp.has('busca')){ setTimeout(function(){ open(); inp.focus(); },60); } })();
   })();
 
   /* ---------- Topo Lente: busca, pautas e escolher quem observar ---------- */

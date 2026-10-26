@@ -39,13 +39,42 @@ const CSS = `
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:'Public Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;font-size:17px;line-height:1.6}
 a{color:var(--link)}
-.top{background:var(--navy);color:#fff}
-.top-in{max-width:880px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
-.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:'Montserrat','Public Sans',sans-serif;font-weight:800;font-size:14px;line-height:1.15;letter-spacing:-.01em}
-.brand b{color:var(--acc);font-weight:800}
-.eye{flex:none;width:44px;height:24px;border-radius:22px/12px;border:3px solid var(--acc);display:flex;align-items:center;justify-content:center}
+.top{position:sticky;top:0;z-index:100;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.12);padding-top:env(safe-area-inset-top,0px)}
+.top-in{position:relative;max-width:1280px;margin:0 auto;height:60px;padding:0 clamp(12px,4vw,48px);display:flex;align-items:center;gap:10px}
+.brand{display:inline-flex;align-items:center;margin-right:auto;text-decoration:none;border-radius:8px}
+.eye{flex:none;width:44px;height:24px;border-radius:22px/12px;border:3px solid var(--acc);display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.brand:hover .eye{transform:scale(1.06)}
 .eye i{width:12px;height:12px;border-radius:50%;background:var(--acc);display:block}
-.pill{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:999px;border:2px solid #fff;color:#fff;text-decoration:none;font-weight:700;font-size:15px;white-space:nowrap}
+.tb{height:40px;box-sizing:border-box;padding:0 16px;border-radius:999px;font:inherit;font-size:15px;font-weight:800;display:inline-flex;align-items:center;gap:8px;text-decoration:none;white-space:nowrap;border:2px solid #fff;cursor:pointer}
+.tb.sin{background:#fff;color:#A64A08}
+.tb.sin:hover{background:#FBEBDD}
+.tb.sin .dot{width:8px;height:8px;border-radius:50%;background:#C2570C;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(194,87,12,.55);opacity:1}70%{box-shadow:0 0 0 6px rgba(194,87,12,0);opacity:.55}100%{box-shadow:0 0 0 0 rgba(194,87,12,0);opacity:1}}
+@media (prefers-reduced-motion:reduce){.tb.sin .dot{animation:none}.eye{transition:none}}
+.tb.bus{background:transparent;color:#fff}
+.tb.bus:hover{background:rgba(255,255,255,.14)}
+.tb.bus svg{width:18px;height:18px}
+.burger{appearance:none;border:0;background:transparent;border-radius:8px;width:36px;height:42px;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.burger:hover{background:rgba(255,255,255,.16)}
+.burger span{display:block;width:22px;height:2.5px;background:#fff;border-radius:2px;transition:transform .2s ease,opacity .2s ease}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.top :focus-visible{outline:3px solid #fff;outline-offset:2px}
+.nav{display:none;position:absolute;top:calc(100% + 4px);right:clamp(12px,4vw,48px);width:max-content;min-width:240px;max-width:calc(100vw - 24px);flex-direction:column;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.22);text-align:right}
+.nav.open{display:flex}
+.nav a{padding:12px 14px;border-radius:8px;color:var(--ink);text-decoration:none;font-weight:600;font-size:16px;white-space:nowrap}
+.nav a:hover{background:var(--ground)}
+.nav a[aria-current="page"]{color:var(--link);box-shadow:inset -4px 0 0 var(--link);border-radius:8px 0 0 8px}
+.nav a.ext{margin:0 0 6px;padding:12px 16px;background:#1A73C8;color:#fff;font-weight:700;border-radius:10px}
+.nav a.ext:hover{background:#155FA3}
+.nav a.sub{font-weight:500;font-size:15px;color:var(--muted)}
+.nav .sep{display:block;height:1px;background:var(--line);margin:6px 12px}
+@media (max-width:760px){.tb{padding:0 14px;font-size:14px}.tb.bus{padding:0 16px;min-width:56px;justify-content:center}.tb.bus .l{display:none}.nav a{font-size:17px;padding:13px 14px}}
+.totop{position:fixed;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:120;width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#0A1A3F;border:2px solid #A6F36A;color:#A6F36A;box-shadow:0 6px 18px rgba(0,0,0,.28);text-decoration:none;font-size:22px;font-weight:700}
+.totop[hidden]{display:none}
+.totop:hover{background:#13213F}
+.totop:focus-visible{outline:3px solid #A6F36A;outline-offset:3px}
 main{max-width:880px;margin:0 auto;padding:20px 16px 48px}
 .crumb{margin:0 0 14px;font-size:15px}
 .crumb a{font-weight:600}
@@ -137,15 +166,43 @@ ${FONTS}
 </head>`;
 }
 
-const topbar = rel => `<header class="top"><div class="top-in">
-<a class="brand" href="${rel}"><span class="eye" aria-hidden="true"><i></i></span><span>Painel Observatório da<br><b>Direita Radical e Extrema</b></span></a>
-<a class="pill" href="${rel}sinais/">Sinais</a>
-</div></header>`;
+const ICON_SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>';
+const topbar = (rel, here) => `<header class="top" id="topo"><div class="top-in">
+<a class="brand" href="${rel}" aria-label="${esc(BRAND)}, ir para o painel" title="${esc(BRAND)}"><span class="eye" aria-hidden="true"><i></i></span></a>
+<a class="tb sin" href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''} aria-label="Abrir a página dos Sinais"><span class="dot" aria-hidden="true"></span>Sinais</a>
+<a class="tb bus" href="${rel}?busca" aria-label="Buscar no painel" title="Buscar no painel">${ICON_SEARCH}<span class="l">Buscar</span></a>
+<button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+<nav class="nav" id="nav" aria-label="Seções do painel">
+<a class="ext" href="${rel}economia/">E a Economia?</a>
+<a href="${rel}">Início</a>
+<a href="${rel}?busca">Buscar no painel</a>
+<a href="${rel}#result">Escolher pauta</a>
+<span class="sep" aria-hidden="true"></span>
+<a href="${rel}#observatorio">Por que um observatório</a>
+<a href="${rel}#parcas">Quem são eles</a>
+<a href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''}>Sinais</a>
+<a href="${rel}#informacoes">Privacidade e fontes</a>
+<a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener">Participe</a>
+</nav>
+</div></header>
+<a class="totop" id="totop" href="#topo" aria-label="Voltar ao topo" hidden>↑</a>`;
+
+const NAVJS = `<script>
+(function(){var b=document.getElementById('burger'),n=document.getElementById('nav'),t=document.getElementById('totop');
+function set(o){n.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false');b.setAttribute('aria-label',o?'Fechar menu':'Abrir menu');}
+b.addEventListener('click',function(e){e.stopPropagation();set(!n.classList.contains('open'));});
+document.addEventListener('click',function(e){if(n.classList.contains('open')&&!n.contains(e.target))set(false);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&n.classList.contains('open')){set(false);b.focus();}});
+function sc(){t.hidden=window.scrollY<600;}window.addEventListener('scroll',sc,{passive:true});sc();
+t.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
+})();
+</script>`;
 
 const foot = rel => `<footer class="foot">
 <p>Toda afirmação tem fonte. Conteúdo do <a href="${rel}">${esc(BRAND)}</a>, uma iniciativa do <a href="https://destrava-conversas.com.br/">Destrava Conversas</a>.</p>
 <p>Atualizado em ${UPD}.</p>
 </footer>
+${NAVJS}
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>`;
 
 const ICON_WA = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg>';
@@ -172,7 +229,7 @@ function sinalPage(n, i) {
   const dcls = isAlerta(n) ? ' al' : (isVS(n) ? ' vs' : '');
   return head({ title, desc, canonical: url(n), image: url(n) + 'og.jpg', imgW: 1200, imgH: 630, rel }) + `
 <body>
-${topbar(rel)}
+${topbar(rel, 'sinal')}
 <main>
 <p class="crumb"><a href="${rel}sinais/">← Todos os Sinais</a></p>
 <article class="card">
@@ -217,7 +274,7 @@ function listPage() {
   const desc = 'Fatos que devem chamar nossa atenção sobre a direita radical e extrema, com fonte e outro lado. Cada Sinal tem link próprio para compartilhar.';
   return head({ title: 'Sinais · ' + BRAND, desc, canonical: BASE + 'sinais/', image: BASE + 'og-observatorio.jpg', imgW: 1200, imgH: 630, rel, type: 'website' }) + `
 <body>
-${topbar(rel)}
+${topbar(rel, 'lista')}
 <main>
 <p class="crumb"><a href="${rel}">← Painel completo</a></p>
 <h1 class="list-h1">Sinais</h1>
