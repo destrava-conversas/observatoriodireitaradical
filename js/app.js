@@ -376,10 +376,10 @@
   }
   function shareHead(g, W, P, HEADH){ g.fillStyle='#0A1A3F'; g.fillRect(0,0,W,HEADH); var ew=150; eyeMark(g, P+ew/2, HEADH/2, ew); brandHead(g, P+ew+30, HEADH/2+8, W-2*P-ew-30, 76, BRANDF); g.textBaseline='alphabetic'; }
   function shareDate(g, W, P, y, sans){ var upd=((document.querySelector('.upd')||{}).textContent||'').replace('Atualizado em ','').trim(); if(!upd) return; g.textBaseline='middle'; g.textAlign='right'; g.fillStyle='#4A5663'; g.font='600 26px '+sans; g.fillText(upd.replace(/ de (\d{4})$/,' $1'), W-P, y); g.textAlign='left'; g.textBaseline='alphabetic'; }
-  function shareFoot(g, W, H, P, FOOTH, sans){
+  function shareFoot(g, W, H, P, FOOTH, sans, ctaTxt){
     g.fillStyle='#0A1A3F'; g.fillRect(0,H-FOOTH,W,FOOTH);
     g.textBaseline='middle'; g.fillStyle='#fff'; g.font='800 34px '+sans; g.fillText('destrava-conversas.com.br', P, H-FOOTH/2);
-    var cta='Veja as fontes no painel'; g.font='800 30px '+sans; var cw=g.measureText(cta).width;
+    var cta=ctaTxt||'Veja as fontes no painel', cz=30; g.font='800 '+cz+'px '+sans; var cw=g.measureText(cta).width; while(cw>W-2*P-460 && cz>22){ cz--; g.font='800 '+cz+'px '+sans; cw=g.measureText(cta).width; }
     g.fillStyle='#A6F36A'; roundRect(g, W-P-cw-36, H-FOOTH/2-30, cw+36, 60, 30); g.fill();
     g.fillStyle='#0A1A3F'; g.fillText(cta, W-P-cw-18, H-FOOTH/2+1);
     g.textBaseline='alphabetic';
@@ -1596,19 +1596,48 @@
     });
   }
   window.__fxItemCanvas=fxItemCanvas;
-  function newsCanvas(n){
-    var tags=(n.tags||[]).join(' · ');
-    return cardCanvas([
-      n.tipo==='Você sabia?' ? {t:'kicker', v:'SINAL '+(n.n||'')+' · VOCÊ SABIA? · '+ndate(n).toUpperCase(), color:CARD.BLUE} : {t:'kicker', v:'SINAL '+(n.n||'')+' · '+ndate(n).toUpperCase(), color:CARD.CON},
-      {t:'small', v:(n.tipo&&n.tipo!=='Você sabia?'?n.tipo+(tags?' · ':''):'')+tags, weight:'700'},
-      (n.alerta&&n.alerta.length) ? {t:'small', v:'⚠ Alerta democrático: '+n.alerta.map(function(k){ return ALERTA[k]; }).join(' · '), weight:'800', color:'#8A1C1C', size:26} : {t:'gap',v:0},
-      {t:'gap', v:6},
-      {t:'title', v:n.t, size:60, max:4},
-      {t:'text', v:n.s, size:(n.tipo==='Você sabia?'?30:31), maxl:(n.tipo==='Você sabia?'?12:8)},
-      n.why ? {t:'text', v:n.why, lead:(n.wl||'Por que importa:'), size:28, color:CARD.MUT, maxl:(n.tipo==='Você sabia?'?6:4)} : {t:'gap',v:0},
-      {t:'small', v:'Fontes: '+n.src.map(function(x){ return x[0]; }).join('; '), size:24, maxl:2}
-    ], true);
+  var ALERTA_WHY={regras:'Rejeitar as regras do jogo democrático: não aceitar eleições ou decisões da Justiça, ou mudar as regras para controlar quem arbitra o jogo.',inimigo:'Tratar o adversário como inimigo: criminoso, traidor ou ameaça, sem prova.',violencia:'Incentivar, tolerar ou glorificar a violência, inclusive a do Estado.',liberdades:'Restringir a imprensa, a oposição, a cultura, a ciência ou a crítica.'};
+  function newsHighlight(n){
+    if(n.destaque) return n.destaque;
+    var m=String(n.s||'').match(/“([^”]{20,240})”/); if(m) return '“'+m[1].replace(/[.,;:]$/,'')+'”';
+    var f=String(n.s||'').split(/(?<=[.!?])\s+/); var t=f[0]||''; if(t.length<40 && f[1]) t+=' '+f[1]; return t;
   }
+  function newsCanvas(n){
+    var W=1080, H=1350, P=72, HEADH=200, FOOTH=118, maxW=W-2*P;
+    var SANS="'Public Sans','Segoe UI',Arial,sans-serif", HEAD="'Bricolage Grotesque','Public Sans','Segoe UI',Arial,sans-serif";
+    var c=document.createElement('canvas'); c.width=W; c.height=H; var g=c.getContext('2d');
+    var vs=n.tipo==='Você sabia?', al=(n.alerta||[]);
+    g.fillStyle='#EEF1F4'; g.fillRect(0,0,W,H);
+    shareHead(g, W, P, HEADH);
+    var y=HEADH+64;
+    /* selo: número e data */
+    g.textBaseline='middle'; var kick='SINAL '+(n.n||'')+' · '+(vs?'VOCÊ SABIA? · ':'')+ndate(n).toUpperCase();
+    g.font='800 32px '+SANS; var kw=g.measureText(kick).width;
+    g.fillStyle=vs?'#1A73C8':'#A64A08'; roundRect(g,P-14,y-30,kw+28,60,12); g.fill(); g.fillStyle='#fff'; g.fillText(kick,P,y+1);
+    y+=62;
+    if(al.length){ var at='⚠ '+al.map(function(k){ return ALERTA[k]; }).join(' · '); g.font='800 30px '+SANS; var aw=g.measureText(at).width; g.fillStyle='#FBE3E3'; roundRect(g,P-14,y-26,aw+28,52,26); g.fill(); g.fillStyle='#8A1C1C'; g.fillText(at,P,y+1); y+=44; }
+    /* manchete */
+    var lines, ts=64; for(;ts>=42;ts-=2){ g.font='800 '+ts+'px '+HEAD; lines=wrapLines(g,n.t,maxW); if(lines.length<=3) break; } lines=lines.slice(0,4);
+    var lh=Math.round(ts*1.1); y+=24; g.textBaseline='alphabetic'; g.fillStyle='#1A2430'; g.font='800 '+ts+'px '+HEAD;
+    lines.forEach(function(l,i){ g.fillText(l,P,y+(i+1)*lh-Math.round(lh*0.2)); }); y+=lines.length*lh+34;
+    /* destaque: o trecho que justifica o alerta */
+    var hl=newsHighlight(n), why=al.length?ALERTA_WHY[al[0]]:'', foot=H-FOOTH-36;
+    var whyLines=[]; if(why){ g.font='600 32px '+SANS; whyLines=wrapLines(g,why,maxW).slice(0,4); }
+    var whyH = whyLines.length ? 50+whyLines.length*46 : 0;
+    var room=Math.min(foot-y-whyH-40, 560), hs=66, hlines;
+    for(;hs>=34;hs-=2){ g.font='700 '+hs+'px '+SANS; hlines=wrapLines(g,hl,maxW-64); if(hlines.length*Math.round(hs*1.3)+56<=room) break; }
+    var hlh=Math.round(hs*1.3), maxL=Math.max(1,Math.floor((room-56)/hlh)); if(hlines.length>maxL){ hlines=hlines.slice(0,maxL); hlines[maxL-1]=hlines[maxL-1].replace(/[,.;:]?\s*\S*$/,'')+'…'; }
+    var bh=hlines.length*hlh+56;
+    var free=foot-y, need=bh+(whyH?40+whyH:0); if(free>need) y+=Math.round((free-need)/2);
+    g.fillStyle='#FFFFFF'; roundRect(g,P-14,y,maxW+28,bh,20); g.fill();
+    g.fillStyle=vs?'#1A73C8':'#C2570C'; roundRect(g,P-14,y,12,bh,{tl:20,bl:20,tr:0,br:0}); g.fill();
+    g.fillStyle='#1A2430'; g.font='700 '+hs+'px '+SANS; hlines.forEach(function(l,i){ g.fillText(l,P+32,y+28+(i+1)*hlh-Math.round(hlh*0.25)); });
+    y+=bh+40;
+    if(whyLines.length){ g.fillStyle='#8A1C1C'; g.font='800 28px '+SANS; g.fillText('POR QUE PREOCUPA', P, y); y+=16; g.fillStyle='#4A5663'; g.font='600 32px '+SANS; whyLines.forEach(function(l,i){ g.fillText(l,P,y+(i+1)*46); }); }
+    shareFoot(g, W, H, P, FOOTH, SANS, 'Outro lado e fontes no painel');
+    return c;
+  }
+
   function fichaCanvas(k){
     var n=cxNode(k), L=null; PX.mx.lideres.forEach(function(x){ if(x.k===k) L=x; });
     var atos=PX.mx.pilares.filter(function(p){ return pxCell((L.celulas||{})[p])==='ato'; });
