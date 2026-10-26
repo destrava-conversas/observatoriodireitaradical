@@ -1910,7 +1910,7 @@
     /* pílulas de pauta */
     var box=document.getElementById('hl-pills');
     if(box){
-      Object.keys(SHORT).forEach(function(k){ var b=document.createElement('button'); b.type='button'; b.className='hl-pill'; b.textContent=SHORT[k]; b.title=gname(k); b.addEventListener('click', function(){ setSel('top-foco', k); }); box.appendChild(b); });
+      Object.keys(SHORT).forEach(function(k){ var b=document.createElement('button'); b.type='button'; b.className='hl-pill'; b.textContent=SHORT[k]; b.title=gname(k); b.addEventListener('click', function(){ var tp=document.getElementById('top-pais'); if(tp) tp.value='all'; state.c='all'; setSel('top-foco', k); }); box.appendChild(b); });
       var all=document.createElement('button'); all.type='button'; all.className='hl-pill all'; all.innerHTML='Ver as '+nP+' <span aria-hidden="true">→</span>'; all.setAttribute('aria-label','Ver as '+nP+' pautas');
       all.addEventListener('click', function(){ var r=document.getElementById('result'), tf=document.getElementById('top-foco'); if(r) r.scrollIntoView({behavior:reduce()?'auto':'smooth', block:'start'}); setTimeout(function(){ if(tf) tf.focus({preventScroll:true}); }, reduce()?0:450); });
       box.appendChild(all);

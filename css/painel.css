@@ -1850,12 +1850,13 @@ html[data-page] #parcas .lg-panel{margin-top:0}
 .home-more b::after{content:" →";color:var(--pro-ink)}
 .home-more span{font-size:15px;color:var(--muted);line-height:1.45}
 
-/* bloco de filtro (pauta e governo) todo em verde, para destacar */
-#result .panel{--fil-bg:#15803D;background:var(--fil-bg);border:0;border-left:6px solid #0F5F2C;color:#FFFFFF}
-#result .panel .tf-l,#result .panel .tf-opt{color:#FFFFFF}
-#result .panel .upd{color:#E3F5E9}
-#result .panel .tf select,#result .panel #top-pais,#result .panel #top-foco{border-color:#FFFFFF;background-color:#FFFFFF;color:#13241A}
-#result .panel .tf select:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px}
-#result .panel .tf .tf-reset{background:#FFFFFF;color:#15803D;border-color:#FFFFFF}
-#result .panel .tf .tf-reset:disabled{background:transparent;color:#E3F5E9;border-color:rgba(255,255,255,.6);opacity:1}
-#result .panel .tf .tf-reset:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px}
+/* bloco de filtro (pauta e governo) no verde da marca, para destacar */
+#result .panel{background:var(--obs-acc);border:0;border-left:6px solid #6FCB3A;color:var(--obs-navy)}
+#result .panel .tf-l,#result .panel .tf-opt{color:var(--obs-navy)}
+#result .panel .upd{color:#22401A}
+#result .panel .tf select,#result .panel #top-pais,#result .panel #top-foco{border-color:var(--obs-navy);background-color:#FFFFFF;color:var(--obs-navy)}
+#result .panel .tf select:disabled{border-color:rgba(10,26,63,.35);background-color:rgba(255,255,255,.55);color:#3B4A63;opacity:1}
+#result .panel .tf select:focus-visible{outline:3px solid var(--obs-navy);outline-offset:3px}
+#result .panel .tf .tf-reset{background:var(--obs-navy);color:var(--obs-acc);border-color:var(--obs-navy)}
+#result .panel .tf .tf-reset:disabled{background:transparent;color:#22401A;border-color:rgba(10,26,63,.4);opacity:1}
+#result .panel .tf .tf-reset:focus-visible{outline:3px solid var(--obs-navy);outline-offset:3px}
