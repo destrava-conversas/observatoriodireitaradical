@@ -1797,6 +1797,17 @@ html.hs-open{overflow:hidden}
 .topbar .parcas-btn:hover{background:rgba(255,255,255,.1);border-color:#FFFFFF}
 @media(max-width:430px){.topbar-in:has(.totop:not([hidden])) .parcas-btn{display:none}}
 .news-n{display:inline-flex;align-items:center;font-size:12.5px;font-weight:800;letter-spacing:.04em;padding:3px 9px;border-radius:6px;background:var(--ink);color:var(--surface);font-variant-numeric:tabular-nums}
+.news-list .item{border-left:1px solid var(--line)}
+.news-filt{display:flex;gap:8px;margin:12px -4px 4px;padding:2px 4px 6px;overflow-x:auto;scrollbar-width:none}
+.news-filt::-webkit-scrollbar{display:none}
+.news-chip{flex:none}
+.news-chip{font:inherit;font-weight:700;font-size:14.5px;min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.news-chip .nc-n{font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.news-chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.news-chip[aria-pressed="true"] .nc-n{color:var(--surface);opacity:.8}
+.news-chip:focus-visible,.news-vm:focus-visible{outline:3px solid var(--pro);outline-offset:2px}
+.news-list li.news:not(.open) .news-s{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.news-vm{font:inherit;font-weight:700;font-size:15px;margin-top:10px;padding:8px 0;border:0;background:none;color:var(--pro-ink);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 /* Por que um observatório */
 #observatorio{scroll-margin-top:calc(var(--hdr) + 72px)}
 #observatorio.blk{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-top:28px}
@@ -2230,12 +2241,12 @@ html.hs-open{overflow:hidden}
   </footer>
 </main>
 
-<script src="data/base.js?v=20261025d"></script>
-<script src="data/acoes.js?v=20261025d"></script>
-<script src="data/fontes.js?v=20261025d"></script>
-<script src="data/sinais.js?v=20261025d"></script>
-<script src="data/rede.js?v=20261025d"></script>
-<script src="js/app.js?v=20261025d"></script>
+<script src="data/base.js?v=20261025f"></script>
+<script src="data/acoes.js?v=20261025f"></script>
+<script src="data/fontes.js?v=20261025f"></script>
+<script src="data/sinais.js?v=20261025f"></script>
+<script src="data/rede.js?v=20261025f"></script>
+<script src="js/app.js?v=20261025f"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
