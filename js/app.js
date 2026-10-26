@@ -1916,6 +1916,15 @@
       box.appendChild(all);
     }
     /* busca */
+    /* últimos Sinais na entrada */
+    (function(){ var ul=document.getElementById('hl-sl'); if(!ul) return;
+      NEWS.filter(function(n){ return n.n; }).sort(function(a,b){ return a.n<b.n?1:-1; }).slice(0,3).forEach(function(n){
+        var li=document.createElement('li'), a=document.createElement('a'); a.href='sinais/'+n.n+'/';
+        var hd=el('span','hl-sh'); hd.appendChild(el('span','hl-sn','Sinal '+n.n)); hd.appendChild(el('span','hl-sd', n.tipo==='Você sabia?' ? 'Você sabia?' : ndate(n)));
+        (n.alerta||[]).slice(0,1).forEach(function(k){ hd.appendChild(el('span','hl-sa','⚠ '+ALERTA[k])); });
+        a.appendChild(hd); a.appendChild(el('b','hl-st',n.t)); if(n.destaque) a.appendChild(el('span','hl-sx',n.destaque));
+        li.appendChild(a); ul.appendChild(li); });
+    })();
     /* folha de personagens */
     var who=document.getElementById('hl-who'), sh=document.getElementById('hl-sheet'), list=document.getElementById('hs-list'), sq=document.getElementById('hs-q'), tabs=document.getElementById('hs-tabs'), empty=document.getElementById('hs-empty');
     if(!who||!sh) return;

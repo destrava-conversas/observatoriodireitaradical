@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://destrava-conversas.com.br/observatoriodireitaradical/og-observatorio.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/painel.css?v=20261026k">
+<link rel="stylesheet" href="css/painel.css?v=20261026l">
 </head>
 <body>
 <div class="pickbar" id="pickbar" role="region" aria-label="Seleção atual" hidden>
@@ -33,17 +33,6 @@
     <button type="button" class="pb-go" id="pb-go">Escolher<span class="pb-go-l">pauta</span> <span aria-hidden="true">→</span></button>
     <p class="pb-ask"><b>Qual pauta importa para você?</b><span class="pb-ask-s"> Veja o que os governos fizeram nela.</span></p>
     <button type="button" class="reset-pauta pb-reset" aria-label="Reiniciar pauta: limpar os filtros e voltar ao início"><span aria-hidden="true">↺</span><span class="rp-t">Reiniciar<span class="rp-long"> pauta</span></span></button>
-  </div>
-</div>
-<div class="hl-sheet" id="hl-sheet" role="dialog" aria-modal="true" aria-labelledby="hs-h" hidden>
-  <div class="hs-bg" data-hs-close></div>
-  <div class="hs-p">
-    <span class="hs-grip" aria-hidden="true"></span>
-    <div class="hs-top"><h2 id="hs-h">Quem você quer observar?</h2><button type="button" class="hs-x" data-hs-close aria-label="Fechar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-    <div class="hs-q"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><input type="search" id="hs-q" aria-label="Buscar nome ou país" placeholder="Buscar nome ou país" autocomplete="off" spellcheck="false"></div>
-    <div class="hs-tabs" id="hs-tabs"></div>
-    <ul class="hs-list" id="hs-list"></ul>
-    <p class="hs-empty" id="hs-empty" hidden>Ninguém encontrado com esse nome ou país.</p>
   </div>
 </div>
 <div class="topbar" id="topo">
@@ -91,9 +80,10 @@
       <p class="hl-or">ou comece por uma pauta</p>
       <div class="hl-pills" id="hl-pills" role="group" aria-label="Pautas"></div>
     </div>
-    <div class="hl-blk">
-      <p class="hl-or">ou por personagem</p>
-      <button type="button" class="hl-who" id="hl-who" aria-haspopup="dialog" aria-controls="hl-sheet"><b>Escolher quem observar</b><small id="hl-who-s">governos observados no painel</small><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="hl-blk hl-sin">
+      <p class="hl-or">ou veja os últimos Sinais</p>
+      <ul class="hl-sl" id="hl-sl"></ul>
+      <a class="hl-sall" href="sinais/">Ver todos os Sinais <span aria-hidden="true">→</span></a>
     </div>
    </div>
   </header>
@@ -277,13 +267,13 @@
   </footer>
 </main>
 
-<script src="data/base.js?v=20261026k"></script>
-<script src="data/acoes.js?v=20261026k"></script>
-<script src="data/fontes.js?v=20261026k"></script>
-<script src="data/sinais.js?v=20261026k"></script>
-<script src="data/rede.js?v=20261026k"></script>
-<script src="data/flavio.js?v=20261026k"></script>
-<script src="js/app.js?v=20261026k"></script>
+<script src="data/base.js?v=20261026l"></script>
+<script src="data/acoes.js?v=20261026l"></script>
+<script src="data/fontes.js?v=20261026l"></script>
+<script src="data/sinais.js?v=20261026l"></script>
+<script src="data/rede.js?v=20261026l"></script>
+<script src="data/flavio.js?v=20261026l"></script>
+<script src="js/app.js?v=20261026l"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

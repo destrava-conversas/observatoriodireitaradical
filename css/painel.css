@@ -1860,3 +1860,16 @@ html[data-page] #parcas .lg-panel{margin-top:0}
 #result .panel .tf .tf-reset{background:var(--obs-navy);color:var(--obs-acc);border-color:var(--obs-navy)}
 #result .panel .tf .tf-reset:disabled{background:transparent;color:#22401A;border-color:rgba(10,26,63,.4);opacity:1}
 #result .panel .tf .tf-reset:focus-visible{outline:3px solid var(--obs-navy);outline-offset:3px}
+
+/* últimos Sinais na entrada */
+.hl-blk.hl-sin{max-width:1100px}
+.hl-sl{list-style:none;margin:0;padding:0;width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;text-align:left}
+.hl-sl a{display:flex;flex-direction:column;gap:8px;height:100%;box-sizing:border-box;padding:16px 18px;border-radius:12px;border:1.5px solid rgba(255,255,255,.32);background:rgba(255,255,255,.06);color:#FFFFFF;text-decoration:none}
+.hl-sl a:hover{border-color:var(--obs-acc);background:rgba(255,255,255,.1)}
+.hl-sl a:focus-visible,.hl-sall:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px}
+.hl-sh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:13px;color:var(--obs-soft)}
+.hl-sn{background:var(--obs-acc);color:var(--obs-navy);font-weight:800;border-radius:999px;padding:1px 9px}
+.hl-sa{background:#FDE2E2;color:#8A1C1C;font-weight:800;font-size:12px;border-radius:999px;padding:1px 8px}
+.hl-st{font-family:'Bricolage Grotesque','Public Sans',system-ui,sans-serif;font-weight:800;font-size:18px;line-height:1.25}
+.hl-sx{font-size:14.5px;line-height:1.45;color:#DDE4F3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.hl-sall{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 18px;border-radius:999px;background:var(--obs-acc);color:var(--obs-navy);font-weight:800;font-size:15px;text-decoration:none}
