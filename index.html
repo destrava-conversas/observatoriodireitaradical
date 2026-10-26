@@ -1835,6 +1835,16 @@ html.bs-open .topbar .totop,html.hs-open .topbar .totop{display:none}
 #observatorio .obs-txt a:hover{color:var(--pro-ink)}
 #observatorio .obs-txt p{margin:0 0 14px}
 #observatorio .obs-txt p b{color:var(--ink)}
+
+/* busca única: resultados logo abaixo do campo do topo */
+.hero-lente .busca{position:static;inset:auto;z-index:auto;width:100%;max-width:980px;margin:16px auto 0;background:var(--ground);color:var(--ink);border:0;border-radius:16px;text-align:left;overflow:visible;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.hero-lente .busca-in{padding:14px clamp(14px,3vw,28px) 22px;max-width:none}
+.hero-lente .busca-bar{position:static;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 0 6px;background:transparent}
+.hero-lente .busca-st{margin:0;flex:1}
+html.bs-open{overflow:visible}
+.hero-lente.bs-on .hl-blk{display:none}
+.hl-search{scroll-margin-top:calc(var(--hdr,60px) + 16px)}
+.hl-box .bs-chip{flex:none}
 </style>
 </head>
 <body>
@@ -1853,17 +1863,6 @@ html.bs-open .topbar .totop,html.hs-open .topbar .totop{display:none}
   <div class="pxbar-in">
     <nav class="pxbar-nav" aria-label="Partes de Quem são eles"><a href="#px-espectro" data-s="px-espectro">O que é extrema direita</a><a href="#px-pilares" data-s="px-pilares">Os pilares</a><a href="#px-matriz" data-s="px-matriz">O que têm em comum</a><a href="#px-rede" data-s="px-rede">Como se conectam</a><a href="#px-quem" data-s="px-quem">Quem é quem</a><a href="#px-flavio" data-s="px-flavio">E o próprio Flávio?</a></nav>
     <div class="pxbar-who" id="pxbar-who" role="group" aria-label="Escolher um governo" hidden></div>
-  </div>
-</div>
-<div class="busca" id="busca" role="dialog" aria-modal="false" aria-label="Buscar no painel" hidden>
-  <div class="busca-in">
-    <div class="busca-bar">
-      <label class="sr" for="busca-q">Buscar no painel</label>
-      <input type="search" id="busca-q" placeholder="Buscar: aposentadoria, Vorcaro, vacina, Milei…" autocomplete="off" spellcheck="false">
-      <button type="button" class="busca-x" id="busca-x" aria-label="Fechar busca">Fechar</button>
-    </div>
-    <p class="busca-st" id="busca-st" role="status" aria-live="polite"></p>
-    <div class="busca-res" id="busca-res"></div>
   </div>
 </div>
 <div class="hl-sheet" id="hl-sheet" role="dialog" aria-modal="true" aria-labelledby="hs-h" hidden>
@@ -1897,7 +1896,7 @@ html.bs-open .topbar .totop,html.hs-open .topbar .totop{display:none}
     </nav>
     <a class="sinais-btn" href="sinais/" aria-label="Abrir a página dos Sinais"><span class="dot" aria-hidden="true"></span>Sinais</a>
     <a class="parcas-btn" href="#parcas" aria-label="Ir para Quem são eles">Quem são</a>
-    <button type="button" class="part-btn busca-btn" id="busca-btn" aria-expanded="false" aria-controls="busca" aria-label="Buscar no painel" title="Buscar no painel"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><span class="bb-l">Buscar</span><span class="pt">Buscar</span></button>
+    <button type="button" class="part-btn busca-btn" id="busca-btn" aria-controls="busca-q" aria-label="Ir para a busca do painel" title="Buscar no painel"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><span class="bb-l">Buscar</span><span class="pt">Buscar</span></button>
     <a class="part-btn" href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener" data-participe aria-label="Participe: receber atualizações, reportar um erro ou destacar um acerto" title="Receber atualizações, reportar um erro ou destacar um acerto"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.5-4.8A8 8 0 1 1 21 12z"/></svg><span class="pt">Participe</span></a>
     <a class="totop" id="totop" href="#topo" data-top aria-label="Voltar ao topo" hidden><span class="ic" aria-hidden="true">↑</span><span class="tt">Voltar ao topo</span></a>
     <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
@@ -1908,12 +1907,16 @@ html.bs-open .topbar .totop,html.hs-open .topbar .totop{display:none}
    <div class="hl-in">
     <div class="hl-eye" aria-hidden="true"><span class="hl-iris"><span class="hl-pupil"></span></span></div>
     <h1 class="hl-t">Painel Observatório da <span>Direita Radical e Extrema</span></h1>
-    <p class="hl-sub">Olhar para o que eles fazem, não só para o que dizem.</p>
-    <a class="hl-why" href="#observatorio">Por que um observatório</a>
     <form class="hl-search" role="search" id="hl-form">
-      <label class="hl-k" for="hl-q">O que você quer observar?</label>
-      <div class="hl-box"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><input type="search" id="hl-q" placeholder="aposentadoria, Vorcaro, vacina" autocomplete="off" spellcheck="false"><button type="submit">Ver</button></div>
+      <label class="hl-k" for="busca-q">O que você quer observar?</label>
+      <div class="hl-box"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><input type="search" id="busca-q" placeholder="aposentadoria, Vorcaro, vacina" autocomplete="off" spellcheck="false" aria-describedby="busca-st"><button type="submit">Ver</button></div>
     </form>
+    <div class="busca" id="busca" role="region" aria-label="Resultados da busca" hidden>
+      <div class="busca-in">
+        <div class="busca-bar"><p class="busca-st" id="busca-st" role="status" aria-live="polite"></p><button type="button" class="busca-x" id="busca-x" aria-label="Limpar a busca">Limpar</button></div>
+        <div class="busca-res" id="busca-res"></div>
+      </div>
+    </div>
     <div class="hl-blk">
       <p class="hl-or">ou comece por uma pauta</p>
       <div class="hl-pills" id="hl-pills" role="group" aria-label="Pautas"></div>
@@ -2222,13 +2225,6 @@ html.bs-open .topbar .totop,html.hs-open .topbar .totop{display:none}
 
   </div>
 
-  <section id="noticias" aria-labelledby="h-news">
-    <h2 id="h-news">Sinais</h2>
-    <ul class="list news-list" id="news-list"></ul>
-    <a class="news-all" href="sinais/">Abrir a página dos Sinais, com link próprio para cada um →</a>
-    <p class="method">Curadoria de reportagens, análises, vídeos e podcasts para entender o que está em jogo. Cada item leva ao conteúdo original; o resumo e o motivo para ler são do painel.</p>
-  </section>
-
   <section id="informacoes" aria-labelledby="h-info">
     <h2 id="h-info">Privacidade e fontes</h2>
     <h3 class="info-h">Privacidade</h3>
@@ -2258,12 +2254,12 @@ html.bs-open .topbar .totop,html.hs-open .topbar .totop{display:none}
   </footer>
 </main>
 
-<script src="data/base.js?v=20261026g"></script>
-<script src="data/acoes.js?v=20261026g"></script>
-<script src="data/fontes.js?v=20261026g"></script>
-<script src="data/sinais.js?v=20261026g"></script>
-<script src="data/rede.js?v=20261026g"></script>
-<script src="js/app.js?v=20261026g"></script>
+<script src="data/base.js?v=20261026h"></script>
+<script src="data/acoes.js?v=20261026h"></script>
+<script src="data/fontes.js?v=20261026h"></script>
+<script src="data/sinais.js?v=20261026h"></script>
+<script src="data/rede.js?v=20261026h"></script>
+<script src="js/app.js?v=20261026h"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
