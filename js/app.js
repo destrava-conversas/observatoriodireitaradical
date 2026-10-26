@@ -1922,7 +1922,7 @@
         var li=document.createElement('li'), a=document.createElement('a'); a.href='sinais/'+n.n+'/';
         var hd=el('span','hl-sh'); hd.appendChild(el('span','hl-sn','Sinal '+n.n)); hd.appendChild(el('span','hl-sd', n.tipo==='Você sabia?' ? 'Você sabia?' : ndate(n)));
         (n.alerta||[]).slice(0,1).forEach(function(k){ hd.appendChild(el('span','hl-sa','⚠ '+ALERTA[k])); });
-        a.appendChild(hd); a.appendChild(el('b','hl-st',n.t)); if(n.destaque) a.appendChild(el('span','hl-sx',n.destaque));
+        a.appendChild(hd); a.appendChild(el('b','hl-st',n.t));
         li.appendChild(a); ul.appendChild(li); });
     })();
     /* folha de personagens */
