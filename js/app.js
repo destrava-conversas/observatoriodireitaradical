@@ -395,7 +395,7 @@
       if(hit){ used[hit[1]] = 1; out.push(part + ': ' + hit[1]); } else out.push(part);
     });
     links.forEach(function(l){ if(!used[l[1]]){ used[l[1]] = 1; out.push(l[0] + ': ' + l[1]); } });
-    return i.t + ' (' + who + ')\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + (out[0]||'')) + '\n\nVia '+BRAND+': ' + PANEL_URL;
+    return i.t + ' (' + who + ')\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + (out[0]||'')) + '\n\n' + (n.n ? 'Outro lado e fontes: ' + PANEL_URL + 'sinais/' + n.n + '/' : 'Via '+BRAND+': ' + PANEL_URL);
   }
   function ndate(n){ return n.quando || fdate(n.d); }
   function newsText(n){
@@ -1175,7 +1175,7 @@
       if(n.why){ var w=el('p','news-w'); w.appendChild(el('b','',(n.wl||'Por que ler:')+' ')); w.appendChild(document.createTextNode(n.why)); more.appendChild(w); }
       var ft=el('div','ifoot'); var sp=el('span','srcs', n.tipo==='Vídeo' ? 'Assistir em: ' : (n.tipo==='Podcast' ? 'Ouvir em: ' : 'Ler em: '));
       n.src.forEach(function(sr,ix){ if(ix) sp.appendChild(document.createTextNode('; ')); var a=el('a','',sr[0]); a.href=sr[1]; a.target='_blank'; a.rel='noopener noreferrer'; sp.appendChild(a); });
-      ft.appendChild(sp); var acts=el('div','iacts'); ft.appendChild(acts); acts.appendChild(copyBtn(function(){ return newsText(n); })); acts.appendChild(imgBtn('Imagem', function(){ return newsCanvas(n); }, 'sinal-'+(n.n||n.d)+'-'+slug(n.t)+'.png', n.t)); more.appendChild(ft); li.appendChild(more);
+      ft.appendChild(sp); var acts=el('div','iacts'); ft.appendChild(acts); if(n.n){ var pg=el('a','news-pg','Página do Sinal '+n.n+' ↗'); pg.href='sinais/'+n.n+'/'; acts.appendChild(pg); } acts.appendChild(copyBtn(function(){ return newsText(n); })); acts.appendChild(imgBtn('Imagem', function(){ return newsCanvas(n); }, 'sinal-'+(n.n||n.d)+'-'+slug(n.t)+'.png', n.t)); more.appendChild(ft); li.appendChild(more);
       var vm=el('button','news-vm','Ver mais'); vm.type='button'; vm.setAttribute('aria-expanded','false'); vm.setAttribute('aria-controls',more.id);
       li.__open=function(op){ if(op){ [].slice.call(ul.querySelectorAll('li.news.open')).forEach(function(o){ if(o!==li && o.__open) o.__open(false); }); } more.hidden=!op; li.classList.toggle('open',op); vm.setAttribute('aria-expanded',op?'true':'false'); vm.textContent=op?'Ver menos':'Ver mais'; };
       vm.addEventListener('click',function(){ var op=!li.classList.contains('open'); li.__open(op); if(!op){ var r=li.getBoundingClientRect(); if(r.top<0) li.scrollIntoView({block:'start'}); } });
@@ -1596,6 +1596,7 @@
     });
   }
   window.__fxItemCanvas=fxItemCanvas;
+  window.__sinalCanvas=function(n){ return newsCanvas(n); };
   var ALERTA_WHY={regras:'Rejeitar as regras do jogo democrático: não aceitar eleições ou decisões da Justiça, ou mudar as regras para controlar quem arbitra o jogo.',inimigo:'Tratar o adversário como inimigo: criminoso, traidor ou ameaça, sem prova.',violencia:'Incentivar, tolerar ou glorificar a violência, inclusive a do Estado.',liberdades:'Restringir a imprensa, a oposição, a cultura, a ciência ou a crítica.'};
   function newsHighlight(n){
     if(n.destaque) return n.destaque;
