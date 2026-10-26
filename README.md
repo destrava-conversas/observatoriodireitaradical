@@ -25,3 +25,9 @@ Observatório cívico, com fontes, sobre o que governos da direita radical e ext
 ## Licença
 
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.pt-br): pode copiar, adaptar e compartilhar, inclusive para fins comerciais, citando o painel e o link do site e indicando se houve mudanças. Detalhes em `LICENSE`.
+
+## Páginas geradas
+
+- `node tools/build-sinais.js`: gera `sinais/` (lista e uma página por Sinal) a partir de `data/sinais.js`.
+- `node tools/render-sinais.js`: gera as imagens dos Sinais que faltam (`--todas` refaz tudo). Precisa do Playwright.
+- `python3 tools/build-paginas.py`: gera `quem-sao-eles/`, `metodo/` e `data/flavio.js` a partir dos trechos em `tools/paginas/` e do topo da home. Rode depois de mudar o topo da home ou um trecho.

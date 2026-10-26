@@ -221,7 +221,7 @@
       splitSrc(it.src).forEach(function(part){ reg(baseName(part), it.c); });
     });
     var names = Object.keys(use);
-    var box = $('src-body'); box.innerHTML='';
+    var box = $('src-body'); if(!box) return; box.innerHTML='';
     var nG = names.filter(function(n){ return trust(n)==='g'; }).length;
     var sum = el('p','tl-sum','');
     var dg = el('span','tl g',''); sum.appendChild(dg); sum.appendChild(document.createTextNode(nG+' muito confiáveis'));
@@ -385,6 +385,8 @@
     g.textBaseline='alphabetic';
   }
   var PANEL_URL = 'https://destrava-conversas.com.br/observatoriodireitaradical/';
+  var PAGE = document.documentElement.getAttribute('data-page') || 'home', ROOT = PAGE==='home' ? '' : '../';
+  var QUEM = PAGE==='quem' ? '' : ROOT+'quem-sao-eles/';
   function copyText(i){
     var who = cname(i.c) + (i.y ? ', ' + i.y : '');
     var parts = splitSrc(i.src).map(function(p){ return p.trim(); }).filter(Boolean);
@@ -395,12 +397,12 @@
       if(hit){ used[hit[1]] = 1; out.push(part + ': ' + hit[1]); } else out.push(part);
     });
     links.forEach(function(l){ if(!used[l[1]]){ used[l[1]] = 1; out.push(l[0] + ': ' + l[1]); } });
-    return i.t + ' (' + who + ')\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + (out[0]||'')) + '\n\n' + (n.n ? 'Outro lado e fontes: ' + PANEL_URL + 'sinais/' + n.n + '/' : 'Via '+BRAND+': ' + PANEL_URL);
+    return i.t + ' (' + who + ')\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + (out[0]||'')) + '\n\nVia '+BRAND+': ' + PANEL_URL;
   }
   function ndate(n){ return n.quando || fdate(n.d); }
   function newsText(n){
     var out = n.src.map(function(sr){ return sr[0] + ': ' + sr[1]; });
-    return (n.n ? 'Sinal '+n.n+' · ' : '') + (n.tipo==='Você sabia?' ? 'Você sabia?' : ndate(n)) + '\n' + n.t + ((n.alerta&&n.alerta.length) ? '\n⚠ Alerta democrático: ' + n.alerta.map(function(k){ return ALERTA[k]; }).join(' · ') : '') + '\n\n' + n.s + (n.why ? '\n\n' + (n.wl||'Por que ler:') + ' ' + n.why : '') + '\n\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + out[0]) + '\n\nVia '+BRAND+': ' + PANEL_URL;
+    return (n.n ? 'Sinal '+n.n+' · ' : '') + (n.tipo==='Você sabia?' ? 'Você sabia?' : ndate(n)) + '\n' + n.t + ((n.alerta&&n.alerta.length) ? '\n⚠ Alerta democrático: ' + n.alerta.map(function(k){ return ALERTA[k]; }).join(' · ') : '') + '\n\n' + n.s + (n.why ? '\n\n' + (n.wl||'Por que ler:') + ' ' + n.why : '') + '\n\n' + (out.length>1 ? 'Fontes:\n- ' + out.join('\n- ') : 'Fonte: ' + out[0]) + '\n\n' + (n.n ? 'Outro lado e fontes: ' + PANEL_URL + 'sinais/' + n.n + '/' : 'Via '+BRAND+': ' + PANEL_URL);
   }
   function doCopy(txt){
     if(navigator.clipboard && window.isSecureContext){
@@ -544,12 +546,12 @@
     if(subC && !subC.ctrl && sub.indexOf(subC.n) >= 0){
       var ix = sub.indexOf(subC.n);
       ss.appendChild(document.createTextNode(sub.slice(0,ix)));
-      var la = el('a','parca-link',subC.n); la.href = '#parca-'+subC.k; la.title = 'Ver quem é '+subC.n+' e a ligação com Flávio';
+      var la = el('a','parca-link',subC.n); la.href = QUEM+'#parca-'+subC.k; la.title = 'Ver quem é '+subC.n+' e a ligação com Flávio';
       ss.appendChild(la);
       ss.appendChild(document.createTextNode(sub.slice(ix+subC.n.length)));
     } else if(!subC){
       ss.appendChild(document.createTextNode('Soma de '));
-      var lp = el('a','parca-link','todos os governos'); lp.href = '#parcas'; lp.title = 'Ver quem são e como se ligam';
+      var lp = el('a','parca-link','todos os governos'); lp.href = QUEM || '#parcas'; lp.title = 'Ver quem são e como se ligam';
       ss.appendChild(lp);
     } else ss.textContent = sub;
     $('n-contra').textContent = t.contra; (function(){ [['go-contra',t.contra],['go-pro',t.pro]].forEach(function(x){ var a=$(x[0]); if(!a) return; if(x[1]>0){ a.removeAttribute('aria-disabled'); a.setAttribute('title','Ver as ações'); } else { a.setAttribute('aria-disabled','true'); a.removeAttribute('title'); } }); })();
@@ -878,6 +880,7 @@
     else { bt.textContent=offLbl; bt.removeAttribute('aria-label'); bt.removeAttribute('title'); }
   }
   function makeBlock(id, headSel, openLbl){
+    if(PAGE!=='home') return;
     var box = $(id); if(!box) return;
     var head = box.querySelector(headSel); if(!head) return;
     var bar = el('div','blk-bar');
@@ -1175,7 +1178,7 @@
       if(n.why){ var w=el('p','news-w'); w.appendChild(el('b','',(n.wl||'Por que ler:')+' ')); w.appendChild(document.createTextNode(n.why)); more.appendChild(w); }
       var ft=el('div','ifoot'); var sp=el('span','srcs', n.tipo==='Vídeo' ? 'Assistir em: ' : (n.tipo==='Podcast' ? 'Ouvir em: ' : 'Ler em: '));
       n.src.forEach(function(sr,ix){ if(ix) sp.appendChild(document.createTextNode('; ')); var a=el('a','',sr[0]); a.href=sr[1]; a.target='_blank'; a.rel='noopener noreferrer'; sp.appendChild(a); });
-      ft.appendChild(sp); var acts=el('div','iacts'); ft.appendChild(acts); if(n.n){ var pg=el('a','news-pg','Página do Sinal '+n.n+' ↗'); pg.href='sinais/'+n.n+'/'; acts.appendChild(pg); } acts.appendChild(copyBtn(function(){ return newsText(n); })); acts.appendChild(imgBtn('Imagem', function(){ return newsCanvas(n); }, 'sinal-'+(n.n||n.d)+'-'+slug(n.t)+'.png', n.t)); more.appendChild(ft); li.appendChild(more);
+      ft.appendChild(sp); var acts=el('div','iacts'); ft.appendChild(acts); if(n.n){ var pg=el('a','news-pg','Página do Sinal '+n.n+' ↗'); pg.href=ROOT+'sinais/'+n.n+'/'; acts.appendChild(pg); } acts.appendChild(copyBtn(function(){ return newsText(n); })); acts.appendChild(imgBtn('Imagem', function(){ return newsCanvas(n); }, 'sinal-'+(n.n||n.d)+'-'+slug(n.t)+'.png', n.t)); more.appendChild(ft); li.appendChild(more);
       var vm=el('button','news-vm','Ver mais'); vm.type='button'; vm.setAttribute('aria-expanded','false'); vm.setAttribute('aria-controls',more.id);
       li.__open=function(op){ if(op){ [].slice.call(ul.querySelectorAll('li.news.open')).forEach(function(o){ if(o!==li && o.__open) o.__open(false); }); } more.hidden=!op; li.classList.toggle('open',op); vm.setAttribute('aria-expanded',op?'true':'false'); vm.textContent=op?'Ver menos':'Ver mais'; };
       vm.addEventListener('click',function(){ var op=!li.classList.contains('open'); li.__open(op); if(!op){ var r=li.getBoundingClientRect(); if(r.top<0) li.scrollIntoView({block:'start'}); } });
@@ -1216,14 +1219,19 @@
     wr.classList.toggle('more-l', sc.scrollLeft > 4);
     if(h) h.hidden = !over;
   }
-  initSelects();
+  if(PAGE==='home') initSelects();
   makeBlock('observatorio','h2','Ler o texto');
+  (function(){ var dl=$('crit-list'); if(!dl) return;
+    var tagA=function(t){ return t.replace(/^(A favor:|Contra:)/,'<b>$1</b>').replace(/ (Contra:)/,'<br><b>$1</b>'); };
+    GROUPS.concat(THEMES).forEach(function(g){ var t=CRITERIA[g.k]; if(!t) return; var dt=el('dt','',g.n); dt.id='crit-'+g.k; var dd=el('dd',''); dd.innerHTML=tagA(t.replace(/&/g,'&amp;').replace(/</g,'&lt;')); dl.appendChild(dt); dl.appendChild(dd); });
+  })();
+  if(PAGE==='quem' && /^#parca-/.test(location.hash)){ setTimeout(function(){ var a=document.createElement('a'); a.href=location.hash; a.setAttribute('href',location.hash); a.hidden=true; document.body.appendChild(a); a.click(); a.remove(); },120); }
   if($('tz-observatorio')) $('tz-observatorio').textContent='Por que o painel continua depois da eleição: como olhamos, o que observamos e o que não fazemos.';
   makeBlock('noticias','h2','Ver seleção');
   makeBlock('visao-geral','h2','Ver tabela');
   makeBlock('democracia','h2','Ver ranking');
   makeBlock('informacoes','h2','Ver informações');
-  render();
+  if(PAGE==='home') render();
   document.addEventListener('click', function(e){
     var a = e.target.closest && e.target.closest('a[href^="#"]');
     if(!a) return;
@@ -1236,7 +1244,7 @@
   renderNews();
   function fitTitle(){
     var h = document.querySelector('header h1');
-    if(!h || !h.parentElement || h.classList.contains('hl-t')) return;
+    if(PAGE!=='home' || !h || !h.parentElement || h.classList.contains('hl-t')) return;
     var box = h.parentElement;
     h.style.display = 'inline-block';
     h.style.fontSize = '100px';
@@ -1761,6 +1769,7 @@
       NEWS.forEach(function(n){ IDX.n.push({o:n, h:nz([n.n?('sinal '+n.n+' '+parseInt(n.n,10)+' nº'+n.n):'',((n.tags||[]).indexOf('Eleições e regras')>=0?'método metodo golpismo antidemocrático':''),n.tipo,n.t,n.s,n.why,(n.tags||[]).join(' '),(n.alerta||[]).map(function(k){ return 'alerta '+ALERTA[k]; }).join(' '),(n.src||[]).map(function(x){return x[0];}).join(' ')].join(' '))}); });
       document.querySelectorAll('#px-flavio .fx-list > li').forEach(function(li){ var h=li.closest('ul'); while(h && h.tagName!=='H4') h=h.previousElementSibling;
         IDX.f.push({o:li, p:h?h.textContent.trim():'', h:nz('flavio bolsonaro '+(h?h.textContent:'')+' '+li.textContent)}); });
+      if(!IDX.f.length && PD.FLAVIO){ PD.FLAVIO.forEach(function(x){ var li=document.createElement('li'); li.innerHTML=x.h; IDX.f.push({o:li, p:x.p, h:nz('flavio bolsonaro '+x.p+' '+li.textContent)}); }); }
     }
     var LAST=[];
     function mark(root){
@@ -1857,11 +1866,11 @@
       if(a.length){ var s1=sec('Ações',a.length); res.appendChild(s1); renderList(s1,a,function(x){ var i=x.o, pro=i.s==='pro', li=itemNode(i,true,true); li.classList.add(pro?'bs-pro':'bs-con'); var top=el('div','bs-top'); top.appendChild(el('span','bs-lado '+(pro?'pro':'con'),(pro?'Melhorou ':'Piorou ')+(PARA[i.g]||''))); top.appendChild(see('Ver '+gname(i.g)+(i.c==='br'?'':' · '+cname(i.c))+' no painel', function(){ verNoPainel(i); })); li.insertBefore(top, li.firstChild); return li; },12); }
       if(n.length){ var s2=sec('Sinais',n.length); res.appendChild(s2); renderList(s2,n,function(x){ var o=x.o, li=el('li','item news bs-news');
           var top=el('div','bs-top'); var hd=el('div','news-hd'); if(o.n) hd.appendChild(el('span','news-n','Sinal '+o.n)); if(o.tipo) hd.appendChild(el('span','news-k'+(o.tipo==='Você sabia?'?' vs':''),o.tipo)); hd.appendChild(el('time','news-d',ndate(o))); (o.tags||[]).forEach(function(t){ var tg=el('span','tag',t); tg.setAttribute('data-ptag',t); pillA(tg,'Buscar tudo sobre '+t); hd.appendChild(tg); }); alertChips(o, hd); top.appendChild(hd);
-          if(o.n){ var sa=el('a','bs-see','Abrir o Sinal '+o.n); sa.href='sinais/'+o.n+'/'; top.appendChild(sa); } li.appendChild(top);
+          if(o.n){ var sa=el('a','bs-see','Abrir o Sinal '+o.n); sa.href=ROOT+'sinais/'+o.n+'/'; top.appendChild(sa); } li.appendChild(top);
           li.appendChild(el('p','news-t',o.t)); li.appendChild(el('p','news-s',o.s)); return li; },6); }
       if(f.length){ var s3=sec('E o próprio Flávio?',f.length); res.appendChild(s3); renderList(s3,f,function(x){ var li=el('li','item bs-fx'); var c=x.o.cloneNode(true); var ac=c.querySelector('.fx-act'); if(ac) ac.remove();
           var top=el('div','bs-top'); top.appendChild(x.p ? el('span','tag',x.p) : el('span','',''));
-          top.appendChild(see('Ver em E o próprio Flávio?', function(){ close(); var tg=$('parcas-toggle'); if(tg && tg.getAttribute('aria-expanded')!=='true') tg.click(); setTimeout(function(){ flashTo(x.o); },200); })); li.appendChild(top);
+          top.appendChild(see('Ver em E o próprio Flávio?', function(){ location.href=QUEM+'#px-flavio'; })); li.appendChild(top);
           while(c.firstChild) li.appendChild(c.firstChild); return li; },6); }
       if(r.length){ var s4=sec('Contexto',r.length); res.appendChild(s4); renderList(s4,r,function(x){ var o=x.o, li=ctxItem(o,true,true,false); var top=el('div','bs-top'); top.appendChild(el('span','tag','Contexto'+(o.g?' · '+gname(o.g):'')));
           top.appendChild(see('Ver '+gname(o.g)+(o.c==='br'?'':' · '+cname(o.c))+' no painel', function(){ close(); var f=$('top-foco'), q=$('top-pais'); f.value=o.g; f.dispatchEvent(new Event('change',{bubbles:true})); q.value=o.c==='br'?'all':o.c; q.dispatchEvent(new Event('change',{bubbles:true}));

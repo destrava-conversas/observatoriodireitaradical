@@ -178,10 +178,10 @@ const topbar = (rel, here) => `<header class="top" id="topo"><div class="top-in"
 <a href="${rel}?busca">Buscar no painel</a>
 <a href="${rel}#result">Escolher pauta</a>
 <span class="sep" aria-hidden="true"></span>
-<a href="${rel}#observatorio">Por que um observatório</a>
-<a href="${rel}#parcas">Quem são eles</a>
+<a href="${rel}quem-sao-eles/">Quem são eles</a>
 <a href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''}>Sinais</a>
-<a href="${rel}#informacoes">Privacidade e fontes</a>
+<a href="${rel}metodo/">Método e critérios</a>
+<a href="${rel}metodo/#informacoes">Privacidade e fontes</a>
 <a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener">Participe</a>
 </nav>
 </div></header>
