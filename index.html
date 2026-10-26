@@ -1809,6 +1809,18 @@ html.hs-open{overflow:hidden}
 .news-list li.news:not(.open) .news-s{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .news-vm{font:inherit;font-weight:700;font-size:15px;margin-top:10px;padding:8px 0;border:0;background:none;color:var(--pro-ink);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .topbar .parcas-btn,.topbar a.part-btn[data-participe]{display:none}
+.topbar .sinais-btn,.topbar .busca-btn{height:40px;box-sizing:border-box;padding:0 16px;border-radius:999px;font-size:15px;font-weight:800;display:inline-flex;align-items:center;gap:8px}
+.topbar .sinais-btn{border:2px solid #fff}
+.topbar .busca-btn{width:auto;border:2px solid #fff;background:transparent;color:#fff}
+.topbar .busca-btn:hover{background:rgba(255,255,255,.14)}
+.topbar .busca-btn svg{width:18px;height:18px}
+.topbar .busca-btn .bb-l{display:inline}
+@media(max-width:760px){.topbar .sinais-btn,.topbar .busca-btn{height:40px;padding:0 14px;font-size:14px}.topbar .busca-btn{padding:0 16px;min-width:56px;justify-content:center}.topbar .busca-btn .bb-l{display:none}}
+.topbar .totop{position:fixed;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:120;width:52px;height:52px;padding:0;justify-content:center;border-radius:50%;background:#0A1A3F;border:2px solid #A6F36A;color:#A6F36A;box-shadow:0 6px 18px rgba(0,0,0,.28);margin:0}
+.topbar .totop .tt{display:none}
+.topbar .totop .ic{font-size:22px}
+.topbar .totop:hover{background:#13213F}
+html.bs-open .topbar .totop,html.hs-open .topbar .totop{display:none}
 /* Por que um observatório */
 #observatorio{scroll-margin-top:calc(var(--hdr) + 72px)}
 #observatorio.blk{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-top:28px}
@@ -1882,7 +1894,7 @@ html.hs-open{overflow:hidden}
     </nav>
     <a class="sinais-btn" href="#noticias" aria-label="Ir para Sinais"><span class="dot" aria-hidden="true"></span>Sinais</a>
     <a class="parcas-btn" href="#parcas" aria-label="Ir para Quem são eles">Quem são</a>
-    <button type="button" class="part-btn busca-btn" id="busca-btn" aria-expanded="false" aria-controls="busca" aria-label="Buscar no painel" title="Buscar no painel"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><span class="pt">Buscar</span></button>
+    <button type="button" class="part-btn busca-btn" id="busca-btn" aria-expanded="false" aria-controls="busca" aria-label="Buscar no painel" title="Buscar no painel"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><span class="bb-l">Buscar</span><span class="pt">Buscar</span></button>
     <a class="part-btn" href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener" data-participe aria-label="Participe: receber atualizações, reportar um erro ou destacar um acerto" title="Receber atualizações, reportar um erro ou destacar um acerto"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.5-4.8A8 8 0 1 1 21 12z"/></svg><span class="pt">Participe</span></a>
     <a class="totop" id="totop" href="#topo" data-top aria-label="Voltar ao topo" hidden><span class="ic" aria-hidden="true">↑</span><span class="tt">Voltar ao topo</span></a>
     <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
@@ -2242,12 +2254,12 @@ html.hs-open{overflow:hidden}
   </footer>
 </main>
 
-<script src="data/base.js?v=20261026e"></script>
-<script src="data/acoes.js?v=20261026e"></script>
-<script src="data/fontes.js?v=20261026e"></script>
-<script src="data/sinais.js?v=20261026e"></script>
-<script src="data/rede.js?v=20261026e"></script>
-<script src="js/app.js?v=20261026e"></script>
+<script src="data/base.js?v=20261026f"></script>
+<script src="data/acoes.js?v=20261026f"></script>
+<script src="data/fontes.js?v=20261026f"></script>
+<script src="data/sinais.js?v=20261026f"></script>
+<script src="data/rede.js?v=20261026f"></script>
+<script src="js/app.js?v=20261026f"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
