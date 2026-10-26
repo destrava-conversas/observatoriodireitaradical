@@ -1145,7 +1145,7 @@
     var n=NEWS.filter(function(x){ return x.alerta && x.alerta.length; }).length;
     var d=document.createElement('details'); d.className='alert-legend';
     var sm=document.createElement('summary'); sm.textContent='O que são os sinais de alerta democrático (⚠)'; d.appendChild(sm);
-    d.appendChild(el('p','','Quatro indicadores de comportamento autoritário usados na ciência política, a partir de Steven Levitsky e Daniel Ziblatt (“Como as democracias morrem”, 2018). Valem para qualquer governo ou lado político. Nem todo sinal recebe rótulo: só os que tocam um destes critérios.'));
+    d.appendChild(el('p','','Quatro indicadores de comportamento autoritário usados na ciência política, a partir de Steven Levitsky e Daniel Ziblatt (“Como as democracias morrem”, 2018). Valem para qualquer governo ou lado político. Nem todo sinal recebe rótulo: só os que tocam um destes critérios. Os autores mostram que esses sinais costumam se repetir juntos, como um método: para ver a sequência, use o filtro “Eleições e regras” ou busque “método”.'));
     var dl=el('ul','alert-defs');
     [['regras','não aceitar eleições ou decisões da Justiça, sugerir ruptura, mudar as regras para controlar quem arbitra o jogo.'],
      ['inimigo','tratar o oponente como criminoso, traidor ou ameaça, ou acusá-lo sem prova.'],
@@ -1757,7 +1757,7 @@
         IDX.a.push({o:i, h:nz([i.t,i.note,i.src,cname(i.c),(i.gs||[i.g]).map(gname).join(' '),i.y,(i.links||[]).map(function(l){return l[0];}).join(' ')].join(' '))}); });
       var seenR={};
       R.forEach(function(r){ var k=r.c+'|'+r.t; if(seenR[k]) return; seenR[k]=1; IDX.r.push({o:r, h:nz([r.t,r.src,cname(r.c),gname(r.g)].join(' '))}); });
-      NEWS.forEach(function(n){ IDX.n.push({o:n, h:nz([n.n?('sinal '+n.n+' '+parseInt(n.n,10)+' nº'+n.n):'',n.tipo,n.t,n.s,n.why,(n.tags||[]).join(' '),(n.alerta||[]).map(function(k){ return 'alerta '+ALERTA[k]; }).join(' '),(n.src||[]).map(function(x){return x[0];}).join(' ')].join(' '))}); });
+      NEWS.forEach(function(n){ IDX.n.push({o:n, h:nz([n.n?('sinal '+n.n+' '+parseInt(n.n,10)+' nº'+n.n):'',((n.tags||[]).indexOf('Eleições e regras')>=0?'método metodo golpismo antidemocrático':''),n.tipo,n.t,n.s,n.why,(n.tags||[]).join(' '),(n.alerta||[]).map(function(k){ return 'alerta '+ALERTA[k]; }).join(' '),(n.src||[]).map(function(x){return x[0];}).join(' ')].join(' '))}); });
       document.querySelectorAll('#px-flavio .fx-list > li').forEach(function(li){ var h=li.closest('ul'); while(h && h.tagName!=='H4') h=h.previousElementSibling;
         IDX.f.push({o:li, p:h?h.textContent.trim():'', h:nz('flavio bolsonaro '+(h?h.textContent:'')+' '+li.textContent)}); });
     }
