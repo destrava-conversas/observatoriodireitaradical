@@ -1956,3 +1956,13 @@ html[data-page="respostas"] .pg-h h1{color:var(--rsp-ink)}
 .item .ibolso .ib-a .ib-cp{background:var(--obs-navy);color:var(--obs-acc)}
 .item .ibolso .ib-a .imgsh .cp{background:transparent;color:var(--obs-navy)}
 .item .ibolso .ib-a button:focus-visible{outline:3px solid var(--obs-navy);outline-offset:2px}
+
+/* argumento de bolso das ações: laranja quando piorou, azul-petróleo quando melhorou */
+.item .ibolso.ib-con{background:#B5520B;color:#FFFFFF}
+.item .ibolso.ib-pro{background:#0B6B8F;color:#FFFFFF}
+.item .ibolso.ib-con .ib-t,.item .ibolso.ib-pro .ib-t{color:#FFFFFF}
+.item .ibolso.ib-con .ib-a .ib-cp,.item .ibolso.ib-pro .ib-a .ib-cp{background:#FFFFFF;border-color:#FFFFFF}
+.item .ibolso.ib-con .ib-a .ib-cp{color:#8A3A05}
+.item .ibolso.ib-pro .ib-a .ib-cp{color:#08516D}
+.item .ibolso.ib-con .ib-a .imgsh .cp,.item .ibolso.ib-pro .ib-a .imgsh .cp{background:transparent;border-color:#FFFFFF;color:#FFFFFF}
+.item .ibolso.ib-con .ib-a button:focus-visible,.item .ibolso.ib-pro .ib-a button:focus-visible{outline-color:#FFFFFF}
