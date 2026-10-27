@@ -97,6 +97,8 @@ h1{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;fo
 .bolso-k span{font-weight:600;letter-spacing:0;text-transform:none;opacity:.8;margin-left:4px}
 .bolso-t{margin:0 0 12px;font-size:18px;line-height:1.45;font-weight:600}
 .bolso-f{font-weight:500;font-size:15px;opacity:.85}
+html .card .bolso .btn{margin:0 8px 8px 0}
+html .card .bolso .btn.bolso-dl{background:transparent;border-color:#0A1A3F;color:#0A1A3F}
 html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var(--acc)}
 .why{margin:0 0 18px;color:var(--ink)}
 .why b{font-weight:700}
@@ -252,7 +254,7 @@ ${topbar(rel, 'sinal')}
 <div class="hd">${hdHTML(n, true, rel)}</div>
 <h1>${esc(n.t)}</h1>
 ${n.bolso ? '' : `<p class="dest${dcls}">${esc(hl)}</p>`}
-${n.bolso ? `<div class="bolso"><p class="bolso-k">Argumento de bolso <span>para usar numa conversa</span></p><p class="bolso-t">${esc(n.bolso)}${n.bf ? ` <span class="bolso-f">Fonte: ${esc(n.bf)}.</span>` : ''}</p><button class="btn bolso-b" type="button" data-copy="${esc(bolsoTxt)}" data-ok="Argumento copiado" data-lbl="Copiar argumento">${ICON_COPY}<span>Copiar argumento</span></button></div>` : ''}
+${n.bolso ? `<div class="bolso"><p class="bolso-k">Argumento de bolso <span>para usar numa conversa</span></p><p class="bolso-t">${esc(n.bolso)}${n.bf ? ` <span class="bolso-f">Fonte: ${esc(n.bf)}.</span>` : ''}</p><button class="btn bolso-b" type="button" data-copy="${esc(bolsoTxt)}" data-ok="Argumento copiado" data-lbl="Copiar argumento">${ICON_COPY}<span>Copiar argumento</span></button><a class="btn o bolso-dl" href="argumento-${n.n}.png" download="argumento-sinal-${n.n}.png">${ICON_IMG}Baixar imagem</a></div>` : ''}
 <p class="txt">${esc(n.s)}</p>
 ${n.why ? `<p class="why"><b>${esc(n.wl || 'Por que ler:')}</b> ${esc(n.why)}</p>` : ''}
 <p class="src">${srcLbl}: ${n.src.map(s => `<a href="${esc(s[1])}" target="_blank" rel="noopener noreferrer">${esc(s[0])}</a>`).join('; ')}</p>

@@ -13,7 +13,7 @@ vm.runInContext(fs.readFileSync(path.join(ROOT, 'data/sinais.js'), 'utf8').repla
 const NEWS = ctxv.window.PD.NEWS.filter(n => n.n);
 const args = process.argv.slice(2), all = args.includes('--todas'), only = args.filter(a => /^\d{3}$/.test(a));
 const todo = NEWS.filter(n => all || (only.length ? only.includes(n.n) : !fs.existsSync(path.join(ROOT, 'sinais', n.n, 'og.jpg')) || !fs.existsSync(path.join(ROOT, 'sinais', n.n, 'sinal-' + n.n + '.png'))));
-if (!todo.length) { console.log('Nada a gerar.'); process.exit(0); }
+
 
 const MESES = ['jan.', 'fev.', 'mar.', 'abr.', 'maio', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
 const ndate = n => n.quando || (p => parseInt(p[2], 10) + ' ' + MESES[+p[1] - 1] + ' ' + p[0])(n.d.split('-'));
@@ -83,6 +83,27 @@ function serve() {
     fs.writeFileSync(path.join(dir, 'sinal-' + n.n + '.png'), Buffer.from(data.split(',')[1], 'base64'));
     process.stdout.write(n.n + ' ');
   }
-  console.log('\nImagens geradas:', todo.length);
+  console.log('\nImagens de Sinais geradas:', todo.length);
+  /* argumentos de bolso e respostas de "Se te disserem…" (sempre refeitas: são poucas) */
+  const png = d => Buffer.from(d.split(',')[1], 'base64');
+  let nb = 0;
+  for (const n of NEWS.filter(x => x.bolso)) {
+    const d = await panel.evaluate(o => window.__bolsoCanvas(o).toDataURL('image/png'), { kick: 'ARGUMENTO DE BOLSO · SINAL ' + n.n, text: n.bolso, fonte: n.bf || '' });
+    fs.writeFileSync(path.join(ROOT, 'sinais', n.n, 'argumento-' + n.n + '.png'), png(d)); nb++;
+  }
+  const un = t => t.replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
+  const frag = fs.readFileSync(path.join(ROOT, 'tools/paginas/_respostas.html'), 'utf8');
+  const outR = path.join(ROOT, 'se-te-disserem', 'img'); fs.mkdirSync(outR, { recursive: true });
+  let nr = 0;
+  for (const m of frag.matchAll(/<li class="rsp-i" id="([^"]+)"[^>]*>([\s\S]*?)\n      <\/li>/g)) {
+    const id = m[1], body = m[2];
+    const q = un((body.match(/<p class="rsp-q">([\s\S]*?)<\/p>/) || [])[1] || '').replace(/^Se te disserem/, '').replace(/^“|”$/g, '');
+    const a = un((body.match(/<p class="rsp-a">([\s\S]*?)<\/p>/) || [])[1] || '').replace(/^Responda/, '');
+    const f = un((body.match(/<p class="rsp-s">([\s\S]*?)<\/p>/) || [])[1] || '').replace(/^Fonte:\s*/, '');
+    const xm = m[0].match(/data-img="([^"]*)"/); const extra = xm ? un(xm[1]).split(' | ') : null;
+    const d = await panel.evaluate(o => window.__bolsoCanvas(o).toDataURL('image/png'), { kick: 'SE TE DISSEREM', quote: q, label: 'Responda', text: a, fonte: f, extra: extra });
+    fs.writeFileSync(path.join(outR, id + '.png'), png(d)); nr++;
+  }
+  console.log('Argumentos de bolso:', nb, '· respostas:', nr);
   await b.close(); srv.close();
 })();

@@ -1910,3 +1910,6 @@ html:not(.lula-cmp) .lula-only,html:not(.lula-cmp) #comparacao{display:none!impo
 #result .panel .tf-rankbtn[aria-pressed="true"]{background:var(--obs-navy);color:var(--obs-acc)}
 #result .panel .tf-rankbtn:focus-visible{outline:3px solid var(--obs-navy);outline-offset:3px}
 #result .panel > .tf-rankbtn{display:inline-flex!important}
+.rsp-dl{font:inherit;font-size:15px;font-weight:700;display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;border:2px solid var(--line);color:var(--ink);text-decoration:none}
+.rsp-dl:hover{border-color:var(--ink)}
+.rsp-dl:focus-visible{outline:3px solid var(--pro);outline-offset:2px}
