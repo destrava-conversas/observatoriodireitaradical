@@ -52,6 +52,10 @@ a{color:var(--link)}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(194,87,12,.55);opacity:1}70%{box-shadow:0 0 0 6px rgba(194,87,12,0);opacity:.55}100%{box-shadow:0 0 0 0 rgba(194,87,12,0);opacity:1}}
 @media (prefers-reduced-motion:reduce){.tb.sin .dot{animation:none}.eye{transition:none}}
 .tb.bus{background:transparent;color:#fff}
+.tb.rsp{background:#4338CA;border-color:#4338CA;color:#fff}
+.tb.rsp:hover{background:#3730A3;border-color:#fff}
+.tb.rsp .s2{display:none}
+@media (max-width:430px){.tb.rsp .l2{display:none}.tb.rsp .s2{display:inline}.tb{padding:0 12px}.top-in{gap:8px}}
 .tb.bus:hover{background:rgba(255,255,255,.14)}
 .tb.bus svg{width:18px;height:18px}
 .burger{appearance:none;border:0;background:transparent;border-radius:8px;width:36px;height:42px;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
@@ -185,6 +189,7 @@ const ICON_SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 const topbar = (rel, here) => `<header class="top" id="topo"><div class="top-in">
 <a class="brand" href="${rel}" aria-label="${esc(BRAND)}, ir para o painel" title="${esc(BRAND)}"><span class="eye" aria-hidden="true"><i></i></span></a>
 <a class="tb sin" href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''} aria-label="Abrir a página dos Sinais"><span class="dot" aria-hidden="true"></span>Sinais</a>
+<a class="tb rsp" href="${rel}se-te-disserem/" aria-label="Abrir Se te disserem: respostas curtas para conversas"><span class="l2">Se te disserem</span><span class="s2" aria-hidden="true">Respostas</span></a>
 <a class="tb bus" href="${rel}?busca" aria-label="Buscar no painel" title="Buscar no painel">${ICON_SEARCH}<span class="l">Buscar</span></a>
 <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
 <nav class="nav" id="nav" aria-label="Seções do painel">

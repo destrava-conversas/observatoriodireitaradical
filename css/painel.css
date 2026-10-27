@@ -1913,3 +1913,46 @@ html:not(.lula-cmp) .lula-only,html:not(.lula-cmp) #comparacao{display:none!impo
 .rsp-dl{font:inherit;font-size:15px;font-weight:700;display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;border:2px solid var(--line);color:var(--ink);text-decoration:none}
 .rsp-dl:hover{border-color:var(--ink)}
 .rsp-dl:focus-visible{outline:3px solid var(--pro);outline-offset:2px}
+
+/* argumento de bolso nas ações */
+.item .ibolso{margin:10px 0 12px;padding:12px 14px;border-radius:12px;background:var(--obs-acc);color:var(--obs-navy)}
+.item .ibolso .ib-k{display:block;font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;opacity:.8;margin-bottom:4px}
+.item .ibolso .ib-t{margin:0 0 10px;font-weight:700;font-size:16.5px;line-height:1.45;color:var(--obs-navy)}
+.item .ibolso .ib-a{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.item .ibolso .cp{background:var(--obs-navy);color:var(--obs-acc);border-color:var(--obs-navy)}
+.item .ibolso .imgsh .cp{background:transparent;color:var(--obs-navy);border-color:var(--obs-navy)}
+
+/* ===== cores por área (out. 2026): Sinais vermelho, Se te disserem índigo, Quem são eles grafite ===== */
+:root{--rsp:#4338CA;--rsp-ink:#3730A3;--rsp-soft:#F1F0FF;--rsp-on:#FFFFFF;--gra:#3B4A5E;--gra-ink:#2E3A4B;--gra-soft:#EEF1F5}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--rsp:#6D66F2;--rsp-ink:#B4B0FF;--rsp-soft:#1C1B4A;--rsp-on:#FFFFFF;--gra:#8A99AE;--gra-ink:#C3CEDC;--gra-soft:#1E2633}}
+:root[data-theme="dark"]{--rsp:#6D66F2;--rsp-ink:#B4B0FF;--rsp-soft:#1C1B4A;--rsp-on:#FFFFFF;--gra:#8A99AE;--gra-ink:#C3CEDC;--gra-soft:#1E2633}
+/* Se te disserem… */
+.rsp-i{background:var(--rsp-soft);border-color:color-mix(in srgb,var(--rsp) 30%,var(--line));border-left:6px solid var(--rsp)}
+.rsp-q .rsp-k{color:var(--rsp-ink)}
+.rsp-a{background:var(--rsp);color:var(--rsp-on)}
+.rsp-a .rsp-k{color:var(--rsp-on);opacity:.85}
+.rsp-cp,:root[data-theme="dark"] .rsp-cp{background:var(--rsp);border-color:var(--rsp);color:var(--rsp-on)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rsp-cp{background:var(--rsp);border-color:var(--rsp);color:var(--rsp-on)}}
+.rsp-go{color:var(--rsp-ink)}
+html[data-page="respostas"] .pg-h h1{color:var(--rsp-ink)}
+.home-more a[href="se-te-disserem/"]{background:var(--rsp-soft);border-color:color-mix(in srgb,var(--rsp) 35%,var(--line))}
+.home-more a[href="se-te-disserem/"] b::after{color:var(--rsp-ink)}
+.topbar .rsp-btn{display:inline-flex;align-items:center;height:40px;box-sizing:border-box;padding:0 16px;border-radius:999px;background:#4338CA;border:2px solid #4338CA;color:#FFFFFF;text-decoration:none;font-weight:800;font-size:15px;white-space:nowrap}
+.topbar .rsp-btn:hover{background:#3730A3;border-color:#fff}
+.topbar .rsp-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.topbar .rsp-btn .rs-s{display:none}
+@media(max-width:760px){.topbar .rsp-btn{order:2;height:40px;padding:0 13px;font-size:14px}}
+@media(max-width:430px){.topbar .rsp-btn .rs-l{display:none}.topbar .rsp-btn .rs-s{display:inline}.topbar .sinais-btn{padding:0 12px}}
+/* Quem são eles em grafite */
+#parcas.legend,#parcas.legend:not(.closed){border-color:color-mix(in srgb,var(--gra) 30%,var(--line));border-left-color:var(--gra);background:color-mix(in srgb,var(--gra) 5%,var(--surface))}
+#parcas h2,#parcas .toggle,:root[data-theme="dark"] #parcas h2,:root[data-theme="dark"] #parcas .toggle{color:var(--gra-ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #parcas h2,:root:not([data-theme="light"]) #parcas .toggle{color:var(--gra-ink)}}
+#parcas .toggle{border-color:var(--gra)}
+.pxbar{background:#3B4A5E;border-bottom-color:#2E3A4B}
+.pxbar-nav a[aria-current="true"],.pxbar .pxw[aria-pressed="true"]{color:#2E3A4B}
+.parcas-link{text-decoration-color:var(--gra)}
+@media(max-width:380px){.topbar-in{gap:6px!important;padding:0 10px!important}.topbar .rsp-btn,.topbar .sinais-btn{padding:0 10px!important;font-size:13.5px!important}.topbar .busca-btn{min-width:46px!important;padding:0 12px!important}}
+.item .ibolso .ib-a button,.item .ibolso .ib-a .cp{appearance:none;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 16px;border-radius:999px;border:2px solid var(--obs-navy);font:inherit;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap;margin:0}
+.item .ibolso .ib-a .ib-cp{background:var(--obs-navy);color:var(--obs-acc)}
+.item .ibolso .ib-a .imgsh .cp{background:transparent;color:var(--obs-navy)}
+.item .ibolso .ib-a button:focus-visible{outline:3px solid var(--obs-navy);outline-offset:2px}
