@@ -76,7 +76,7 @@
   var VQ = [];
   window.__vMiss = [];
   var CONST_EV = PD.CONST_EV;
-  var state = {c:'all', g:'all', picked:false};
+  var state = {c:'all', g:'all', picked:false, rank:false};
   var PAUTA_ORDER = ['saude','aposentados','trabalhadores','renda','seguranca','educacao','criancas','pobres','cidades','religiao','ambiente','instituicoes','soberania','mulheres','lgbt','etnicas'];
   function byOrder(a,b){ return PAUTA_ORDER.indexOf(a.k)-PAUTA_ORDER.indexOf(b.k); }
   var PARA = {saude:'na saúde',aposentados:'para aposentados',trabalhadores:'para trabalhadores',renda:'na renda e no custo de vida',seguranca:'na segurança pública',educacao:'na educação e na ciência',criancas:'para crianças e adolescentes',pobres:'para pessoas pobres',cidades:'nas cidades, no transporte e na moradia',religiao:'na liberdade religiosa',ambiente:'no meio ambiente',instituicoes:'nas instituições e na imprensa',mulheres:'para mulheres',lgbt:'para pessoas LGBTQIA+',etnicas:'para minorias étnicas',soberania:'na soberania'};
@@ -289,9 +289,13 @@
       if(typeof setBlk==='function' && state.picked){ setBlk('acoes', true); setBlk('rank', true); setBlk('ctx', true); }
     }
     var pbs=$('pb-sel'); var pbGo=function(){ var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; $('result').scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'}); setTimeout(function(){ tf.focus({preventScroll:true}); }, reduce?0:450); }; if($('pb-go')) $('pb-go').addEventListener('click', pbGo); if($('hero-pauta')) $('hero-pauta').addEventListener('click', function(e){ e.preventDefault(); pbGo(); }); if(pbs) pbs.addEventListener('click', function(){ var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; $('result').scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'}); setTimeout(function(){ tf.focus({preventScroll:true}); }, reduce?0:450); });
-    [].slice.call(document.querySelectorAll('.reset-pauta')).forEach(function(b){ b.addEventListener('click', function(){ state.c='all'; state.g='all'; state.picked=false; render(); afterTop(); tf.focus({preventScroll:true}); }); });
+    [].slice.call(document.querySelectorAll('.reset-pauta')).forEach(function(b){ b.addEventListener('click', function(){ state.c='all'; state.g='all'; state.picked=false; state.rank=false; render(); afterTop(); tf.focus({preventScroll:true}); }); });
     tp.addEventListener('change', function(){ state.c=tp.value; state.picked=true; render(); afterTop(); });
-    tf.addEventListener('change', function(){ state.g=tf.value; state.picked=true; render(); afterTop(); });
+    tf.addEventListener('change', function(){ state.g=tf.value; state.picked=true; state.rank=false; render(); afterTop(); });
+    function openRank(){ state.rank=true; state.picked=true; render(); var r=$('rank'); if(typeof setBlk==='function') setBlk('rank', true); var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if(r) r.scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'}); }
+    var trk=$('tf-rank'); if(trk) trk.addEventListener('click', openRank);
+    window.__openRank=openRank; if(location.hash==='#rank') setTimeout(openRank, 150);
+    [].slice.call(document.querySelectorAll('[data-rank]')).forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); var bg=$('burger'); if(bg && bg.getAttribute('aria-expanded')==='true') bg.click(); openRank(); }); });
   }
   function syncSelects(){
     $('top-pais').value = state.picked ? state.c : '';
@@ -744,7 +748,7 @@
       mini.appendChild(el('div','m'));
       addNums(mini, d);
       b.appendChild(mini);
-      b.addEventListener('click', function(){ state.g = d.k; state.picked = true; render(); goToResult(); });
+      b.addEventListener('click', function(){ state.g = d.k; state.picked = true; state.rank = false; render(); goToResult(); });
       rows.appendChild(b);
     });
   }
@@ -1196,7 +1200,8 @@
     var pdc=$('pandemia'); if(pdc) pdc.hidden = !(state.picked && state.g==='saude'); [].slice.call(document.querySelectorAll('.pd-go')).forEach(function(a){ a.hidden = pdc ? pdc.hidden : true; });
     renderMatrix();
     teasers();
-    var rs = $('result'); if(rs) rs.classList.toggle('nopick', !state.picked);
+    var rs = $('result'); if(rs){ rs.classList.toggle('nopick', !state.picked); rs.classList.toggle('rank-mode', !!state.rank); }
+    var trb = $('tf-rank'); if(trb) trb.setAttribute('aria-pressed', state.rank ? 'true' : 'false');
     var nv = $('nav'); if(nv) nv.classList.toggle('nopick', !state.picked);
     if($('pb-g')){ $('pb-g').textContent = state.g==='all' ? 'Todas' : gname(state.g); $('pb-c').textContent = state.c==='all' ? 'Todos' : cname(state.c); }
     if(typeof pickbarUpdate==='function') pickbarUpdate();

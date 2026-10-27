@@ -1898,3 +1898,15 @@ html:not(.lula-cmp) .lula-only,html:not(.lula-cmp) #comparacao{display:none!impo
 :root[data-theme="dark"] .rsp-cp{background:var(--obs-acc);color:var(--obs-navy);border-color:var(--obs-acc)}
 .rsp-d{margin:0 0 12px;padding-left:20px;font-size:15.5px;line-height:1.5}
 .rsp-d li{margin:0 0 6px}
+
+/* Ranking como modo à parte, aberto pelo botão do filtro */
+#result:not(.rank-mode) #rank{display:none!important}
+#result.rank-mode > *:not(.panel):not(#rank){display:none!important}
+#result.rank-mode #rank{display:block!important}
+#result.rank-mode #rank .sec-nav{display:none}
+.res-nav a[href="#rank"]{display:none!important}
+#result .panel .tf-rankbtn{font:inherit;display:inline-flex;align-items:center;gap:8px;margin:14px 0 0;min-height:44px;padding:0 18px;border-radius:999px;border:2px solid var(--obs-navy);background:transparent;color:var(--obs-navy);font-size:15px;font-weight:800;cursor:pointer}
+#result .panel .tf-rankbtn:hover{background:rgba(10,26,63,.08)}
+#result .panel .tf-rankbtn[aria-pressed="true"]{background:var(--obs-navy);color:var(--obs-acc)}
+#result .panel .tf-rankbtn:focus-visible{outline:3px solid var(--obs-navy);outline-offset:3px}
+#result .panel > .tf-rankbtn{display:inline-flex!important}

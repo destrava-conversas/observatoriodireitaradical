@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://destrava-conversas.com.br/observatoriodireitaradical/og-observatorio.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/painel.css?v=20261027b">
+<link rel="stylesheet" href="css/painel.css?v=20261027c">
 </head>
 <body>
 <div class="pickbar" id="pickbar" role="region" aria-label="Seleção atual" hidden>
@@ -45,7 +45,7 @@
       <a href="#result">Escolher pauta</a>
       <a href="#resumo" class="nav-pick">O que eles fizeram</a>
       <a href="#comparacao" class="nav-pick lula-only">Compare com Lula</a>
-      <a href="#rank" class="nav-pick">Ranking das pautas</a>
+      <a href="#rank" data-rank>Ranking das pautas</a>
       <span class="nav-sep" role="separator" aria-hidden="true"></span>
       <a href="quem-sao-eles/">Quem são eles</a>
       <a href="sinais/">Sinais</a>
@@ -103,6 +103,7 @@
         <label class="tf-f tf-sub"><span class="tf-l">2. Governo <span class="tf-opt">(opcional)</span></span><select id="top-pais" aria-label="Governo (opcional)"></select></label>
         <button type="button" class="reset-pauta tf-reset" id="top-clear" disabled aria-label="Reiniciar pauta: limpar os filtros e voltar ao início" title="Limpar os filtros"><span aria-hidden="true">↺</span><span class="rp-t">Reiniciar<span class="rp-long"> pauta</span></span></button>
       </div>
+      <button type="button" class="tf-rankbtn" id="tf-rank" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h11M4 18h6"/></svg>Ranking de todas as pautas</button>
       <p class="upd">Atualizado em 27 de outubro de 2026</p>
     </div>
 
@@ -126,7 +127,7 @@
       <div class="img-row sum-img-row"><button type="button" class="imgbtn" id="sum-img">Copiar resumo como imagem</button><span class="img-msg" id="sum-img-msg" role="status" aria-live="polite"></span></div>
       <p class="sum" id="sel-sum" hidden></p>
       <details class="crit-det" id="crit-det"><summary>Como classificamos</summary><p class="crit" id="sel-crit"></p></details>
-      <div class="res-btns res-nav"><a class="res-btn" href="#acoes" id="go-acoes">Ações</a><a class="res-btn" href="#comparacao" id="go-cmp">Compare</a><a class="res-btn" href="#rank" id="go-rank">Ranking</a><a class="res-btn pd-go" href="#pandemia" hidden>Especial Pandemia</a></div>
+      <div class="res-btns res-nav"><a class="res-btn" href="#acoes" id="go-acoes">Ações</a><a class="res-btn lula-only" href="#comparacao" id="go-cmp">Compare</a><a class="res-btn" href="#rank" id="go-rank">Ranking</a><a class="res-btn pd-go" href="#pandemia" hidden>Especial Pandemia</a></div>
       <p class="verdict" id="verdict" hidden></p>
 
     <div class="res-acoes" id="acoes">
@@ -229,7 +230,7 @@
       <div id="rank-rows"></div>
       <div class="img-row"><button type="button" class="imgbtn" id="rank-img">Copiar ranking como imagem</button><span class="img-msg" id="rank-img-msg" role="status" aria-live="polite"></span></div>
       <p class="method">Ordenado pelas ações contra documentadas, sem peso por gravidade. Uma ação pode valer para mais de uma pauta, então a soma passa do total. Pautas com mais fontes somam mais ações: é um retrato do que foi documentado, não uma medida de gravidade. Toque numa linha para ver as ações.</p>
-      <nav class="res-btns res-nav sec-nav" aria-label="Ir para outra parte do resultado"><a class="res-btn" href="#acoes">Ações</a><a class="res-btn" href="#comparacao">Compare</a><span class="res-btn is-cur" aria-current="true">Ranking</span><a class="res-btn pd-go" href="#pandemia" hidden>Especial Pandemia</a></nav>
+      <nav class="res-btns res-nav sec-nav" aria-label="Ir para outra parte do resultado"><a class="res-btn" href="#acoes">Ações</a><a class="res-btn lula-only" href="#comparacao">Compare</a><span class="res-btn is-cur" aria-current="true">Ranking</span><a class="res-btn pd-go" href="#pandemia" hidden>Especial Pandemia</a></nav>
     </div>
 
 
@@ -269,13 +270,13 @@
   </footer>
 </main>
 
-<script src="data/base.js?v=20261027b"></script>
-<script src="data/acoes.js?v=20261027b"></script>
-<script src="data/fontes.js?v=20261027b"></script>
-<script src="data/sinais.js?v=20261027b"></script>
-<script src="data/rede.js?v=20261027b"></script>
-<script src="data/flavio.js?v=20261027b"></script>
-<script src="js/app.js?v=20261027b"></script>
+<script src="data/base.js?v=20261027c"></script>
+<script src="data/acoes.js?v=20261027c"></script>
+<script src="data/fontes.js?v=20261027c"></script>
+<script src="data/sinais.js?v=20261027c"></script>
+<script src="data/rede.js?v=20261027c"></script>
+<script src="data/flavio.js?v=20261027c"></script>
+<script src="js/app.js?v=20261027c"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
