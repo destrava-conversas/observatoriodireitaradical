@@ -101,7 +101,7 @@ function serve() {
     const a = un((body.match(/<p class="rsp-a">([\s\S]*?)<\/p>/) || [])[1] || '').replace(/^Responda/, '');
     const f = un((body.match(/<p class="rsp-s">([\s\S]*?)<\/p>/) || [])[1] || '').replace(/^Fonte:\s*/, '');
     const xm = m[0].match(/data-img="([^"]*)"/); const extra = xm ? un(xm[1]).split(' | ') : null;
-    const d = await panel.evaluate(o => window.__bolsoCanvas(o).toDataURL('image/png'), { kick: 'SE TE DISSEREM', quote: q, label: 'Responda', text: a, fonte: f, extra: extra });
+    const d = await panel.evaluate(o => window.__bolsoCanvas(o).toDataURL('image/png'), { kick: 'SE TE DISSEREM', quote: q, label: 'Responda', text: a, fonte: f, extra: extra, cta: 'Ver mais no site' });
     fs.writeFileSync(path.join(outR, id + '.png'), png(d)); nr++;
   }
   console.log('Argumentos de bolso:', nb, '· respostas:', nr);

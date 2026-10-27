@@ -1645,7 +1645,7 @@
     if(L.xl.length){ var xy=ty+L.tl.length*L.ts*1.36+18; g.font='600 '+L.xs+'px '+SANS; L.xl.forEach(function(x,i){ var yy=xy+L.xs*0.95+i*L.xs*1.4; if(x.b){ g.beginPath(); g.arc(P+BP+7, yy-L.xs*0.32, 6, 0, Math.PI*2); g.fill(); } g.fillText(x.t, P+BP+24, yy); }); }
     y+=L.th+30;
     if(o.fonte){ g.font='600 30px '+SANS; g.fillStyle='#4A5663'; L.fl.forEach(function(ln,i){ g.fillText(ln, P, y+30+i*40); }); }
-    shareFoot(g, W, H, P, FOOTH, SANS, 'Outro lado e fontes no painel');
+    shareFoot(g, W, H, P, FOOTH, SANS, o.cta || 'Outro lado e fontes no painel');
     return c;
   }
   window.__bolsoCanvas=function(o){ return bolsoCanvas(o); };
