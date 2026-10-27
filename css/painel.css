@@ -1896,3 +1896,5 @@ html:not(.lula-cmp) .lula-only,html:not(.lula-cmp) #comparacao{display:none!impo
 .rsp-note a{color:var(--pro-ink);font-weight:600}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rsp-cp{background:var(--obs-acc);color:var(--obs-navy);border-color:var(--obs-acc)}}
 :root[data-theme="dark"] .rsp-cp{background:var(--obs-acc);color:var(--obs-navy);border-color:var(--obs-acc)}
+.rsp-d{margin:0 0 12px;padding-left:20px;font-size:15.5px;line-height:1.5}
+.rsp-d li{margin:0 0 6px}
