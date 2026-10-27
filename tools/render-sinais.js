@@ -3,7 +3,7 @@
    sinais/NNN/og.jpg        1200x630, prévia do link (WhatsApp, redes)
    sinais/NNN/sinal-NNN.png 1080x1350, a mesma imagem do botão "Imagem" do painel
    Uso: node tools/render-sinais.js [045 046 ...]   (sem números: gera só as que faltam; --todas refaz tudo)
-   Opcional: FONTROUTE=/caminho/fontroute.js para servir as fontes sem internet. */
+   As fontes vêm de tools/fonts via tools/fontroute.js (funciona sem internet). */
 const fs = require('fs'), path = require('path'), http = require('http'), vm = require('vm');
 const { chromium } = require('playwright');
 const ROOT = path.join(__dirname, '..');
@@ -66,8 +66,7 @@ function serve() {
   const srv = await serve(), port = srv.address().port;
   const b = await chromium.launch();
   const ctx = await b.newContext({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
-  if (process.env.FONTROUTE) await require(path.resolve(process.env.FONTROUTE))(ctx);
-  else await ctx.route('https://gc.zgo.at/**', r => r.abort());
+  await require(process.env.FONTROUTE ? path.resolve(process.env.FONTROUTE) : path.join(__dirname, 'fontroute.js'))(ctx);
   const panel = await ctx.newPage();
   await panel.goto('http://127.0.0.1:' + port + '/', { waitUntil: 'networkidle' });
   await panel.evaluate(() => document.fonts.ready);
