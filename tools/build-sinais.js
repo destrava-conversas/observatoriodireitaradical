@@ -66,6 +66,7 @@ a{color:var(--link)}
 .nav a{padding:12px 14px;border-radius:8px;color:var(--ink);text-decoration:none;font-weight:600;font-size:16px;white-space:nowrap}
 .nav a:hover{background:var(--ground)}
 .nav a[aria-current="page"]{color:var(--link);box-shadow:inset -4px 0 0 var(--link);border-radius:8px 0 0 8px}
+.nav a[hidden]{display:none!important}
 .nav a.ext{margin:0 0 6px;padding:12px 16px;background:#1A73C8;color:#fff;font-weight:700;border-radius:10px}
 .nav a.ext:hover{background:#155FA3}
 .nav a.sub{font-weight:500;font-size:15px;color:var(--muted)}
@@ -91,6 +92,12 @@ h1{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;fo
 .dest.al{border-left-color:#C0392B}
 .dest.vs{border-left-color:#0B6B8F}
 .txt{margin:0 0 16px}
+.bolso{margin:0 0 22px;padding:16px 18px;border-radius:12px;background:var(--acc);color:#0A1A3F}
+.bolso-k{margin:0 0 6px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.bolso-k span{font-weight:600;letter-spacing:0;text-transform:none;opacity:.8;margin-left:4px}
+.bolso-t{margin:0 0 12px;font-size:18px;line-height:1.45;font-weight:600}
+.bolso-f{font-weight:500;font-size:15px;opacity:.85}
+html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var(--acc)}
 .why{margin:0 0 18px;color:var(--ink)}
 .why b{font-weight:700}
 .src{margin:0 0 4px;font-size:15.5px;color:var(--muted)}
@@ -173,13 +180,14 @@ const topbar = (rel, here) => `<header class="top" id="topo"><div class="top-in"
 <a class="tb bus" href="${rel}?busca" aria-label="Buscar no painel" title="Buscar no painel">${ICON_SEARCH}<span class="l">Buscar</span></a>
 <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
 <nav class="nav" id="nav" aria-label="Seções do painel">
-<a class="ext" href="${rel}economia/">E a Economia?</a>
+<a class="ext lula-only" href="${rel}economia/" hidden>E a Economia?</a>
 <a href="${rel}">Início</a>
 <a href="${rel}?busca">Buscar no painel</a>
 <a href="${rel}#result">Escolher pauta</a>
 <span class="sep" aria-hidden="true"></span>
 <a href="${rel}quem-sao-eles/">Quem são eles</a>
 <a href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''}>Sinais</a>
+<a href="${rel}se-te-disserem/">Se te disserem…</a>
 <a href="${rel}metodo/">Método e critérios</a>
 <a href="${rel}metodo/#informacoes">Privacidade e fontes</a>
 <a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener">Participe</a>
@@ -206,6 +214,7 @@ ${NAVJS}
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>`;
 
 const ICON_WA = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg>';
+const ICON_COPY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
 const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
 const ICON_IMG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>';
 
@@ -225,7 +234,8 @@ function sinalPage(n, i) {
   const desc = hl.length > 180 ? hl.slice(0, 177).replace(/\s+\S*$/, '') + '…' : hl;
   const prev = byNum[i - 1], next = byNum[i + 1];
   const srcLbl = n.tipo === 'Vídeo' ? 'Assistir em' : (n.tipo === 'Podcast' ? 'Ouvir em' : (n.src.length > 1 ? 'Fontes' : 'Fonte'));
-  const shareTxt = 'Sinal ' + n.n + ': ' + n.t + '\n\n' + hl + '\n\nOutro lado e fontes: ' + url(n);
+  const bolsoTxt = n.bolso ? n.bolso + (n.bf ? ' Fonte: ' + n.bf + '.' : '') + '\n' + url(n) : '';
+  const shareTxt = n.bolso ? 'Sinal ' + n.n + ': ' + n.t + '\n\n' + n.bolso + (n.bf ? ' (Fonte: ' + n.bf + ')' : '') + '\n\nOutro lado e fontes: ' + url(n) : 'Sinal ' + n.n + ': ' + n.t + '\n\n' + hl + '\n\nOutro lado e fontes: ' + url(n);
   const dcls = isAlerta(n) ? ' al' : (isVS(n) ? ' vs' : '');
   return head({ title, desc, canonical: url(n), image: url(n) + 'og.jpg', imgW: 1200, imgH: 630, rel }) + `
 <body>
@@ -235,7 +245,8 @@ ${topbar(rel, 'sinal')}
 <article class="card">
 <div class="hd">${hdHTML(n, true, rel)}</div>
 <h1>${esc(n.t)}</h1>
-<p class="dest${dcls}">${esc(hl)}</p>
+${n.bolso ? '' : `<p class="dest${dcls}">${esc(hl)}</p>`}
+${n.bolso ? `<div class="bolso"><p class="bolso-k">Argumento de bolso <span>para usar numa conversa</span></p><p class="bolso-t">${esc(n.bolso)}${n.bf ? ` <span class="bolso-f">Fonte: ${esc(n.bf)}.</span>` : ''}</p><button class="btn bolso-b" type="button" data-copy="${esc(bolsoTxt)}" data-ok="Argumento copiado" data-lbl="Copiar argumento">${ICON_COPY}<span>Copiar argumento</span></button></div>` : ''}
 <p class="txt">${esc(n.s)}</p>
 ${n.why ? `<p class="why"><b>${esc(n.wl || 'Por que ler:')}</b> ${esc(n.why)}</p>` : ''}
 <p class="src">${srcLbl}: ${n.src.map(s => `<a href="${esc(s[1])}" target="_blank" rel="noopener noreferrer">${esc(s[0])}</a>`).join('; ')}</p>
@@ -254,7 +265,7 @@ ${next ? `<a class="nx" href="../${next.n}/"><span>Sinal ${next.n} →</span>${e
 </main>
 ${foot(rel)}
 <script>
-document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){var u=b.getAttribute('data-copy'),s=b.querySelector('span');function ok(){s.textContent='Link copiado';setTimeout(function(){s.textContent='Copiar link';},2200);}
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){var u=b.getAttribute('data-copy'),s=b.querySelector('span'),l0=b.getAttribute('data-lbl')||'Copiar link';function ok(){s.textContent=b.getAttribute('data-ok')||'Link copiado';setTimeout(function(){s.textContent=l0;},2200);}
 if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(ok,function(){prompt('Copie o link:',u);});}else{prompt('Copie o link:',u);}});});
 </script>
 </body>

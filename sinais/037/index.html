@@ -63,6 +63,7 @@ a{color:var(--link)}
 .nav a{padding:12px 14px;border-radius:8px;color:var(--ink);text-decoration:none;font-weight:600;font-size:16px;white-space:nowrap}
 .nav a:hover{background:var(--ground)}
 .nav a[aria-current="page"]{color:var(--link);box-shadow:inset -4px 0 0 var(--link);border-radius:8px 0 0 8px}
+.nav a[hidden]{display:none!important}
 .nav a.ext{margin:0 0 6px;padding:12px 16px;background:#1A73C8;color:#fff;font-weight:700;border-radius:10px}
 .nav a.ext:hover{background:#155FA3}
 .nav a.sub{font-weight:500;font-size:15px;color:var(--muted)}
@@ -88,6 +89,12 @@ h1{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;fo
 .dest.al{border-left-color:#C0392B}
 .dest.vs{border-left-color:#0B6B8F}
 .txt{margin:0 0 16px}
+.bolso{margin:0 0 22px;padding:16px 18px;border-radius:12px;background:var(--acc);color:#0A1A3F}
+.bolso-k{margin:0 0 6px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.bolso-k span{font-weight:600;letter-spacing:0;text-transform:none;opacity:.8;margin-left:4px}
+.bolso-t{margin:0 0 12px;font-size:18px;line-height:1.45;font-weight:600}
+.bolso-f{font-weight:500;font-size:15px;opacity:.85}
+html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var(--acc)}
 .why{margin:0 0 18px;color:var(--ink)}
 .why b{font-weight:700}
 .src{margin:0 0 4px;font-size:15.5px;color:var(--muted)}
@@ -134,13 +141,14 @@ h1{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;fo
 <a class="tb bus" href="../../?busca" aria-label="Buscar no painel" title="Buscar no painel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><span class="l">Buscar</span></a>
 <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
 <nav class="nav" id="nav" aria-label="Seções do painel">
-<a class="ext" href="../../economia/">E a Economia?</a>
+<a class="ext lula-only" href="../../economia/" hidden>E a Economia?</a>
 <a href="../../">Início</a>
 <a href="../../?busca">Buscar no painel</a>
 <a href="../../#result">Escolher pauta</a>
 <span class="sep" aria-hidden="true"></span>
 <a href="../../quem-sao-eles/">Quem são eles</a>
 <a href="../../sinais/">Sinais</a>
+<a href="../../se-te-disserem/">Se te disserem…</a>
 <a href="../../metodo/">Método e critérios</a>
 <a href="../../metodo/#informacoes">Privacidade e fontes</a>
 <a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener">Participe</a>
@@ -153,6 +161,7 @@ h1{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;fo
 <div class="hd"><span class="num">Sinal 037</span><span class="kind">Respeito às regras</span><time datetime="2025-01-01">2025</time><a class="tag" href="../../?q=Milei">Milei</a><a class="tag" href="../../?q=Elei%C3%A7%C3%B5es%20e%20regras">Eleições e regras</a><span class="alerta">⚠ Regras do jogo</span></div>
 <h1>Argentina: Milei nomeia juízes da Suprema Corte por decreto</h1>
 <p class="dest al">Milei nomeou dois juízes da Suprema Corte por decreto, sem o Senado. O Senado rejeitou, e a Justiça declarou o decreto inconstitucional.</p>
+
 <p class="txt">Decreto 137/2025 nomeia dois juízes da Suprema Corte “em comissão” durante o recesso do Congresso, sem os dois terços do Senado; o Senado rejeitou as indicações em 3 de abril de 2025, e um juiz federal declarou o decreto inconstitucional.</p>
 <p class="why"><b>Situação:</b> Barrada ou revertida. Tipo: cortes e órgãos de controle.</p>
 <p class="src">Fontes: <a href="https://www.deia.eus/mundo/2025/02/26/milei-nombra-decreto-jueces-supremo-apoyo-senado-9324638.amp.html" target="_blank" rel="noopener noreferrer">Deia</a>; <a href="https://www.diagonales.com/lijo_t666093f241112e30de4e0e59" target="_blank" rel="noopener noreferrer">Diagonales</a>; <a href="https://www.iprofesional.com/politica/423324-cuales-son-argumentos-y-plan-de-javier-milei-detras-decreto-sobre-corte-suprema" target="_blank" rel="noopener noreferrer">iProfesional</a></p>
@@ -171,7 +180,7 @@ h1{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;fo
 </main>
 <footer class="foot">
 <p>Toda afirmação tem fonte. Conteúdo do <a href="../../">Painel Observatório da Direita Radical e Extrema</a>, uma iniciativa do <a href="https://destrava-conversas.com.br/">Destrava Conversas</a>.</p>
-<p>Atualizado em 26 de outubro de 2026.</p>
+<p>Atualizado em 27 de outubro de 2026.</p>
 </footer>
 <script>
 (function(){var b=document.getElementById('burger'),n=document.getElementById('nav'),t=document.getElementById('totop');
@@ -185,7 +194,7 @@ t.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0
 </script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <script>
-document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){var u=b.getAttribute('data-copy'),s=b.querySelector('span');function ok(){s.textContent='Link copiado';setTimeout(function(){s.textContent='Copiar link';},2200);}
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){var u=b.getAttribute('data-copy'),s=b.querySelector('span'),l0=b.getAttribute('data-lbl')||'Copiar link';function ok(){s.textContent=b.getAttribute('data-ok')||'Link copiado';setTimeout(function(){s.textContent=l0;},2200);}
 if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(ok,function(){prompt('Copie o link:',u);});}else{prompt('Copie o link:',u);}});});
 </script>
 </body>

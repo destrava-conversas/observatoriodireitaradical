@@ -63,6 +63,7 @@ a{color:var(--link)}
 .nav a{padding:12px 14px;border-radius:8px;color:var(--ink);text-decoration:none;font-weight:600;font-size:16px;white-space:nowrap}
 .nav a:hover{background:var(--ground)}
 .nav a[aria-current="page"]{color:var(--link);box-shadow:inset -4px 0 0 var(--link);border-radius:8px 0 0 8px}
+.nav a[hidden]{display:none!important}
 .nav a.ext{margin:0 0 6px;padding:12px 16px;background:#1A73C8;color:#fff;font-weight:700;border-radius:10px}
 .nav a.ext:hover{background:#155FA3}
 .nav a.sub{font-weight:500;font-size:15px;color:var(--muted)}
@@ -88,6 +89,12 @@ h1{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;fo
 .dest.al{border-left-color:#C0392B}
 .dest.vs{border-left-color:#0B6B8F}
 .txt{margin:0 0 16px}
+.bolso{margin:0 0 22px;padding:16px 18px;border-radius:12px;background:var(--acc);color:#0A1A3F}
+.bolso-k{margin:0 0 6px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.bolso-k span{font-weight:600;letter-spacing:0;text-transform:none;opacity:.8;margin-left:4px}
+.bolso-t{margin:0 0 12px;font-size:18px;line-height:1.45;font-weight:600}
+.bolso-f{font-weight:500;font-size:15px;opacity:.85}
+html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var(--acc)}
 .why{margin:0 0 18px;color:var(--ink)}
 .why b{font-weight:700}
 .src{margin:0 0 4px;font-size:15.5px;color:var(--muted)}
@@ -134,13 +141,14 @@ h1{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;fo
 <a class="tb bus" href="../../?busca" aria-label="Buscar no painel" title="Buscar no painel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><span class="l">Buscar</span></a>
 <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
 <nav class="nav" id="nav" aria-label="Seções do painel">
-<a class="ext" href="../../economia/">E a Economia?</a>
+<a class="ext lula-only" href="../../economia/" hidden>E a Economia?</a>
 <a href="../../">Início</a>
 <a href="../../?busca">Buscar no painel</a>
 <a href="../../#result">Escolher pauta</a>
 <span class="sep" aria-hidden="true"></span>
 <a href="../../quem-sao-eles/">Quem são eles</a>
 <a href="../../sinais/">Sinais</a>
+<a href="../../se-te-disserem/">Se te disserem…</a>
 <a href="../../metodo/">Método e critérios</a>
 <a href="../../metodo/#informacoes">Privacidade e fontes</a>
 <a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener">Participe</a>
@@ -153,6 +161,7 @@ h1{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;fo
 <div class="hd"><span class="num">Sinal 017</span><span class="kind">Você sabia?</span><a class="tag" href="../../?q=Fl%C3%A1vio">Flávio</a><a class="tag" href="../../?q=Vorcaro">Vorcaro</a></div>
 <h1>Quanto custa um filme brasileiro?</h1>
 <p class="dest vs">O filme sobre Bolsonaro custa R$ 134 milhões, três vezes o do Oscar brasileiro. R$ 61 milhões vieram de Vorcaro, hoje preso.</p>
+
 <p class="txt">“Ainda Estou Aqui”, que deu ao Brasil o Oscar de filme internacional, e “O Agente Secreto” custaram cerca de R$ 45 milhões cada. “Dark Horse”, o filme sobre Jair Bolsonaro, tem orçamento negociado de R$ 134 milhões. Segundo reportagens, R$ 61 milhões vieram de Daniel Vorcaro, ex-dono do Banco Master, hoje preso. Flávio é investigado no STF pelo dinheiro que pediu a ele para o filme.</p>
 <p class="why"><b>Outro lado:</b> Eduardo Bolsonaro diz que o valor é “até barato para os padrões de Hollywood”. Mesmo lá, os cerca de US$ 24 milhões superam o orçamento de 15 dos últimos 20 vencedores do Oscar de melhor filme. Flávio diz que o dinheiro era privado, lícito e sem contrapartida.</p>
 <p class="src">Fontes: <a href="https://www.bemparana.com.br/cultura/dark-horse-longa-metragem-sobre-bolsonaro-custou-mais-que-filmes-brasileiros-indicados-ao-oscar/" target="_blank" rel="noopener noreferrer">Folhapress (via Bem Paraná)</a>; <a href="https://www.metropoles.com/entretenimento/cinema/eduardo-bolsonaro-defende-orcamento-de-dark-horse-ate-barato" target="_blank" rel="noopener noreferrer">Metrópoles</a>; <a href="https://www.cnnbrasil.com.br/eleicoes/o-grande-debate-qual-o-impacto-do-inquerito-sobre-dark-horse-para-flavio/" target="_blank" rel="noopener noreferrer">CNN Brasil</a>; <a href="https://www.em.com.br/politica/2026/09/7497516-dark-horse-filme-sobre-bolsonaro-tem-orcamento-maior-que-vencedores-do-oscar.html" target="_blank" rel="noopener noreferrer">Estado de Minas</a></p>
@@ -171,7 +180,7 @@ h1{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;fo
 </main>
 <footer class="foot">
 <p>Toda afirmação tem fonte. Conteúdo do <a href="../../">Painel Observatório da Direita Radical e Extrema</a>, uma iniciativa do <a href="https://destrava-conversas.com.br/">Destrava Conversas</a>.</p>
-<p>Atualizado em 26 de outubro de 2026.</p>
+<p>Atualizado em 27 de outubro de 2026.</p>
 </footer>
 <script>
 (function(){var b=document.getElementById('burger'),n=document.getElementById('nav'),t=document.getElementById('totop');
@@ -185,7 +194,7 @@ t.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0
 </script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <script>
-document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){var u=b.getAttribute('data-copy'),s=b.querySelector('span');function ok(){s.textContent='Link copiado';setTimeout(function(){s.textContent='Copiar link';},2200);}
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){var u=b.getAttribute('data-copy'),s=b.querySelector('span'),l0=b.getAttribute('data-lbl')||'Copiar link';function ok(){s.textContent=b.getAttribute('data-ok')||'Link copiado';setTimeout(function(){s.textContent=l0;},2200);}
 if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(ok,function(){prompt('Copie o link:',u);});}else{prompt('Copie o link:',u);}});});
 </script>
 </body>

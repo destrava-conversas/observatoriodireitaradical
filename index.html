@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://destrava-conversas.com.br/observatoriodireitaradical/og-observatorio.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/painel.css?v=20261026m">
+<link rel="stylesheet" href="css/painel.css?v=20261027a">
 </head>
 <body>
 <div class="pickbar" id="pickbar" role="region" aria-label="Seleção atual" hidden>
@@ -39,16 +39,17 @@
   <div class="topbar-in">
     <a class="brand brand-icon" href="#topo" data-top aria-label="Painel Observatório da Direita Radical e Extrema, voltar ao início" title="Painel Observatório da Direita Radical e Extrema"><span class="brand-eye" aria-hidden="true"><i></i></span></a>
     <nav class="nav" id="nav" aria-label="Seções da página">
-      <a class="ext" href="economia/" title="Economia do Brasil: Bolsonaro e Lula 3 lado a lado" aria-label="E a Economia? Bolsonaro e Lula 3 lado a lado">E a Economia?</a>
+      <a class="ext lula-only" href="economia/" title="Economia do Brasil: Bolsonaro e Lula 3 lado a lado" aria-label="E a Economia? Bolsonaro e Lula 3 lado a lado">E a Economia?</a>
       <a href="#topo" data-top>Início</a>
       <a href="#busca" data-busca>Buscar no painel</a>
       <a href="#result">Escolher pauta</a>
       <a href="#resumo" class="nav-pick">O que eles fizeram</a>
-      <a href="#comparacao" class="nav-pick">Compare com Lula</a>
+      <a href="#comparacao" class="nav-pick lula-only">Compare com Lula</a>
       <a href="#rank" class="nav-pick">Ranking das pautas</a>
       <span class="nav-sep" role="separator" aria-hidden="true"></span>
       <a href="quem-sao-eles/">Quem são eles</a>
       <a href="sinais/">Sinais</a>
+      <a href="se-te-disserem/">Se te disserem…</a>
       <a href="metodo/">Método e critérios</a>
       <a href="metodo/#informacoes">Privacidade e fontes</a>
       <a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener" data-participe>Participe</a>
@@ -102,7 +103,7 @@
         <label class="tf-f tf-sub"><span class="tf-l">2. Governo <span class="tf-opt">(opcional)</span></span><select id="top-pais" aria-label="Governo (opcional)"></select></label>
         <button type="button" class="reset-pauta tf-reset" id="top-clear" disabled aria-label="Reiniciar pauta: limpar os filtros e voltar ao início" title="Limpar os filtros"><span aria-hidden="true">↺</span><span class="rp-t">Reiniciar<span class="rp-long"> pauta</span></span></button>
       </div>
-      <p class="upd">Atualizado em 26 de outubro de 2026</p>
+      <p class="upd">Atualizado em 27 de outubro de 2026</p>
     </div>
 
     <div class="res-card" id="resumo">
@@ -149,7 +150,7 @@
     <section class="pand-card" id="pandemia" hidden aria-labelledby="h-pand">
       <p class="pd-kick">Recorte de Saúde</p>
       <h2 id="h-pand">Pandemia: o teste de estresse</h2>
-      <p class="pd-intro">De 2020 a 2022, cinco dos sete governos observados estavam no poder durante a covid-19: Jair Bolsonaro, Trump (só em 2020), Orbán, o PiS e Bukele. Milei, Kast e o governo Lula 3 começaram depois da fase aguda. Como são países diferentes, a régua aqui é o mundo: a média de 159 países com mais de 1 milhão de habitantes, sem contar os cinco analisados.</p>
+      <p class="pd-intro">De 2020 a 2022, cinco dos sete governos observados estavam no poder durante a covid-19: Jair Bolsonaro, Trump (só em 2020), Orbán, o PiS e Bukele. Milei e Kast começaram depois da fase aguda. Como são países diferentes, a régua aqui é o mundo: a média de 159 países com mais de 1 milhão de habitantes, sem contar os cinco analisados.</p>
       <h3 class="pd-h">Mortes em excesso por 100 mil habitantes</h3>
       <p class="pd-sub">Quantas pessoas morreram a mais do que o esperado, por qualquer causa. Conta também as mortes por covid que não foram registradas. Em cada ano, ao lado do número, quantas vezes a média mundial e a posição no mundo (1º é o pior). Toque na comparação para ver as decisões de cada governo.</p>
       <div class="pd-key"><span><i class="y0"></i>2020</span><span><i class="y1"></i>2021</span><span><i class="y2"></i>2022</span><span><i class="mk"></i>Média mundial do ano</span></div>
@@ -245,6 +246,7 @@
   <nav class="home-more" aria-label="Outras páginas do painel">
     <a href="sinais/"><b>Sinais</b><span>Fatos que devem chamar nossa atenção, cada um com link próprio para compartilhar.</span></a>
     <a href="quem-sao-eles/"><b>Quem são eles</b><span>O que é extrema direita, o que os governos têm em comum, como se conectam e o que Flávio fez nos mandatos.</span></a>
+    <a href="se-te-disserem/"><b>Se te disserem…</b><span>Frases que circulam e a resposta curta, com dado e fonte, para usar numa conversa.</span></a>
     <a href="metodo/"><b>Método e critérios</b><span>Por que um observatório, os critérios de cada pauta, as regras de fonte e a privacidade.</span></a>
   </nav>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
@@ -267,13 +269,13 @@
   </footer>
 </main>
 
-<script src="data/base.js?v=20261026m"></script>
-<script src="data/acoes.js?v=20261026m"></script>
-<script src="data/fontes.js?v=20261026m"></script>
-<script src="data/sinais.js?v=20261026m"></script>
-<script src="data/rede.js?v=20261026m"></script>
-<script src="data/flavio.js?v=20261026m"></script>
-<script src="js/app.js?v=20261026m"></script>
+<script src="data/base.js?v=20261027a"></script>
+<script src="data/acoes.js?v=20261027a"></script>
+<script src="data/fontes.js?v=20261027a"></script>
+<script src="data/sinais.js?v=20261027a"></script>
+<script src="data/rede.js?v=20261027a"></script>
+<script src="data/flavio.js?v=20261027a"></script>
+<script src="js/app.js?v=20261027a"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

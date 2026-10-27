@@ -2,6 +2,9 @@
   var COUNTRIES = PD.COUNTRIES;
   var CONTROL = PD.CONTROL;
   var ALLC = COUNTRIES.concat([CONTROL]);
+  /* comparação com o governo Lula: desligada por decisão editorial (out. 2026); o código fica. Para religar: true */
+  var LULA_CMP = false;
+  if(LULA_CMP) document.documentElement.classList.add('lula-cmp');
   var GROUPS = PD.GROUPS;
   var THEMES = PD.THEMES;
   var CRITERIA = PD.CRITERIA;
@@ -128,7 +131,7 @@
       }
     }
     var br = tally('br', state.g);
-    out.push('Para comparação, o governo Lula (2023 a 2025) tem ' + plural(br.contra,'ação contra','ações contra') + ' e ' + br.pro + ' a favor ' + (allG ? 'no total.' : 'nesta pauta.'));
+    if(LULA_CMP) out.push('Para comparação, o governo Lula (2023 a 2025) tem ' + plural(br.contra,'ação contra','ações contra') + ' e ' + br.pro + ' a favor ' + (allG ? 'no total.' : 'nesta pauta.'));
     box.innerHTML = out.join(' ');
   }
   function shortAct(t){
@@ -748,7 +751,7 @@
   function renderVs(t){
     var box = $('vs');
     vsOpen = true; vsActOpen = false;
-    if(state.c==='br'){ box.hidden = true; return; }
+    if(!LULA_CMP || state.c==='br'){ box.hidden = true; return; }
     var tc = tally('br', state.g);
     var rows = $('vs-rows');
     rows.innerHTML = '';
@@ -1761,11 +1764,12 @@
     var IDX=null;
     function build(){
       IDX={a:[],r:[],n:[],f:[]};
+      var noBR=function(i){ return LULA_CMP || i.c!=='br'; };
       var seen={};
-      A.forEach(function(i){ var k=i.c+'|'+i.t; if(seen[k]) return; seen[k]=1;
+      A.filter(noBR).forEach(function(i){ var k=i.c+'|'+i.t; if(seen[k]) return; seen[k]=1;
         IDX.a.push({o:i, h:nz([i.t,i.note,i.src,cname(i.c),(i.gs||[i.g]).map(gname).join(' '),i.y,(i.links||[]).map(function(l){return l[0];}).join(' ')].join(' '))}); });
       var seenR={};
-      R.forEach(function(r){ var k=r.c+'|'+r.t; if(seenR[k]) return; seenR[k]=1; IDX.r.push({o:r, h:nz([r.t,r.src,cname(r.c),gname(r.g)].join(' '))}); });
+      R.filter(noBR).forEach(function(r){ var k=r.c+'|'+r.t; if(seenR[k]) return; seenR[k]=1; IDX.r.push({o:r, h:nz([r.t,r.src,cname(r.c),gname(r.g)].join(' '))}); });
       NEWS.forEach(function(n){ IDX.n.push({o:n, h:nz([n.n?('sinal '+n.n+' '+parseInt(n.n,10)+' nº'+n.n):'',((n.tags||[]).indexOf('Eleições e regras')>=0?'método metodo golpismo antidemocrático':''),n.tipo,n.t,n.s,n.why,(n.tags||[]).join(' '),(n.alerta||[]).map(function(k){ return 'alerta '+ALERTA[k]; }).join(' '),(n.src||[]).map(function(x){return x[0];}).join(' ')].join(' '))}); });
       document.querySelectorAll('#px-flavio .fx-list > li').forEach(function(li){ var h=li.closest('ul'); while(h && h.tagName!=='H4') h=h.previousElementSibling;
         IDX.f.push({o:li, p:h?h.textContent.trim():'', h:nz('flavio bolsonaro '+(h?h.textContent:'')+' '+li.textContent)}); });

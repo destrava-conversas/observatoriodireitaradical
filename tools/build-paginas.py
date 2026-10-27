@@ -24,7 +24,7 @@ svgdefs = frag('_svgdefs.html')
 upd = re.search(r'<p class="upd">([^<]*)</p>', home).group(1)
 
 HOME_ANCHORS = {'#topo': '../', '#busca': '../?busca'}
-PAGES = {'quem-sao-eles/': 'quem', 'metodo/': 'metodo'}
+PAGES = {'quem-sao-eles/': 'quem', 'metodo/': 'metodo', 'se-te-disserem/': 'respostas'}
 
 def fix_top(t, page):
     def href(m):
@@ -123,6 +123,13 @@ page('metodo/', 'metodo', 'Método e critérios · ' + BRAND,
      'Método e critérios',
      'Por que o painel existe, como cada ação é escolhida e classificada, quais fontes valem e como tratamos seus dados.',
      frag('_obs.html') + crit + frag('_info.html'))
+
+# Se te disserem…
+page('se-te-disserem/', 'respostas', 'Se te disserem… · ' + BRAND,
+     'Frases que circulam sobre a extrema direita e a resposta curta, com dado e fonte, para usar numa conversa.',
+     'Se te disserem…',
+     'Frases que circulam e a resposta curta, com dado e fonte, para usar numa conversa. O assunto é o fato, não a pessoa.',
+     frag('_respostas.html'))
 
 # itens de Flávio para a busca da home
 fl = re.search(r'<section class="px-sec" id="px-flavio">(.*?)</section>', quem, re.S).group(1)

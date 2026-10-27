@@ -1873,3 +1873,26 @@ html[data-page] #parcas .lg-panel{margin-top:0}
 .hl-st{font-family:'Bricolage Grotesque','Public Sans',system-ui,sans-serif;font-weight:800;font-size:18px;line-height:1.25}
 .hl-sx{font-size:14.5px;line-height:1.45;color:#DDE4F3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .hl-sall{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 18px;border-radius:999px;background:var(--obs-acc);color:var(--obs-navy);font-weight:800;font-size:15px;text-decoration:none}
+
+/* comparação com Lula desligada (ver LULA_CMP em js/app.js) */
+html:not(.lula-cmp) .lula-only,html:not(.lula-cmp) #comparacao{display:none!important}
+
+/* Se te disserem… */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.rsp{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:14px}
+.rsp-i{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;scroll-margin-top:84px}
+.rsp-k{display:block;font-family:'Public Sans',system-ui,sans-serif;font-size:12.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
+.rsp-q{margin:0 0 14px;font-family:'Bricolage Grotesque','Public Sans',system-ui,sans-serif;font-weight:800;font-size:clamp(20px,2.6vw,24px);line-height:1.25}
+.rsp-q .rsp-k{color:var(--contra-ink)}
+.rsp-a{margin:0 0 10px;padding:14px 16px;border-radius:10px;background:var(--obs-acc);color:var(--obs-navy);font-size:17px;line-height:1.5;font-weight:600}
+.rsp-a .rsp-k{color:var(--obs-navy);opacity:.8}
+.rsp-s{margin:0 0 12px;font-size:14.5px;color:var(--muted)}
+.rsp-s a{color:var(--pro-ink);font-weight:600}
+.rsp-act{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.rsp-cp{font:inherit;font-size:15px;font-weight:700;min-height:44px;padding:0 18px;border-radius:999px;border:2px solid var(--obs-navy);background:var(--obs-navy);color:var(--obs-acc);cursor:pointer}
+.rsp-cp:focus-visible,.rsp-go:focus-visible{outline:3px solid var(--pro);outline-offset:2px}
+.rsp-go{font-weight:700;color:var(--pro-ink)}
+.rsp-note{margin:18px 0 0;color:var(--muted);font-size:15px}
+.rsp-note a{color:var(--pro-ink);font-weight:600}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rsp-cp{background:var(--obs-acc);color:var(--obs-navy);border-color:var(--obs-acc)}}
+:root[data-theme="dark"] .rsp-cp{background:var(--obs-acc);color:var(--obs-navy);border-color:var(--obs-acc)}
