@@ -1666,7 +1666,7 @@
     /* chamada */
     var y=FH+72, kick=String(o.kick||'').toUpperCase();
     g.font='600 23px '+S; ls('2.8px'); g.fillStyle=o.kc; g.fillText(kick, P, y); var kx=P+g.measureText(kick).width;
-    if(o.alerta){ var at='⚠ '+String(o.alerta).toUpperCase(); g.fillStyle='#FF8A80'; g.fillText(at, kx+22, y); kx+=22+g.measureText(at).width; }
+    if(o.alerta){ var at='⚠ '+String(o.alerta).toUpperCase(), aw=g.measureText(at).width; g.fillStyle='#FF8A80'; if(kx+22+aw > W-P){ y+=36; g.fillText(at, P, y); kx=P+aw; } else { g.fillText(at, kx+22, y); kx+=22+aw; } }
     if(o.tag){ var tg=String(o.tag).toUpperCase(); g.font='600 21px '+S; ls('1.8px'); var tw=g.measureText(tg).width; g.fillStyle=o.kc; roundRect(g, kx+18, y-25, tw+26, 36, 6); g.fill(); g.fillStyle='#0A1A3F'; g.fillText(tg, kx+31, y); }
     ls('0px'); y+=30;
     /* fonte, logo acima da linha do rodapé */
