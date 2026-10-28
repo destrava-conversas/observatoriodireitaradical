@@ -70,6 +70,7 @@ function serve() {
   const panel = await ctx.newPage();
   await panel.goto('http://127.0.0.1:' + port + '/', { waitUntil: 'networkidle' });
   await panel.evaluate(() => document.fonts.ready);
+  await panel.evaluate(() => window.__prepShare());
   const og = await ctx.newPage();
   for (const n of todo) {
     const dir = path.join(ROOT, 'sinais', n.n); fs.mkdirSync(dir, { recursive: true });
@@ -87,12 +88,14 @@ function serve() {
   const png = d => Buffer.from(d.split(',')[1], 'base64');
   let nb = 0;
   for (const n of NEWS.filter(x => x.bolso)) {
-    const d = await panel.evaluate(o => window.__bolsoCanvas(o).toDataURL('image/png'), { kick: 'ARGUMENTO DE BOLSO · SINAL ' + n.n, text: n.bolso, fonte: n.bf || '' });
+    const d = await panel.evaluate(o => window.__bolsoCanvas(o).toDataURL('image/png'), { kick: 'Argumento de bolso · Sinal ' + n.n, text: n.bolso, fonte: n.bf || '', sinal: n.n });
     fs.writeFileSync(path.join(ROOT, 'sinais', n.n, 'argumento-' + n.n + '.png'), png(d)); nb++;
   }
   const un = t => t.replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
   const frag = fs.readFileSync(path.join(ROOT, 'tools/paginas/_respostas.html'), 'utf8');
   const outR = path.join(ROOT, 'se-te-disserem', 'img'); fs.mkdirSync(outR, { recursive: true });
+  /* faixa do olho de cada resposta (img/olhos): a etapa ou o alerta do assunto */
+  const RSP_OLHO = { exilados: 'fuga-b', '8-de-janeiro': 'violencia-a', prorrogacao: 'regras-a', tarifas: 'fora-b' };
   let nr = 0;
   for (const m of frag.matchAll(/<li class="rsp-i" id="([^"]+)"[^>]*>([\s\S]*?)\n      <\/li>/g)) {
     const id = m[1], body = m[2];
@@ -100,7 +103,7 @@ function serve() {
     const a = un((body.match(/<p class="rsp-a">([\s\S]*?)<\/p>/) || [])[1] || '').replace(/^Responda/, '');
     const f = un((body.match(/<p class="rsp-s">([\s\S]*?)<\/p>/) || [])[1] || '').replace(/^Fonte:\s*/, '');
     const xm = m[0].match(/data-img="([^"]*)"/); const extra = xm ? un(xm[1]).split(' | ') : null;
-    const d = await panel.evaluate(o => window.__bolsoCanvas(o).toDataURL('image/png'), { kick: 'SE TE DISSEREM', quote: q, label: 'Responda', text: a, fonte: f, extra: extra, cta: 'Ver mais no site', theme: 'rsp' });
+    const d = await panel.evaluate(o => window.__bolsoCanvas(o).toDataURL('image/png'), { kick: 'Se te disserem', quote: q, label: 'Responda', text: a, fonte: f, extra: extra, theme: 'rsp', olho: RSP_OLHO[id] || 'padrao-a' });
     fs.writeFileSync(path.join(outR, id + '.png'), png(d)); nr++;
   }
   console.log('Argumentos de bolso:', nb, '· respostas:', nr);
