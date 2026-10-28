@@ -45,27 +45,19 @@ const V=[
 /* Muro: concreto e blocos gastos, cartazes rasgados sem texto legível, sujeira e pichações antigas apagadas.
    O olho vem por cima como spray: borda irregular, névoa de tinta (overspray), tinta falhada e escorridos. */
 function wall(seed){const r=rng(seed*3+11);let s='';
- const G=['#3b3d40','#36383b','#414346','#323437','#44464a','#2f3134'];
+ const G=['#12275c','#0f2153','#162d66','#0d1d4b','#1a3270','#102458'];
  // blocos de concreto com rejunte
  const bw=150,bh=62;for(let row=0;row*bh<H0+bh;row++){const off=row%2?-bw/2:0;for(let x=off;x<W0+bw;x+=bw){
   s+=`<rect x="${x+2}" y="${row*bh+2}" width="${bw-4}" height="${bh-4}" fill="${G[Math.floor(r()*G.length)]}"/>`;}}
- // cartazes rasgados: retângulos com bordas rasgadas, papel envelhecido, só barras ilegíveis no lugar de texto
- for(let i=0;i<6;i++){const x0=r()*W0-60,y0=r()*H0-60,w=120+r()*190,h=110+r()*170,rot=(r()-.5)*10,pts=[];
-  const edge=(xa,ya,xb,yb,j,n)=>{for(let k=0;k<n;k++){const t=k/n;pts.push([(xa+(xb-xa)*t+(r()-.5)*j).toFixed(0),(ya+(yb-ya)*t+(r()-.5)*j).toFixed(0)].join(','));}};
-  edge(x0,y0,x0+w,y0,r()<.6?26:6,12);edge(x0+w,y0,x0+w,y0+h,r()<.5?22:5,9);edge(x0+w,y0+h,x0,y0+h,r()<.6?30:6,12);edge(x0,y0+h,x0,y0,5,9);
-  const tone=['#b9b3a6','#a8a294','#c6c0b3','#8f8a80'][Math.floor(r()*4)];
-  s+=`<g transform="rotate(${rot.toFixed(1)} ${(x0+w/2).toFixed(0)} ${(y0+h/2).toFixed(0)})" opacity="${(.32+r()*.22).toFixed(2)}"><polygon points="${pts.join(' ')}" fill="${tone}"/>`;
-  s+=`<rect x="${(x0+w*.1).toFixed(0)}" y="${(y0+h*.12).toFixed(0)}" width="${(w*.8).toFixed(0)}" height="${(h*.22).toFixed(0)}" fill="#1b1c1e" opacity=".7"/>`;
-  for(let l=0;l<4;l++){const lw=w*(.3+r()*.5);s+=`<rect x="${(x0+w*.1).toFixed(0)}" y="${(y0+h*.45+l*h*.12).toFixed(0)}" width="${lw.toFixed(0)}" height="${(5+r()*6).toFixed(0)}" fill="#1b1c1e" opacity=".45"/>`;}
-  s+=`</g>`;}
  // pichações antigas, apagadas e ilegíveis
  for(let i=0;i<5;i++){let x=r()*W0,y=40+r()*(H0-80),d=`M${x.toFixed(0)},${y.toFixed(0)}`;for(let k=0;k<7;k++){x+=18+r()*34;y+=(r()-.5)*60;d+=` Q${(x-10).toFixed(0)},${(y-30*(r()-.5)).toFixed(0)} ${x.toFixed(0)},${y.toFixed(0)}`;}
-  s+=`<path d="${d}" fill="none" stroke="${['#15161a','#5b5e63','#24262a'][i%3]}" stroke-width="${(4+r()*6).toFixed(0)}" stroke-linecap="round" opacity="${(.25+r()*.25).toFixed(2)}"/>`;}
+  s+=`<path d="${d}" fill="none" stroke="${['#071233','#2a4588','#0a1740'][i%3]}" stroke-width="${(4+r()*6).toFixed(0)}" stroke-linecap="round" opacity="${(.25+r()*.25).toFixed(2)}"/>`;}
  // escorridos de sujeira
- for(let i=0;i<14;i++){const x=r()*W0,y=r()*H0*.6,l=40+r()*160;s+=`<rect x="${x.toFixed(0)}" y="${y.toFixed(0)}" width="${(2+r()*4).toFixed(1)}" height="${l.toFixed(0)}" fill="#121315" opacity="${(.15+r()*.2).toFixed(2)}"/>`;}
+ for(let i=0;i<14;i++){const x=r()*W0,y=r()*H0*.6,l=40+r()*160;s+=`<rect x="${x.toFixed(0)}" y="${y.toFixed(0)}" width="${(2+r()*4).toFixed(1)}" height="${l.toFixed(0)}" fill="#050c24" opacity="${(.18+r()*.22).toFixed(2)}"/>`;}
  return s;}
 const wallFx=(seed)=>`<filter id="gr${seed}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="${seed}"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .7"/></feComponentTransfer></filter>
-<filter id="st${seed}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".008 .02" numOctaves="3" seed="${seed+3}"/><feColorMatrix values="0 0 0 0 .04  0 0 0 0 .04  0 0 0 0 .05  0 0 0 1.4 -.55"/></filter>
+<filter id="st${seed}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".008 .02" numOctaves="3" seed="${seed+3}"/><feColorMatrix values="0 0 0 0 .01  0 0 0 0 .03  0 0 0 0 .10  0 0 0 1.4 -.5"/></filter>
+<filter id="pl${seed}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".035 .06" numOctaves="4" seed="${seed+21}"/><feColorMatrix values="0 0 0 0 .45  0 0 0 0 .58  0 0 0 0 .95  0 0 0 .75 -.3"/></filter>
 <radialGradient id="vg${seed}" cx="50%" cy="50%" r="75%"><stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".6"/></radialGradient>
 <filter id="sp${seed}" x="-5%" y="-10%" width="110%" height="125%">
  <feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="2" seed="${seed+5}" result="n"/>
@@ -87,7 +79,7 @@ function drips(seed,c,skip){if(skip)return '';const r=rng(seed*7+5);let s='';con
 const banner=(v,i)=>{const [c,k,,acc,eye]=v,seed=101+i*37;const dc=c==='violencia'?R:L;
  const wash=(eye.match(/<path d="(M[^"]+Z)" fill="#0A1A3F" fill-opacity="\.55"/)||[])[1];
  const eyeW=eye.replace(/fill="#0A1A3F" fill-opacity="\.55"/g,'fill="none"');
- return `<svg xmlns="http://www.w3.org/2000/svg" width="${W0}" height="${H0}" viewBox="0 0 ${W0} ${H0}"><defs>${wallFx(seed)}</defs><rect width="${W0}" height="${H0}" fill="#2c2e31"/>${wall(seed)}<rect width="${W0}" height="${H0}" filter="url(#st${seed})"/><rect width="${W0}" height="${H0}" filter="url(#gr${seed})" opacity=".5" style="mix-blend-mode:overlay"/><rect width="${W0}" height="${H0}" filter="url(#gr${seed})" opacity=".22"/><rect width="${W0}" height="${H0}" fill="url(#vg${seed})"/>${wash?`<path d="${wash}" fill="#0b0c10" opacity=".38"/>`:''}<g filter="url(#sp${seed})">${eyeW}${drips(seed,dc,c==='anistia')}</g></svg>`;};
+ return `<svg xmlns="http://www.w3.org/2000/svg" width="${W0}" height="${H0}" viewBox="0 0 ${W0} ${H0}"><defs>${wallFx(seed)}</defs><rect width="${W0}" height="${H0}" fill="#0E2052"/>${wall(seed)}<rect width="${W0}" height="${H0}" filter="url(#pl${seed})"/><rect width="${W0}" height="${H0}" filter="url(#st${seed})"/><rect width="${W0}" height="${H0}" filter="url(#gr${seed})" opacity=".7" style="mix-blend-mode:overlay"/><rect width="${W0}" height="${H0}" filter="url(#gr${seed})" opacity=".28"/><rect width="${W0}" height="${H0}" fill="url(#vg${seed})"/>${wash?`<path d="${wash}" fill="#050c26" opacity=".45"/>`:''}<g filter="url(#sp${seed})">${eyeW}${drips(seed,dc,c==='anistia')}</g></svg>`;};
 
 const OUT = path.join(__dirname, '..', 'img', 'olhos');
 (async () => {
