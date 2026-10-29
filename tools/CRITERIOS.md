@@ -25,7 +25,7 @@ Um método é um padrão de conduta descrito pela ciência política (régua: os
 6. Fugir e se dizer perseguido ("exílio").
 7. Pedir anistia ou perdão.
 
-No arquivo data/sinais.js, a etapa vai no campo `etapa` (número de 1 a 7). Ela escolhe o olho que ilustra a imagem do Sinal: 1 a 3 usam o olho de Regras do jogo, 4 o de Violência, 5 o de Pressão de fora, 6 o de Fuga e 7 o de Anistia. Sem etapa, vale o primeiro alerta; sem alerta, o olho padrão. As faixas ficam em img/olhos (tools/build-olhos.js).
+No arquivo data/sinais.js, a etapa vai no campo `etapa` (número de 1 a 7). Ela escolhe o olho que ilustra a imagem do Sinal: 1 a 3 usam o olho de Regras do jogo, 4 o de Violência, 5 o de Pressão de fora, 6 o de Fuga e 7 o de Anistia. Sem etapa, vale o primeiro alerta; sem alerta, o olho padrão. As faixas ficam em img/olhos e saem da colagem de referência em tools/olhos-ref (tools/build-olhos-colagem.py; o muro azul antigo é tools/build-olhos.js).
 
 ### Para um item ganhar destaque (home, carrossel, topo)
 - É novo (até 7 dias) ou é um marco: decisão judicial, condenação, prisão, fuga, votação.
