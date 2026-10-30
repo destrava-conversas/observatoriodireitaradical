@@ -33,6 +33,17 @@ No arquivo data/sinais.js, a etapa vai no campo `etapa` (número de 1 a 7). Ela 
 - Tem argumento de bolso verificado contra a fonte.
 - Tem alerta de "Regras do jogo" ou "Violência".
 
+## Dossiês (em construção, ver tools/DOSSIES-classificacao.md e tools/DOSSIES-textos.md)
+O painel tem duas frentes: Pautas de governo (ações que pioraram ou melhoraram) e Dossiês (provas). Os quatro dossiês seguem os sinais de alerta de Levitsky e Ziblatt: Regras do jogo, Adversário como inimigo, Violência e Liberdades.
+- Prova é um Sinal ou uma ação que responde à pergunta de um dossiê. A mesma ação é um registro só: aparece na pauta e, se couber, no dossiê.
+- Um Sinal só entra se responder à pergunta de pelo menos um dossiê. Notícia que não responde não entra, por mais relevante que seja. Sinais antigos que não se encaixam saem da linha principal, mas as páginas continuam no ar.
+- Ampliações declaradas: Regras do jogo inclui o desprezo ao direito internacional; Adversário como inimigo inclui grupos desumanizados (orientação sexual, gênero, origem, raça, religião, deficiência); Violência inclui a força do Estado sem limite legal.
+- Não há contraprova: o que não está no dossiê está fora. O "outro lado" de cada item continua obrigatório.
+- Parlamentares, líderes e influenciadores entram por Sinais, com fonte do grupo A e situação jurídica exata. Atos coletivos (ex.: assédio eleitoral) exigem fonte institucional com números (MPT, TSE, tribunais).
+- Desinformação só entra quando for sistemática (método), não uma fala isolada.
+- "Se te disserem…" deixa de ser frente própria e vira o fecho de cada dossiê.
+- Visual: Regras do jogo = raio na pupila; Adversário como inimigo = mira; Violência = olho vermelho com espinhos; Liberdades = risco cortando o olho.
+
 ## O que não entra
 Boato, post sem confirmação, vida pessoal, previsão, ataque pessoal, conteúdo que só reproduz a provocação sem o fato que a contradiz.
 
