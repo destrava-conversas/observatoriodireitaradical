@@ -41,3 +41,13 @@ As frases que circulam sobre o tema do dossiê, com a resposta curta sustentada 
 - Regras do jogo: "Eles são exilados políticos", "A prorrogação da votação foi fraude", "As tarifas são culpa do STF"
 - Violência: "O 8 de Janeiro foi só um protesto que saiu do controle"
 - Fora dos dossiês (voltam a uma pauta de governo): "vacina" e "desmatamento"
+
+---
+
+## Remédios (terceira camada de cada dossiê, a construir)
+Decisão do Ces (30/10/2026): cada dossiê fecha com "Remédios": soluções com base acadêmica e práticas de países com bons índices. Sem falsas simetrias e sem diminuir os riscos (paradoxo da tolerância, Popper: não se tolera a intolerância).
+- Medidor: onde cada país observado está no índice do dossiê (V-Dem / V-Party, índice de antipluralismo; RSF; CIVICUS; Freedom House; IDEA; ACLED). Conferir os números nos relatórios mais recentes antes de publicar.
+- Duas fontes de remédios: (1) países que reverteram a autocratização ("viradas" do V-Dem, como Brasil 2022 e Polônia 2023); (2) desenhos institucionais de países no topo dos índices (democracia defensiva alemã, órgãos eleitorais independentes, regulação de mídia, proteção a jornalistas).
+- Literatura: Levitsky e Ziblatt (grades de proteção e partidos como porteiros; *Como salvar a democracia*, 2023); Laura Gamboa, *Resisting Backsliding* (2022); Carothers e Press (Carnegie, 2022).
+- Responsabilização: o Brasil julgou e condenou a trama golpista; os EUA perdoaram os réus do 6 de Janeiro.
+- A metáfora da doença (sintomas, focos, remédios) é interna. O texto público mantém o tom firme pelos fatos.
