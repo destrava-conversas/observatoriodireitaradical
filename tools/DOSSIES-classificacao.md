@@ -4,7 +4,10 @@
 - Os casos de fronteira de **Violência** entram: violência de Estado pode levar à exceção.
 - Os casos de fronteira de **Inimigo** com grupos entram (LGBT, "ideologia de gênero"). Escolher um grupo para desumanizar segue a mesma lógica de ter um inimigo, como no nazismo contra judeus, negros, homossexuais e pessoas com deficiência. A pergunta do dossiê passa a dizer isso de forma explícita.
 - **Não há contraprova.** Se não está no dossiê, está fora. O "outro lado" de cada item continua obrigatório.
-- Ainda abertos: as fronteiras de Regras do jogo (3) e de Liberdades (6) e os Sinais 013 e 015.
+- **Regras do jogo:** a captura de Maduro entra, como desprezo ao direito internacional, junto com os ataques a barcos [324], que também ficam em Violência. A eleição pelo correio na Polônia [142] e o prazo ignorado em El Salvador [71] saem.
+- **Liberdades:** o regime de exceção de Bukele [72/73/122] entra, porque prender sem limite abre precedente para prender inimigos; ele também fica em Violência. Saem Télam [175], Agência de Mídia Global [108], negociação coletiva [160], Inpe [80] e Lex Czarnek [189].
+- **Sinal 013** sai por ser só retórica; entra se virar ato.
+- **Sinal 015** sai. Desinformação só entra quando for sistemática (método), não uma mentira num debate.
 
 Régua: os quatro sinais de alerta de Levitsky e Ziblatt (*Como as democracias morrem*).
 
@@ -25,7 +28,7 @@ Visual de cada dossiê, a partir da colagem:
 
 ## 1. Regras do jogo
 
-*Pergunta do teste: rejeita ou enfraquece as regras democráticas? Isso inclui não aceitar resultado, atacar ou capturar árbitros (cortes, autoridades eleitorais, polícia) e governar contornando a Constituição.*
+*Pergunta do teste: rejeita ou enfraquece as regras democráticas? Isso inclui não aceitar resultado, atacar ou capturar árbitros (cortes, autoridades eleitorais, polícia) governar contornando a Constituição e desprezar o direito internacional.*
 
 ### Sinais (✅ 29)
 
@@ -70,10 +73,13 @@ Visual de cada dossiê, a partir da colagem:
 - [313] EUA: voos de deportação saem no dia em que um juiz manda suspender
 - [33] EUA: ordem contra a cidadania por nascimento (junta com o Sinal 039)
 
-### ⚖️ Fronteira
-- [142] Polônia: eleição de 2020 só pelo correio. Mudou a regra em cima da hora, mas foi abandonada.
-- [71] El Salvador: Assembleia ignora o prazo da Suprema Corte sobre reconhecimento de gênero
-- [325] EUA: captura de Maduro sem autorização do Congresso. É mais política externa que regra doméstica.
+### ✅ Direito internacional (decisão do Ces)
+- [325] EUA: captura de Maduro em Caracas, sem autorização do Congresso
+- [324] EUA: ataques a barcos no Caribe e no Pacífico, sem julgamento (também em Violência)
+
+### ❌ Saem
+- [142] Polônia: eleição só pelo correio
+- [71] El Salvador: prazo da Suprema Corte ignorado
 
 ---
 
@@ -97,7 +103,7 @@ Visual de cada dossiê, a partir da colagem:
 - [3] Hungria: "ideologia de gênero" como inimigo público
 - [16] Polônia: "ideologia LGBT" mais perigosa que o comunismo
 - [47] Argentina: Milei chama a "ideologia de gênero" de abuso infantil
-### ⚖️ Ainda aberto
+### ❌ Sai
 - Sinal 015: checagem aponta 7 falas falsas ou enganosas de Flávio no debate. É desinformação, não demonização do adversário.
 
 ### Para buscar (a nova frente)
@@ -137,8 +143,8 @@ Visual de cada dossiê, a partir da colagem:
 
 *Pergunta do teste: restringe as liberdades civis de opositores, críticos, imprensa ou sociedade civil?*
 
-### Sinais (⚖️ 1)
-- 013 presidente da Colômbia declara "guerra total" ao "wokismo". É retórica e ainda não é medida. Entra se vier ato concreto.
+### Sinais (nenhum por enquanto)
+- ❌ 013 presidente da Colômbia declara "guerra total" ao "wokismo". É retórica e ainda não é medida. Entra se vier ato concreto.
 
 ### Ações (✅ 22)
 
@@ -172,13 +178,15 @@ Visual de cada dossiê, a partir da colagem:
 - [69] El Salvador: proibição de conteúdo sobre identidade sexual na TV estatal
 - [302] EUA: cerca de 170 cidadãos americanos detidos pela imigração, alguns sem advogado
 
-### ⚖️ Fronteira
+### ✅ Regime de exceção (decisão do Ces)
+- [72/73/122] El Salvador: 79 mil detidos e 265 mortes sob custódia (também em Violência)
+
+### ❌ Saem
 - [175] Argentina: fim da Télam, a agência estatal de notícias
 - [108] EUA: cortes na Agência de Mídia Global
 - [160] EUA: fim da negociação coletiva de servidores, "por segurança nacional"
 - [80] Brasil: exoneração do diretor do Inpe depois de divulgar o desmatamento
 - [189] Polônia: Lex Czarnek, contra ONGs nas escolas (vetada pelo presidente)
-- [72/73/122] El Salvador: regime de exceção (ver Violência)
 
 ---
 
@@ -210,10 +218,10 @@ As checagens (012, 017 a 020) podem migrar para o "Se te disserem…" de cada do
 
 | Dossiê | Sinais | Ações | Fronteira |
 |---|---|---|---|
-| Regras do jogo | 29 | 15 | 3 |
-| Adversário como inimigo | 4 | 7 | 1 (Sinal 015) |
+| Regras do jogo | 29 | 17 | 0 |
+| Adversário como inimigo | 4 | 7 | 0 |
 | Violência | 5 | 10 | 0 |
-| Liberdades | 0 (1 ⚖️) | 22 | 6 |
-| Saem | 13 | — | — |
+| Liberdades | 0 | 23 | 0 |
+| Saem | 15 (os 13 + 013 e 015) | — | — |
 
 Alguns itens contam em mais de um dossiê. "Junta com" quer dizer que o Sinal e a ação tratam do mesmo fato e viram uma prova só.
