@@ -2158,3 +2158,7 @@ html.pbgov .pickbar .pb-sel .pb-dot,html.pbgov .pickbar .pb-sel .pb-k:nth-of-typ
 .selpill .rg-k{font-weight:600;opacity:.85;margin-right:4px}
 html.pk .hl-subl,html.pk .hl-subs{display:none}
 html.pk .hl-subf{margin-top:16px}
+.selpill.has-gov{flex-wrap:wrap;white-space:normal}
+.selpill .res-gov{flex:none}
+@media (max-width:420px){.selpill.has-gov{font-size:15px}.hl-suba .tf-rankbtn,.hl-suba .tf-reset{font-size:13px;padding:0 11px;min-height:36px}.hl-suba{gap:6px;flex-wrap:nowrap}}
+@media (max-width:420px){.selpill.has-gov{font-size:14px;padding:6px 12px;gap:2px}.selpill .rg-k{margin-right:2px}.selpill .res-gov{padding-right:22px;background-position:right 4px center}}
