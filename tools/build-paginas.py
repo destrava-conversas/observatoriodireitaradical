@@ -53,6 +53,7 @@ def page(slug, key, title, desc, h1, lead, body, extra_top=''):
 <html lang="pt-BR" data-page="{key}">
 <head>
 <meta charset="utf-8">
+<script>try{{var t=localStorage.getItem("pd-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}}catch(e){{}}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">

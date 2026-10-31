@@ -166,7 +166,7 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .sl li.pop{animation:slpop .32s ease-out both;animation-delay:var(--d,0ms)}
 @keyframes slpop{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.sl li.pop,.sl-st.flash{animation:none}}
-:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}/* tema no menu */.nav-theme{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:6px;padding:10px 12px 4px;border-top:1px solid var(--line);margin-top:6px}.nav-theme .nt-k{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:auto}.nav-theme button{font:inherit;font-size:13.5px;font-weight:700;min-height:34px;padding:0 11px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}.nav-theme button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 `;
 
 const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">';
@@ -176,6 +176,7 @@ function head({ title, desc, canonical, image, imgW, imgH, rel, type }) {
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<script>try{var t=localStorage.getItem("pd-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
@@ -223,7 +224,9 @@ const topbar = (rel, here) => `<header class="top" id="topo"><div class="top-in"
 <a href="${rel}metodo/">Método e critérios</a>
 <a href="${rel}metodo/#informacoes">Privacidade e fontes</a>
 <a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener">Participe</a>
+<div class="nav-theme" role="group" aria-label="Tema da página"><span class="nt-k">Tema</span><button type="button" data-theme-set="auto">Automático</button><button type="button" data-theme-set="light">Claro</button><button type="button" data-theme-set="dark">Escuro</button></div>
 </nav>
+<script>(function(){var K="pd-theme";function cur(){try{return localStorage.getItem(K)||"auto"}catch(e){return "auto"}}function ap(v){var h=document.documentElement;if(v==="auto")h.removeAttribute("data-theme");else h.setAttribute("data-theme",v);document.querySelectorAll("[data-theme-set]").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-theme-set")===v?"true":"false")})}document.querySelectorAll("[data-theme-set]").forEach(function(b){b.addEventListener("click",function(e){e.stopPropagation();var v=b.getAttribute("data-theme-set");try{if(v==="auto")localStorage.removeItem(K);else localStorage.setItem(K,v)}catch(x){}ap(v)})});ap(cur())})();</script>
 </div></header>
 <a class="totop" id="totop" href="#topo" aria-label="Voltar ao topo" hidden>↑</a>`;
 

@@ -2,6 +2,7 @@
 <html lang="pt-BR" data-page="respostas">
 <head>
 <meta charset="utf-8">
+<script>try{var t=localStorage.getItem("pd-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
@@ -22,7 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://destrava-conversas.com.br/observatoriodireitaradical/og-observatorio.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/painel.css?v=20261031r">
+<link rel="stylesheet" href="../css/painel.css?v=20261031s">
 </head>
 <body>
 <div class="topbar" id="topo">
@@ -41,7 +42,9 @@
       <a href="../metodo/">Método e critérios</a>
       <a href="../metodo/#informacoes">Privacidade e fontes</a>
       <a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener" data-participe>Participe</a>
+      <div class="nav-theme" role="group" aria-label="Tema da página"><span class="nt-k">Tema</span><button type="button" data-theme-set="auto">Automático</button><button type="button" data-theme-set="light">Claro</button><button type="button" data-theme-set="dark">Escuro</button></div>
     </nav>
+    <script>(function(){var K="pd-theme";function cur(){try{return localStorage.getItem(K)||"auto"}catch(e){return "auto"}}function ap(v){var h=document.documentElement;if(v==="auto")h.removeAttribute("data-theme");else h.setAttribute("data-theme",v);document.querySelectorAll("[data-theme-set]").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-theme-set")===v?"true":"false")})}document.querySelectorAll("[data-theme-set]").forEach(function(b){b.addEventListener("click",function(e){e.stopPropagation();var v=b.getAttribute("data-theme-set");try{if(v==="auto")localStorage.removeItem(K);else localStorage.setItem(K,v)}catch(x){}ap(v)})});ap(cur())})();</script>
     <a class="sinais-btn" href="../dossies/" aria-label="Abrir os Dossiês"><span class="dot" aria-hidden="true"></span>Dossiês</a>
     <a class="rsp-btn" href="../sinais/" aria-label="Abrir os Sinais"><span class="dot" aria-hidden="true"></span><span class="rs-l">Sinais</span><span class="rs-s" aria-hidden="true">Sinais</span></a>
     <a class="parcas-btn" href="../quem-sao-eles/" aria-label="Ir para Quem são eles">Quem são</a>
@@ -140,14 +143,14 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
   </footer>
 </main>
 
-<script src="../data/base.js?v=20261031r"></script>
-<script src="../data/acoes.js?v=20261031r"></script>
-<script src="../data/fontes.js?v=20261031r"></script>
-<script src="../data/sinais.js?v=20261031r"></script>
-<script src="../data/rede.js?v=20261031r"></script>
-<script src="../data/dossies.js?v=20261031r"></script>
-<script src="../data/flavio.js?v=20261031r"></script>
-<script src="../js/app.js?v=20261031r"></script>
+<script src="../data/base.js?v=20261031s"></script>
+<script src="../data/acoes.js?v=20261031s"></script>
+<script src="../data/fontes.js?v=20261031s"></script>
+<script src="../data/sinais.js?v=20261031s"></script>
+<script src="../data/rede.js?v=20261031s"></script>
+<script src="../data/dossies.js?v=20261031s"></script>
+<script src="../data/flavio.js?v=20261031s"></script>
+<script src="../js/app.js?v=20261031s"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
