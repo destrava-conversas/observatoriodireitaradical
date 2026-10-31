@@ -2103,3 +2103,17 @@ header.hero-x.hero-lente{padding-bottom:40px}
 .hl-sel select:focus-visible{outline:3px solid #fff;outline-offset:3px}
 label.hl-k{display:block;text-align:center}
 #result .tf-main{display:none}
+
+/* dossiês na home, depois do resultado */
+.dz-home{margin:34px 0 10px;text-align:center}
+.dz-home h2{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(26px,4vw,34px);margin:0 0 6px}
+.dz-home-l{margin:0 auto 18px;max-width:60ch;color:var(--muted);font-size:16px}
+.dz-home .hl-dz{text-align:left}
+/* botões do topo: Dossiês com conteúdo verde; Sinais com marcador verde */
+.sinais-btn,.topbar .sinais-btn{color:#15803D}
+.sinais-btn .dot{background:#16A34A}
+.sinais-btn:hover{background:#E8F7EC}
+@keyframes sinal-pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.55);opacity:1}70%{box-shadow:0 0 0 6px rgba(22,163,74,0);opacity:.55}100%{box-shadow:0 0 0 0 rgba(22,163,74,0);opacity:1}}
+.topbar .rsp-btn{gap:8px}
+.topbar .rsp-btn .dot{width:8px;height:8px;border-radius:50%;background:#A6F36A;flex:none}
+html:not(.pk) header.hero-lente ~ #result{display:none}

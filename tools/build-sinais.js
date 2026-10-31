@@ -52,13 +52,14 @@ a{color:var(--link)}
 .brand:hover .eye{transform:scale(1.06)}
 .eye i{width:12px;height:12px;border-radius:50%;background:var(--acc);display:block}
 .tb{height:40px;box-sizing:border-box;padding:0 16px;border-radius:999px;font:inherit;font-size:15px;font-weight:800;display:inline-flex;align-items:center;gap:8px;text-decoration:none;white-space:nowrap;border:2px solid #fff;cursor:pointer}
-.tb.sin{background:#fff;color:#A64A08}
-.tb.sin:hover{background:#FBEBDD}
-.tb.sin .dot{width:8px;height:8px;border-radius:50%;background:#C2570C;animation:pulse 2.2s ease-out infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(194,87,12,.55);opacity:1}70%{box-shadow:0 0 0 6px rgba(194,87,12,0);opacity:.55}100%{box-shadow:0 0 0 0 rgba(194,87,12,0);opacity:1}}
+.tb.sin{background:#fff;color:#15803D}
+.tb.sin:hover{background:#E8F7EC}
+.tb.sin .dot{width:8px;height:8px;border-radius:50%;background:#16A34A;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.55);opacity:1}70%{box-shadow:0 0 0 6px rgba(22,163,74,0);opacity:.55}100%{box-shadow:0 0 0 0 rgba(22,163,74,0);opacity:1}}
 @media (prefers-reduced-motion:reduce){.tb.sin .dot{animation:none}.eye{transition:none}}
 .tb.bus{background:transparent;color:#fff}
-.tb.rsp{background:#4338CA;border-color:#4338CA;color:#fff}
+.tb.rsp{background:#4338CA;border-color:#4338CA;color:#fff;gap:8px}
+.tb.rsp .dot{width:8px;height:8px;border-radius:50%;background:#A6F36A;flex:none}
 .tb.rsp:hover{background:#3730A3;border-color:#fff}
 .tb.rsp .s2{display:none}
 @media (max-width:430px){.tb.rsp .l2{display:none}.tb.rsp .s2{display:inline}.tb{padding:0 12px}.top-in{gap:8px}}
@@ -208,7 +209,7 @@ const ICON_SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 const topbar = (rel, here) => `<header class="top" id="topo"><div class="top-in">
 <a class="brand" href="${rel}" aria-label="${esc(BRAND)}, ir para o painel" title="${esc(BRAND)}"><span class="eye" aria-hidden="true"><i></i></span></a>
 <a class="tb sin" href="${rel}dossies/" aria-label="Abrir os Dossiês"><span class="dot" aria-hidden="true"></span>Dossiês</a>
-<a class="tb rsp" href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''} aria-label="Abrir os Sinais"><span class="l2">Sinais</span><span class="s2" aria-hidden="true">Sinais</span></a>
+<a class="tb rsp" href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''} aria-label="Abrir os Sinais"><span class="dot" aria-hidden="true"></span><span class="l2">Sinais</span><span class="s2" aria-hidden="true">Sinais</span></a>
 <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
 <nav class="nav" id="nav" aria-label="Seções do painel">
 <a class="ext lula-only" href="${rel}economia/" hidden>E a Economia?</a>
