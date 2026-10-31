@@ -121,8 +121,8 @@ for D in DOS:
     doc = open(f, encoding='utf-8').read()
     doc = re.sub(r'(href|src)="\.\./(?!\.\./)', r'\1="../../', doc)
     nx = DOS[(DOS.index(D) + 1) % len(DOS)]
-    doc = doc.replace('<p class="pg-crumb"><a href="../../">← Painel completo</a></p>',
-                      '<p class="pg-crumb dz-crumb"><a class="dz-next" href="__DZ__%s/">Próximo<span class="dz-nl"> dossiê</span>: %s →</a></p>' % (nx['slug'], E(nx['n'])))
+    doc = doc.replace('<header class="pg-h">\n', '<header class="pg-h">\n    ' +
+                      '<p class="pg-crumb dz-crumb"><a class="dz-next" href="__DZ__%s/">Próximo<span class="dz-nl"> dossiê</span>: %s →</a></p>\n' % (nx['slug'], E(nx['n'])), 1)
     doc = doc.replace('href="__DZ__', 'href="../')  # links entre dossiês
     open(f, 'w', encoding='utf-8').write(doc)
 print('dossiês gerados:', ', '.join(x['slug'] for x in DOS))

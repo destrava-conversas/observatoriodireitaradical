@@ -78,7 +78,6 @@ def page(slug, key, title, desc, h1, lead, body, extra_top=''):
 <body>
 {extra_top}{fix_top(topbar, key)}<main class="wrap pg">
   <header class="pg-h">
-    <p class="pg-crumb"><a href="../">← Painel completo</a></p>
     <h1>{h1}</h1>
     <p class="pg-lead">{lead}</p>
     <p class="upd">{upd}</p>

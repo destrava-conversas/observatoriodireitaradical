@@ -293,7 +293,7 @@ ${(n.dossie || []).length ? `<p class="dzp">Prova do dossiê ${(n.dossie || []).
 ${prev ? `<a href="../${prev.n}/"><span>← Sinal ${prev.n}</span>${esc(short(prev.t))}</a>` : ''}
 ${next ? `<a class="nx" href="../${next.n}/"><span>Sinal ${next.n} →</span>${esc(short(next.t))}</a>` : ''}
 </nav>
-<p class="crumb" style="margin-top:22px"><a href="${rel}">Ver o painel completo</a> · <a href="${rel}sinais/">Todos os Sinais</a></p>
+<p class="crumb" style="margin-top:22px"><a href="${rel}sinais/">Todos os Sinais</a></p>
 </main>
 ${foot(rel)}
 <script>
@@ -336,7 +336,6 @@ function listPage() {
 <body>
 ${topbar(rel, 'lista')}
 <main>
-<p class="crumb"><a href="${rel}">← Painel completo</a></p>
 <h1 class="list-h1">Sinais</h1>
 <p class="lead">Os fatos que entraram como prova em pelo menos um dos <a href="${rel}dossies/">quatro dossiês</a>, com fonte e outro lado. Toque num Sinal para abrir a página dele e compartilhar.</p>
 <div class="filt" role="group" aria-label="Filtrar Sinais por dossiê">
