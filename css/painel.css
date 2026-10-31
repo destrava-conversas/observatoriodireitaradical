@@ -2078,3 +2078,22 @@ header.hero-x.hero-lente{padding-bottom:40px}
 :root[data-theme="dark"] .dz-i{border-left-color:#A6F36A}
 :root[data-theme="dark"] .dz-n,:root[data-theme="dark"] .dz-h3 span,:root[data-theme="dark"] .dz-gov span{background:#A6F36A;color:#0A1A3F}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .dz-i{border-left-color:#A6F36A}:root:not([data-theme="light"]) .dz-n,:root:not([data-theme="light"]) .dz-h3 span,:root:not([data-theme="light"]) .dz-gov span{background:#A6F36A;color:#0A1A3F}}
+
+/* home: régua do espectro */
+.hl-rg{display:block;width:100%;max-width:760px;margin:30px auto 0;color:#fff;text-decoration:none;text-align:center}
+.rg-bar{display:flex;align-items:stretch;gap:0;height:40px}
+.rg-a,.rg-b{display:flex;align-items:center;justify-content:space-around;border-radius:999px;font-style:normal}
+.rg-a{flex:3;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.28);color:#D6DDEE}
+.rg-b{flex:2;background:#A6F36A;color:#0A1A3F}
+.rg-a i,.rg-b i{font-style:normal;font-weight:800;font-size:13.5px;letter-spacing:.01em;white-space:nowrap;padding:0 4px}
+.rg-cut{width:18px;flex:none;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.7) 0 4px,transparent 4px 8px) center/2px 100% no-repeat}
+.rg-leg{display:flex;margin-top:6px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.rg-la{flex:3;color:#AEB9D6}.rg-lb{flex:2;margin-left:18px;color:#A6F36A}
+.rg-t{display:block;margin-top:12px;font-size:15.5px;line-height:1.45;color:#D6DDEE}
+.rg-t b{color:#A6F36A;white-space:nowrap}
+.hl-rg:hover .rg-t b{text-decoration:underline}
+.hl-rg:focus-visible{outline:3px solid #fff;outline-offset:6px;border-radius:12px}
+@media (max-width:520px){.rg-bar{height:auto;flex-direction:column;gap:0}.rg-a,.rg-b{padding:8px 6px}.rg-cut{width:100%;height:16px;background:repeating-linear-gradient(to right,rgba(255,255,255,.7) 0 4px,transparent 4px 8px) center/100% 2px no-repeat}
+  .rg-leg{display:none}.rg-a::after{content:"disputa dentro das regras"}.rg-a,.rg-b{flex-wrap:wrap;row-gap:2px}
+  .rg-a::after,.rg-b::after{flex-basis:100%;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+  .rg-a::after{color:#AEB9D6}.rg-b::after{content:"o que o painel observa";color:#0A1A3F;opacity:.8}}
