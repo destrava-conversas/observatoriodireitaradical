@@ -544,7 +544,7 @@
       var s=window.__resGov; if(!s){ s=window.__resGov=document.createElement('select'); s.className='res-gov'; s.setAttribute('aria-label','Trocar o governo');
         [].slice.call(tp.options).forEach(function(o){ if(!o.value) return; var n=document.createElement('option'); n.value=o.value; n.textContent=o.value==='all'?'Todos os governos':o.textContent; s.appendChild(n); });
         s.addEventListener('change', function(){ tp.value=s.value; tp.dispatchEvent(new Event('change',{bubbles:true})); }); }
-      sp.innerHTML=''; sp.appendChild(el('span','',gn+' · ')); s.value=state.c; sp.appendChild(s); sp.classList.add('has-gov'); })();
+      sp.innerHTML=''; sp.appendChild(el('span','rg-k','Resultados com:')); s.value=state.c; sp.appendChild(s); sp.classList.add('has-gov'); })();
     var cLab = state.c==='all' ? 'Todos os governos' : cname(state.c);
     $('ctx-sel').textContent = gn + ' · ' + cLab;
     (function(){ var box=$('sel-crit'); box.innerHTML=''; var t = state.g==='all' ? '' : (CRITERIA[state.g] || ''); box.hidden = !t; if(!t) return;
