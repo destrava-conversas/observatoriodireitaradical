@@ -88,7 +88,7 @@ for D in DOS:
                          % (E(str(a.get('y') or '')), E(GN.get(a['g'], a['g'])), E(a['t']), ol, fl))
             b.append('    </ol>\n')
     b.append('  </section>\n')
-    if D.get('rsp'):
+    if False and D.get('rsp'):
         lis = []
         for rid in D['rsp']:
             m = re.search(r'      <li class="rsp-i" id="' + re.escape(rid) + r'">.*?\n      </li>', RSP, re.S)
@@ -108,3 +108,14 @@ for D in DOS:
     doc = doc.replace('href="__DZ__', 'href="../')  # links entre dossiês
     open(f, 'w', encoding='utf-8').write(doc)
 print('dossiês gerados:', ', '.join(x['slug'] for x in DOS))
+
+# índice: dossies/index.html
+cards = []
+for D in DOS:
+    sn, ac = provas(D['k'])
+    cards.append('<li><a href="%s/"><img src="../img/olhos/olho-%s.jpg" alt="" width="1080" height="300"><span class="dt"><b>%s</b><span>%s</span><em>%d provas · abrir o dossiê →</em></span></a></li>'
+                 % (D['slug'], D['olho'], E(D['n']), E(D['q']), len(sn) + len(ac)))
+body = ('  <ul class="dzc">' + ''.join(cards) + '</ul>\n'
+        '  <section class="dz-s"><h2>Como os dossiês funcionam</h2><p>Cada dossiê responde a uma pergunta do livro de Steven Levitsky e Daniel Ziblatt. Uma prova entra quando responde a essa pergunta, com fonte e outro lado: pode ser um <a href="../sinais/">Sinal</a> (um fato, uma fala, uma decisão) ou uma ação de governo já registrada nas pautas. Notícia que não responde a nenhuma pergunta não entra.</p></section>\n')
+page('dossies/', 'dossies', 'Dossiês · ' + BRAND, 'Os quatro sinais de alerta de Como as democracias morrem e as provas de cada um, com fonte e outro lado.',
+     'Dossiês', 'Os quatro sinais de alerta de Levitsky e Ziblatt, em <i>Como as democracias morrem</i>, e as provas que o painel reuniu para cada um.', body)

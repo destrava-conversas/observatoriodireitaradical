@@ -14,6 +14,9 @@ const NEWS = ctx.window.PD.NEWS.filter(n => n.n);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'data/dossies.js'), 'utf8').replace('window.PD = window.PD || {};', ''), ctx);
 const DOSSIES = ctx.window.PD.DOSSIES || [];
 const INLINE = NEWS.filter(n => (n.dossie || []).length);
+const RSPF = fs.readFileSync(path.join(ROOT, 'tools/paginas/_respostas.html'), 'utf8');
+const rspOf = id => { const m = RSPF.match(new RegExp('<li class="rsp-i" id="' + id + '">([\\s\\S]*?)\\n      </li>')); if (!m) return null; const b = m[1], g = re => (b.match(re) || [])[1] || '';
+  return { id, q: g(/<p class="rsp-q"><span class="rsp-k">Se te disserem<\/span>([\s\S]*?)<\/p>/), a: g(/<p class="rsp-a"><span class="rsp-k">Responda<\/span>([\s\S]*?)<\/p>/), d: (b.match(/<ul class="rsp-d">[\s\S]*?<\/ul>/) || [''])[0], s: g(/<p class="rsp-s">([\s\S]*?)<\/p>/), c: g(/data-copy="([^"]*)"/) }; };
 const byNum = NEWS.slice().sort((a, b) => a.n < b.n ? -1 : 1);
 
 const MESES = ['jan.', 'fev.', 'mar.', 'abr.', 'maio', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
@@ -143,6 +146,19 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .sl .t{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;font-size:19px;line-height:1.25;margin:0}
 .sl .d{margin:6px 0 0;font-size:15px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .empty{color:var(--muted)}
+.stds{margin:20px 0 6px;border-radius:14px;padding:18px 20px;background:#EEEDFB;border-left:6px solid #4338CA}
+:root[data-theme="dark"] .stds{background:#1F1D3A}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .stds{background:#1F1D3A}}
+.stds-k,.stds-ak{margin:0;font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#4338CA}
+:root[data-theme="dark"] .stds-k,:root[data-theme="dark"] .stds-ak{color:#B4A9FF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .stds-k,:root:not([data-theme="light"]) .stds-ak{color:#B4A9FF}}
+.stds-q{margin:4px 0 12px;font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;font-size:22px;line-height:1.2}
+.stds-a{margin:4px 0 8px;font-size:17px;line-height:1.5}
+.stds ul{margin:6px 0 8px;padding-left:20px;font-size:15.5px;line-height:1.45}
+.stds-s{margin:6px 0 10px;font-size:13.5px;color:var(--muted)}
+.stds-b{display:flex;flex-wrap:wrap;gap:8px}
+.dzp{margin:14px 0 0;font-size:15px;font-weight:700}
+.dzp a{color:inherit}
 .sl-st{margin:10px 0 0;font-size:14.5px;font-weight:700;color:var(--muted);border-radius:8px;padding:2px 0}
 .sl-st.flash{animation:stflash .7s ease-out}
 @keyframes stflash{0%{background:var(--acc);color:#0A1A3F;padding:2px 8px}100%{background:transparent;padding:2px 0}}
@@ -191,19 +207,17 @@ ${FONTS}
 const ICON_SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>';
 const topbar = (rel, here) => `<header class="top" id="topo"><div class="top-in">
 <a class="brand" href="${rel}" aria-label="${esc(BRAND)}, ir para o painel" title="${esc(BRAND)}"><span class="eye" aria-hidden="true"><i></i></span></a>
-<a class="tb sin" href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''} aria-label="Abrir os Dossiês e os Sinais"><span class="dot" aria-hidden="true"></span>Dossiês</a>
-<a class="tb rsp" href="${rel}se-te-disserem/" aria-label="Abrir Se te disserem: respostas curtas para conversas"><span class="l2">Se te disserem</span><span class="s2" aria-hidden="true">Respostas</span></a>
-<a class="tb bus" href="${rel}?busca" aria-label="Buscar no painel" title="Buscar no painel">${ICON_SEARCH}<span class="l">Buscar</span></a>
+<a class="tb sin" href="${rel}dossies/" aria-label="Abrir os Dossiês"><span class="dot" aria-hidden="true"></span>Dossiês</a>
+<a class="tb rsp" href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''} aria-label="Abrir os Sinais"><span class="l2">Sinais</span><span class="s2" aria-hidden="true">Sinais</span></a>
 <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
 <nav class="nav" id="nav" aria-label="Seções do painel">
 <a class="ext lula-only" href="${rel}economia/" hidden>E a Economia?</a>
 <a href="${rel}">Início</a>
-<a href="${rel}?busca">Buscar no painel</a>
 <a href="${rel}#result">Escolher pauta</a>
 <span class="sep" aria-hidden="true"></span>
 <a href="${rel}quem-sao-eles/">Quem são eles</a>
-<a href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''}>Dossiês e Sinais</a>
-<a href="${rel}se-te-disserem/">Se te disserem…</a>
+<a href="${rel}dossies/">Dossiês</a>
+<a href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''}>Sinais</a>
 <a href="${rel}metodo/">Método e critérios</a>
 <a href="${rel}metodo/#informacoes">Privacidade e fontes</a>
 <a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener">Participe</a>
@@ -266,6 +280,8 @@ ${n.bolso ? `<div class="bolso"><p class="bolso-k">Argumento de bolso <span>para
 <p class="txt">${esc(n.s)}</p>
 ${n.why ? `<p class="why"><b>${esc(n.wl || 'Por que ler:')}</b> ${esc(n.why)}</p>` : ''}
 <p class="src">${srcLbl}: ${n.src.map(s => `<a href="${esc(s[1])}" target="_blank" rel="noopener noreferrer">${esc(s[0])}</a>`).join('; ')}</p>
+${(n.rsp ? [].concat(n.rsp) : []).map(rspOf).filter(Boolean).map(r => `<section class="stds" id="${r.id}"><p class="stds-k">Se te disserem</p><p class="stds-q">${r.q}</p><p class="stds-ak">Responda</p><p class="stds-a">${r.a}</p>${r.d}<p class="stds-s">${r.s}</p><div class="stds-b"><button class="btn" type="button" data-copy="${r.c}" data-ok="Resposta copiada" data-lbl="Copiar resposta">${ICON_COPY}<span>Copiar resposta</span></button><a class="btn o" href="${rel}se-te-disserem/img/${r.id}.png" download="se-te-disserem-${r.id}.png">${ICON_IMG}Baixar imagem</a></div></section>`).join('\n')}
+${(n.dossie || []).length ? `<p class="dzp">Prova do dossiê ${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' e ')}</p>` : ''}
 <div class="acts">
 <a class="btn" href="https://wa.me/?text=${encodeURIComponent(shareTxt)}" target="_blank" rel="noopener noreferrer">${ICON_WA}Mandar no WhatsApp</a>
 <button class="btn o" type="button" data-copy="${esc(url(n))}">${ICON_LINK}<span>Copiar link</span></button>
@@ -301,8 +317,8 @@ function listPage() {
     return `<li data-f="${f}" data-i="${esc(idx.normalize('NFD').replace(/[̀-ͯ]/g, ''))}"><a href="${n.n}/"><div class="hd">${hdHTML(n, false, rel)}</div><p class="t">${esc(n.t)}</p><p class="d">${esc(highlight(n))}</p><p class="dzs">${dz}</p></a></li>`;
   }).join('\n');
   const cards = DOSSIES.map(d => `<li data-k="${d.k}"><a href="${rel}dossies/${d.slug}/"><img src="${rel}img/olhos/olho-${d.olho}.jpg" alt="" width="1080" height="300" loading="lazy"><span class="dt"><b>${esc(d.n)}</b><span>${esc(d.q)}</span><em>Abrir o dossiê →</em></span></a></li>`).join('');
-  const desc = 'Os quatro dossiês do painel, com os sinais de alerta de Como as democracias morrem, e os Sinais que servem de prova para cada um, com fonte e outro lado.';
-  return head({ title: 'Dossiês e Sinais · ' + BRAND, desc, canonical: BASE + 'sinais/', image: BASE + 'og-observatorio.jpg', imgW: 1200, imgH: 630, rel, type: 'website' }) + `
+  const desc = 'Os fatos que servem de prova nos quatro dossiês do painel (os sinais de alerta de Como as democracias morrem), com fonte e outro lado.';
+  return head({ title: 'Sinais · ' + BRAND, desc, canonical: BASE + 'sinais/', image: BASE + 'og-observatorio.jpg', imgW: 1200, imgH: 630, rel, type: 'website' }) + `
 <style>
 .dzc{list-style:none;margin:14px 0 6px;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media (min-width:900px){.dzc{grid-template-columns:repeat(4,1fr)}}@media (max-width:420px){.dzc{grid-template-columns:1fr}}
 .dzc a{display:flex;flex-direction:column;height:100%;border-radius:12px;overflow:hidden;background:#0A1A3F;color:#fff;text-decoration:none;border:2px solid #0A1A3F}
@@ -321,11 +337,8 @@ function listPage() {
 ${topbar(rel, 'lista')}
 <main>
 <p class="crumb"><a href="${rel}">← Painel completo</a></p>
-<h1 class="list-h1">Dossiês</h1>
-<p class="lead">Os quatro sinais de alerta de Levitsky e Ziblatt, em <i>Como as democracias morrem</i>. Cada dossiê reúne as provas: Sinais e ações de governo, com fonte e outro lado.</p>
-<ul class="dzc" id="dzc">${cards}</ul>
-<h2 class="h2s">Sinais</h2>
-<p class="lead">Os fatos que entraram como prova em pelo menos um dossiê. Toque num Sinal para abrir a página dele e compartilhar.</p>
+<h1 class="list-h1">Sinais</h1>
+<p class="lead">Os fatos que entraram como prova em pelo menos um dos <a href="${rel}dossies/">quatro dossiês</a>, com fonte e outro lado. Toque num Sinal para abrir a página dele e compartilhar.</p>
 <div class="filt" role="group" aria-label="Filtrar Sinais por dossiê">
 <button class="chip" type="button" data-k="all" aria-pressed="true">Todos<small>${L.length}</small></button>
 ${DOSSIES.map(d => `<button class="chip" type="button" data-k="${d.k}" aria-pressed="false">${esc(d.n)}<small>${cnt(d.k)}</small></button>`).join('\n')}
@@ -340,10 +353,10 @@ ${items}
 </main>
 ${foot(rel)}
 <script>
-(function(){var k='all',st=document.getElementById('st'),q=document.getElementById('q'),lis=[].slice.call(document.querySelectorAll('#sl li')),none=document.getElementById('none'),chips=[].slice.call(document.querySelectorAll('.chip')),cards=[].slice.call(document.querySelectorAll('#dzc li'));
+(function(){var k='all',st=document.getElementById('st'),q=document.getElementById('q'),lis=[].slice.call(document.querySelectorAll('#sl li')),none=document.getElementById('none'),chips=[].slice.call(document.querySelectorAll('.chip'));
 var LB=${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, ' do dossiê ' + d.n])))},SL=${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, d.slug])))};
 function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').trim();}
-function run(){var t=norm(q.value),n=0,num=/^\\d{1,3}$/.test(t)?('000'+t).slice(-3):null;lis.forEach(function(li){var ok=li.getAttribute('data-f').split(' ').indexOf(k)>=0&&(!t||(num?li.getAttribute('data-i').indexOf(num+' ')===0:t.split(/\\s+/).every(function(w){return li.getAttribute('data-i').indexOf(w)>=0;})));li.hidden=!ok;if(ok)n++;});none.hidden=n>0;none.innerHTML=(!t&&SL[k])?'Ainda não há Sinais neste dossiê. Por enquanto, as provas dele são ações de governo: <a href="../dossies/'+SL[k]+'/">abrir o dossiê</a>.':'Nenhum Sinal encontrado.';cards.forEach(function(c){c.classList.toggle('on',c.getAttribute('data-k')===k);});st.textContent=(n===1?'1 Sinal':n+' Sinais')+(LB[k]||'')+(t?' para “'+q.value.trim()+'”':'')+'.';}
+function run(){var t=norm(q.value),n=0,num=/^\\d{1,3}$/.test(t)?('000'+t).slice(-3):null;lis.forEach(function(li){var ok=li.getAttribute('data-f').split(' ').indexOf(k)>=0&&(!t||(num?li.getAttribute('data-i').indexOf(num+' ')===0:t.split(/\\s+/).every(function(w){return li.getAttribute('data-i').indexOf(w)>=0;})));li.hidden=!ok;if(ok)n++;});none.hidden=n>0;none.innerHTML=(!t&&SL[k])?'Ainda não há Sinais neste dossiê. Por enquanto, as provas dele são ações de governo: <a href="../dossies/'+SL[k]+'/">abrir o dossiê</a>.':'Nenhum Sinal encontrado.';st.textContent=(n===1?'1 Sinal':n+' Sinais')+(LB[k]||'')+(t?' para “'+q.value.trim()+'”':'')+'.';}
 function pop(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;var v=lis.filter(function(li){return !li.hidden;}),i=0;v.forEach(function(li){li.classList.remove('pop');});void document.body.offsetWidth;v.slice(0,10).forEach(function(li){li.style.setProperty('--d',(i++*35)+'ms');li.classList.add('pop');});st.classList.remove('flash');void st.offsetWidth;st.classList.add('flash');}
 chips.forEach(function(c){c.addEventListener('click',function(){k=c.getAttribute('data-k');chips.forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false');});run();pop();try{history.replaceState(null,'',k==='all'?location.pathname:'#'+k);}catch(e){}});});
 q.addEventListener('input',run);run();

@@ -1820,8 +1820,8 @@
 
 
   /* Home: o azul do topo vai até a metade da caixa de busca */
-  (function(){ var h=document.querySelector('header.hero-lente'), b=h&&h.querySelector('.hl-box'); if(!h||!b) return;
-    function cut(){ var hr=h.getBoundingClientRect(), br=b.getBoundingClientRect(); h.style.setProperty('--hl-cut', Math.round(br.top-hr.top+br.height/2)+'px'); }
+  (function(){ var h=document.querySelector('header.hero-lente'); if(!h) return;
+    function cut(){ var b=h.querySelector('#hl-dz img')||h.querySelector('.hl-box'); if(!b) return; var hr=h.getBoundingClientRect(), br=b.getBoundingClientRect(); h.style.setProperty('--hl-cut', Math.round(br.top-hr.top+br.height/2)+'px'); }
     cut(); window.addEventListener('resize', cut); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(cut); window.addEventListener('load', cut);
   })();
   /* ===== Home: os quatro dossiês ===== */
@@ -1831,11 +1831,11 @@
       var seen={}, na=0; A.forEach(function(a){ if((a.dossie||[]).indexOf(d.k)<0) return; var key=a.c+'|'+a.t; if(seen[key]) return; seen[key]=1; na++; });
       var li=document.createElement('li'), a=document.createElement('a'); a.href='dossies/'+d.slug+'/';
       var img=document.createElement('img'); img.src='img/olhos/olho-'+d.olho+'.jpg'; img.alt=''; img.width=1080; img.height=300; img.loading='lazy'; a.appendChild(img);
-      var t=el('span','t'); t.appendChild(el('b','',d.n)); t.appendChild(el('span','q',d.q));
+      var t=el('span','t'); t.appendChild(el('b','',d.n));
       t.appendChild(el('span','c',(sn.length+na)+' provas'));
-      if(sn[0]) t.appendChild(el('span','u','Última: Sinal '+sn[0].n+' · '+(sn[0].t.length>78?sn[0].t.slice(0,76).replace(/\s+\S*$/,'')+'…':sn[0].t)));
       a.appendChild(t); li.appendChild(a); ul.appendChild(li);
     });
+    window.dispatchEvent(new Event('resize'));
   })();
   /* ===== Busca ===== */
   (function(){

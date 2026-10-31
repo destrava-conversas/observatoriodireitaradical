@@ -137,6 +137,19 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .sl .t{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;font-size:19px;line-height:1.25;margin:0}
 .sl .d{margin:6px 0 0;font-size:15px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .empty{color:var(--muted)}
+.stds{margin:20px 0 6px;border-radius:14px;padding:18px 20px;background:#EEEDFB;border-left:6px solid #4338CA}
+:root[data-theme="dark"] .stds{background:#1F1D3A}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .stds{background:#1F1D3A}}
+.stds-k,.stds-ak{margin:0;font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#4338CA}
+:root[data-theme="dark"] .stds-k,:root[data-theme="dark"] .stds-ak{color:#B4A9FF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .stds-k,:root:not([data-theme="light"]) .stds-ak{color:#B4A9FF}}
+.stds-q{margin:4px 0 12px;font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;font-size:22px;line-height:1.2}
+.stds-a{margin:4px 0 8px;font-size:17px;line-height:1.5}
+.stds ul{margin:6px 0 8px;padding-left:20px;font-size:15.5px;line-height:1.45}
+.stds-s{margin:6px 0 10px;font-size:13.5px;color:var(--muted)}
+.stds-b{display:flex;flex-wrap:wrap;gap:8px}
+.dzp{margin:14px 0 0;font-size:15px;font-weight:700}
+.dzp a{color:inherit}
 .sl-st{margin:10px 0 0;font-size:14.5px;font-weight:700;color:var(--muted);border-radius:8px;padding:2px 0}
 .sl-st.flash{animation:stflash .7s ease-out}
 @keyframes stflash{0%{background:var(--acc);color:#0A1A3F;padding:2px 8px}100%{background:transparent;padding:2px 0}}
@@ -149,19 +162,17 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 <body>
 <header class="top" id="topo"><div class="top-in">
 <a class="brand" href="../../" aria-label="Painel Observatório da Direita Radical e Extrema, ir para o painel" title="Painel Observatório da Direita Radical e Extrema"><span class="eye" aria-hidden="true"><i></i></span></a>
-<a class="tb sin" href="../../sinais/" aria-label="Abrir os Dossiês e os Sinais"><span class="dot" aria-hidden="true"></span>Dossiês</a>
-<a class="tb rsp" href="../../se-te-disserem/" aria-label="Abrir Se te disserem: respostas curtas para conversas"><span class="l2">Se te disserem</span><span class="s2" aria-hidden="true">Respostas</span></a>
-<a class="tb bus" href="../../?busca" aria-label="Buscar no painel" title="Buscar no painel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><span class="l">Buscar</span></a>
+<a class="tb sin" href="../../dossies/" aria-label="Abrir os Dossiês"><span class="dot" aria-hidden="true"></span>Dossiês</a>
+<a class="tb rsp" href="../../sinais/" aria-label="Abrir os Sinais"><span class="l2">Sinais</span><span class="s2" aria-hidden="true">Sinais</span></a>
 <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
 <nav class="nav" id="nav" aria-label="Seções do painel">
 <a class="ext lula-only" href="../../economia/" hidden>E a Economia?</a>
 <a href="../../">Início</a>
-<a href="../../?busca">Buscar no painel</a>
 <a href="../../#result">Escolher pauta</a>
 <span class="sep" aria-hidden="true"></span>
 <a href="../../quem-sao-eles/">Quem são eles</a>
-<a href="../../sinais/">Dossiês e Sinais</a>
-<a href="../../se-te-disserem/">Se te disserem…</a>
+<a href="../../dossies/">Dossiês</a>
+<a href="../../sinais/">Sinais</a>
 <a href="../../metodo/">Método e critérios</a>
 <a href="../../metodo/#informacoes">Privacidade e fontes</a>
 <a href="https://tally.so/r/eq1lDO" target="_blank" rel="noopener">Participe</a>
@@ -179,6 +190,8 @@ https://destrava-conversas.com.br/observatoriodireitaradical/sinais/050/" data-o
 <p class="txt">Segundo O Globo, a Polícia Federal apura se Flávio Bolsonaro teve apoio do governo de Javier Milei para sair do Brasil rumo aos EUA. Um dos indícios é a presença de Santiago Caputo, assessor presidencial de Milei, em Puerto Iguazú, na fronteira com Foz do Iguaçu, na noite da saída; o La Nación ouviu a mesma informação de fontes do governo argentino, que não a confirmou oficialmente. A Direção Nacional de Migrações da Argentina confirmou que a família cruzou a ponte às 22h50 de 27 de outubro e embarcou às 23h30 num voo privado. O avião, um Gulfstream G400 de matrícula LV-JQW, é operado pela Baires Fly, segundo a Folhapress e o La Nación. A empresa é citada na investigação argentina sobre propina em compras de remédios da Andis, a agência para pessoas com deficiência: segundo a Folhapress, fornecedores da agência transferiram dinheiro à Baires Fly, que emitiu faturas por supostos serviços aéreos. O caso derrubou, em agosto de 2025, o diretor da Andis, Diego Spagnuolo, ex-advogado de Milei, gravado em áudios que falavam de propina e citavam Karina Milei, irmã do presidente.</p>
 <p class="why"><b>Outro lado:</b> A investigação da PF não concluiu que houve ajuda do governo argentino, e as fontes não provam que a empresa participou de um plano de saída. O dono da Baires Fly, Luis Grande, disse ao Perfil que a empresa só operou um voo contratado por terceiros, que ninguém do governo Milei a procurou e que ela não tem relação com o caso Andis. Pessoas próximas a Caputo negam que ele tenha tido papel na saída. O porta-voz do governo, Adrián Ravier, disse que Flávio não pediu asilo na Argentina.</p>
 <p class="src">Fontes: <a href="https://www.bahianoticias.com.br/noticia/323100-pf-suspeita-que-flavio-bolsonaro-teve-apoio-do-governo-milei-para-viajar-aos-eua" target="_blank" rel="noopener noreferrer">O Globo (via Bahia Notícias)</a>; <a href="https://www.agazeta.com.br/brasil/flavio-bolsonaro-fugiu-em-jato-de-empresa-citada-em-esquema-de-corrupcao-que-derrubou-aliado-de-milei-1026" target="_blank" rel="noopener noreferrer">Folhapress (via A Gazeta)</a>; <a href="https://www.lanacion.com.ar/el-mundo/flavio-bolsonaro-aterrizo-en-miami-con-su-familia-tras-huir-de-brasil-via-puerto-iguazu-nid28102026/" target="_blank" rel="noopener noreferrer">La Nación (voo)</a>; <a href="https://www.lanacion.com.ar/politica/ironias-posteos-enigmaticos-y-criticas-a-la-prensa-los-mensajes-de-santiago-caputo-durante-el-escape-nid28102026/" target="_blank" rel="noopener noreferrer">La Nación (Caputo)</a>; <a href="https://www.perfil.com/politica/el-vuelo-de-flavio-bolsonaro-desde-la-argentina-a-ee.uu.-costo-us140-mil-y-lo-pago-un-broker-privado-aqbTv6C4fHSv" target="_blank" rel="noopener noreferrer">Perfil (resposta da Baires Fly)</a></p>
+
+<p class="dzp">Prova do dossiê <a href="../../dossies/regras-do-jogo/">Regras do jogo</a></p>
 <div class="acts">
 <a class="btn" href="https://wa.me/?text=Sinal%20050%3A%20PF%20apura%20se%20o%20governo%20Milei%20ajudou%20Fl%C3%A1vio%20Bolsonaro%20a%20deixar%20o%20Brasil%3B%20jato%20que%20o%20levou%20%C3%A9%20de%20empresa%20citada%20em%20caso%20de%20corrup%C3%A7%C3%A3o%20que%20derrubou%20ex-advogado%20de%20Milei%0A%0AA%20PF%20apura%20se%20o%20governo%20Milei%20ajudou%20Fl%C3%A1vio%20a%20sair%20do%20Brasil%3A%20um%20assessor%20de%20Milei%20estava%20na%20fronteira%20naquela%20noite%2C%20segundo%20O%20Globo.%20O%20jato%20%C3%A9%20de%20uma%20empresa%20citada%20no%20caso%20de%20propina%20que%20derrubou%20o%20ex-advogado%20de%20Milei.%20A%20empresa%20nega%20rela%C3%A7%C3%A3o%20com%20o%20caso.%20(Fonte%3A%20O%20Globo%3B%20Folhapress)%0A%0AOutro%20lado%20e%20fontes%3A%20https%3A%2F%2Fdestrava-conversas.com.br%2Fobservatoriodireitaradical%2Fsinais%2F050%2F" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg>Mandar no WhatsApp</a>
 <button class="btn o" type="button" data-copy="https://destrava-conversas.com.br/observatoriodireitaradical/sinais/050/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><span>Copiar link</span></button>

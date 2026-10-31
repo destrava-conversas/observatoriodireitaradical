@@ -24,7 +24,7 @@ svgdefs = frag('_svgdefs.html')
 upd = re.search(r'<p class="upd">([^<]*)</p>', home).group(1)
 
 HOME_ANCHORS = {'#topo': '../', '#busca': '../?busca'}
-PAGES = {'quem-sao-eles/': 'quem', 'metodo/': 'metodo', 'se-te-disserem/': 'respostas'}
+PAGES = {'quem-sao-eles/': 'quem', 'metodo/': 'metodo', 'se-te-disserem/': 'respostas', 'dossies/': 'dossies', 'sinais/': 'lista'}
 
 def fix_top(t, page):
     def href(m):
