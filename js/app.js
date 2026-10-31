@@ -1849,8 +1849,8 @@
   (function(){ var hs=$('hl-pauta'), tf=$('top-foco'), tp=$('top-pais'); if(!hs||!tf) return;
     function opt(v,t){ var o=document.createElement('option'); o.value=v; o.textContent=t; return o; }
     var ph=opt('','Escolha uma pauta'); ph.disabled=true; ph.selected=true; hs.appendChild(ph);
-    GROUPS.concat(THEMES).sort(byOrder).forEach(function(x){ hs.appendChild(opt(x.k,x.n)); });
     hs.appendChild(opt('all','Todas as pautas'));
+    GROUPS.concat(THEMES).sort(byOrder).forEach(function(x){ hs.appendChild(opt(x.k,x.n)); });
     function reduce(){ return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
     hs.addEventListener('change', function(){ if(!hs.value) return; if(tp){ tp.value='all'; } state.c='all'; tf.value=hs.value; tf.dispatchEvent(new Event('change',{bubbles:true}));
       setTimeout(function(){ var r=$('result'); if(r) r.scrollIntoView({behavior:reduce()?'auto':'smooth', block:'start'}); },80); });
