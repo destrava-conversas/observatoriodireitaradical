@@ -11,6 +11,9 @@ const BRAND = 'Painel Observatório da Direita Radical e Extrema';
 const ctx = { window: {} }; vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'data/sinais.js'), 'utf8').replace('window.PD = window.PD || {};', 'var PD = window.PD = {};'), ctx);
 const NEWS = ctx.window.PD.NEWS.filter(n => n.n);
+vm.runInContext(fs.readFileSync(path.join(ROOT, 'data/dossies.js'), 'utf8').replace('window.PD = window.PD || {};', ''), ctx);
+const DOSSIES = ctx.window.PD.DOSSIES || [];
+const INLINE = NEWS.filter(n => (n.dossie || []).length);
 const byNum = NEWS.slice().sort((a, b) => a.n < b.n ? -1 : 1);
 
 const MESES = ['jan.', 'fev.', 'mar.', 'abr.', 'maio', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
@@ -188,7 +191,7 @@ ${FONTS}
 const ICON_SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>';
 const topbar = (rel, here) => `<header class="top" id="topo"><div class="top-in">
 <a class="brand" href="${rel}" aria-label="${esc(BRAND)}, ir para o painel" title="${esc(BRAND)}"><span class="eye" aria-hidden="true"><i></i></span></a>
-<a class="tb sin" href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''} aria-label="Abrir a página dos Sinais"><span class="dot" aria-hidden="true"></span>Sinais</a>
+<a class="tb sin" href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''} aria-label="Abrir os Dossiês e os Sinais"><span class="dot" aria-hidden="true"></span>Dossiês</a>
 <a class="tb rsp" href="${rel}se-te-disserem/" aria-label="Abrir Se te disserem: respostas curtas para conversas"><span class="l2">Se te disserem</span><span class="s2" aria-hidden="true">Respostas</span></a>
 <a class="tb bus" href="${rel}?busca" aria-label="Buscar no painel" title="Buscar no painel">${ICON_SEARCH}<span class="l">Buscar</span></a>
 <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
@@ -199,7 +202,7 @@ const topbar = (rel, here) => `<header class="top" id="topo"><div class="top-in"
 <a href="${rel}#result">Escolher pauta</a>
 <span class="sep" aria-hidden="true"></span>
 <a href="${rel}quem-sao-eles/">Quem são eles</a>
-<a href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''}>Sinais</a>
+<a href="${rel}sinais/"${here === 'lista' ? ' aria-current="page"' : ''}>Dossiês e Sinais</a>
 <a href="${rel}se-te-disserem/">Se te disserem…</a>
 <a href="${rel}metodo/">Método e critérios</a>
 <a href="${rel}metodo/#informacoes">Privacidade e fontes</a>
@@ -289,25 +292,43 @@ function short(t) { return t.length > 70 ? t.slice(0, 67).replace(/\s+\S*$/, '')
 
 function listPage() {
   const rel = '../';
-  const cnt = { all: NEWS.length, alerta: NEWS.filter(isAlerta).length, regras: NEWS.filter(isRegras).length, vs: NEWS.filter(isVS).length };
-  const items = NEWS.map(n => {
-    const f = ['all', isAlerta(n) && 'alerta', isRegras(n) && 'regras', isVS(n) && 'vs'].filter(Boolean).join(' ');
+  const L = INLINE.slice().sort((a, b) => a.d < b.d ? 1 : a.d > b.d ? -1 : (a.n < b.n ? 1 : -1));
+  const cnt = k => L.filter(n => (n.dossie || []).indexOf(k) >= 0).length;
+  const items = L.map(n => {
+    const f = ['all'].concat(n.dossie || []).join(' ');
     const idx = (n.n + ' ' + parseInt(n.n, 10) + ' ' + n.t + ' ' + n.s + ' ' + (n.tags || []).join(' ') + ' ' + (n.destaque || '')).toLowerCase();
-    return `<li data-f="${f}" data-i="${esc(idx.normalize('NFD').replace(/[̀-ͯ]/g, ''))}"><a href="${n.n}/"><div class="hd">${hdHTML(n, false, rel)}</div><p class="t">${esc(n.t)}</p><p class="d">${esc(highlight(n))}</p></a></li>`;
+    const dz = (n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? '<span class="dzt">' + esc(d.n) + '</span>' : ''; }).join('');
+    return `<li data-f="${f}" data-i="${esc(idx.normalize('NFD').replace(/[̀-ͯ]/g, ''))}"><a href="${n.n}/"><div class="hd">${hdHTML(n, false, rel)}</div><p class="t">${esc(n.t)}</p><p class="d">${esc(highlight(n))}</p><p class="dzs">${dz}</p></a></li>`;
   }).join('\n');
-  const desc = 'Fatos que devem chamar nossa atenção sobre a direita radical e extrema, com fonte e outro lado. Cada Sinal tem link próprio para compartilhar.';
-  return head({ title: 'Sinais · ' + BRAND, desc, canonical: BASE + 'sinais/', image: BASE + 'og-observatorio.jpg', imgW: 1200, imgH: 630, rel, type: 'website' }) + `
+  const cards = DOSSIES.map(d => `<li data-k="${d.k}"><a href="${rel}dossies/${d.slug}/"><img src="${rel}img/olhos/olho-${d.olho}.jpg" alt="" width="1080" height="300" loading="lazy"><span class="dt"><b>${esc(d.n)}</b><span>${esc(d.q)}</span><em>Abrir o dossiê →</em></span></a></li>`).join('');
+  const desc = 'Os quatro dossiês do painel, com os sinais de alerta de Como as democracias morrem, e os Sinais que servem de prova para cada um, com fonte e outro lado.';
+  return head({ title: 'Dossiês e Sinais · ' + BRAND, desc, canonical: BASE + 'sinais/', image: BASE + 'og-observatorio.jpg', imgW: 1200, imgH: 630, rel, type: 'website' }) + `
+<style>
+.dzc{list-style:none;margin:14px 0 6px;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media (min-width:900px){.dzc{grid-template-columns:repeat(4,1fr)}}@media (max-width:420px){.dzc{grid-template-columns:1fr}}
+.dzc a{display:flex;flex-direction:column;height:100%;border-radius:12px;overflow:hidden;background:#0A1A3F;color:#fff;text-decoration:none;border:2px solid #0A1A3F}
+.dzc a:hover{border-color:var(--acc)}
+.dzc img{width:100%;height:auto;display:block}
+.dzc .dt{display:flex;flex-direction:column;gap:4px;padding:10px 12px 12px}
+.dzc b{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-size:18px}
+.dzc .dt>span{font-size:14px;line-height:1.35;color:#D6DDEE}
+.dzc em{font-style:normal;font-weight:800;font-size:13px;color:var(--acc);margin-top:auto;padding-top:4px}
+.dzc li.on a{border-color:var(--acc)}
+.sl .dzs{margin:8px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+.dzt{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:2px 10px;background:#0A1A3F;color:var(--acc)}
+.h2s{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-size:24px;margin:28px 0 4px}
+</style>
 <body>
 ${topbar(rel, 'lista')}
 <main>
 <p class="crumb"><a href="${rel}">← Painel completo</a></p>
-<h1 class="list-h1">Sinais</h1>
-<p class="lead">Fatos que devem chamar nossa atenção, com fonte e outro lado. Toque num Sinal para abrir a página dele e compartilhar.</p>
-<div class="filt" role="group" aria-label="Filtrar Sinais">
-<button class="chip" type="button" data-k="all" aria-pressed="true">Todos<small>${cnt.all}</small></button>
-<button class="chip" type="button" data-k="alerta" aria-pressed="false">⚠ Alertas<small>${cnt.alerta}</small></button>
-<button class="chip" type="button" data-k="regras" aria-pressed="false">Eleições e regras<small>${cnt.regras}</small></button>
-<button class="chip" type="button" data-k="vs" aria-pressed="false">Você sabia?<small>${cnt.vs}</small></button>
+<h1 class="list-h1">Dossiês</h1>
+<p class="lead">Os quatro sinais de alerta de Levitsky e Ziblatt, em <i>Como as democracias morrem</i>. Cada dossiê reúne as provas: Sinais e ações de governo, com fonte e outro lado.</p>
+<ul class="dzc" id="dzc">${cards}</ul>
+<h2 class="h2s">Sinais</h2>
+<p class="lead">Os fatos que entraram como prova em pelo menos um dossiê. Toque num Sinal para abrir a página dele e compartilhar.</p>
+<div class="filt" role="group" aria-label="Filtrar Sinais por dossiê">
+<button class="chip" type="button" data-k="all" aria-pressed="true">Todos<small>${L.length}</small></button>
+${DOSSIES.map(d => `<button class="chip" type="button" data-k="${d.k}" aria-pressed="false">${esc(d.n)}<small>${cnt(d.k)}</small></button>`).join('\n')}
 </div>
 <label for="q" class="lead" style="display:block;margin:4px 0 6px">Buscar nos Sinais</label>
 <input id="q" class="q" type="search" placeholder="número, nome ou assunto" autocomplete="off">
@@ -319,9 +340,10 @@ ${items}
 </main>
 ${foot(rel)}
 <script>
-(function(){var k='all',st=document.getElementById('st'),q=document.getElementById('q'),lis=[].slice.call(document.querySelectorAll('#sl li')),none=document.getElementById('none'),chips=[].slice.call(document.querySelectorAll('.chip'));
+(function(){var k='all',st=document.getElementById('st'),q=document.getElementById('q'),lis=[].slice.call(document.querySelectorAll('#sl li')),none=document.getElementById('none'),chips=[].slice.call(document.querySelectorAll('.chip')),cards=[].slice.call(document.querySelectorAll('#dzc li'));
+var LB=${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, ' do dossiê ' + d.n])))},SL=${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, d.slug])))};
 function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').trim();}
-function run(){var t=norm(q.value),n=0,num=/^\\d{1,3}$/.test(t)?('000'+t).slice(-3):null;lis.forEach(function(li){var ok=li.getAttribute('data-f').split(' ').indexOf(k)>=0&&(!t||(num?li.getAttribute('data-i').indexOf(num+' ')===0:t.split(/\\s+/).every(function(w){return li.getAttribute('data-i').indexOf(w)>=0;})));li.hidden=!ok;if(ok)n++;});none.hidden=n>0;var lb={all:'',alerta:' com ⚠ alerta',regras:' de Eleições e regras',vs:' do tipo Você sabia?'}[k]||'';st.textContent=(n===1?'1 Sinal':n+' Sinais')+lb+(t?' para “'+q.value.trim()+'”':'')+'.';}
+function run(){var t=norm(q.value),n=0,num=/^\\d{1,3}$/.test(t)?('000'+t).slice(-3):null;lis.forEach(function(li){var ok=li.getAttribute('data-f').split(' ').indexOf(k)>=0&&(!t||(num?li.getAttribute('data-i').indexOf(num+' ')===0:t.split(/\\s+/).every(function(w){return li.getAttribute('data-i').indexOf(w)>=0;})));li.hidden=!ok;if(ok)n++;});none.hidden=n>0;none.innerHTML=(!t&&SL[k])?'Ainda não há Sinais neste dossiê. Por enquanto, as provas dele são ações de governo: <a href="../dossies/'+SL[k]+'/">abrir o dossiê</a>.':'Nenhum Sinal encontrado.';cards.forEach(function(c){c.classList.toggle('on',c.getAttribute('data-k')===k);});st.textContent=(n===1?'1 Sinal':n+' Sinais')+(LB[k]||'')+(t?' para “'+q.value.trim()+'”':'')+'.';}
 function pop(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;var v=lis.filter(function(li){return !li.hidden;}),i=0;v.forEach(function(li){li.classList.remove('pop');});void document.body.offsetWidth;v.slice(0,10).forEach(function(li){li.style.setProperty('--d',(i++*35)+'ms');li.classList.add('pop');});st.classList.remove('flash');void st.offsetWidth;st.classList.add('flash');}
 chips.forEach(function(c){c.addEventListener('click',function(){k=c.getAttribute('data-k');chips.forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false');});run();pop();try{history.replaceState(null,'',k==='all'?location.pathname:'#'+k);}catch(e){}});});
 q.addEventListener('input',run);run();
