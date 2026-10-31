@@ -2054,3 +2054,6 @@ header.hero-x.hero-lente{background:linear-gradient(to bottom,var(--obs-navy) 0,
 .hero-lente .hl-blk.hl-pb{margin-top:34px}
 header.hero-x.hero-lente{padding-bottom:40px}
 @media (max-width:760px){.hero-lente .hl-blk.hl-pb{margin-top:24px}.hero-lente .hl-pill{min-height:40px;padding:0 13px;font-size:15px}}
+
+.dz-go{display:inline-block;margin-top:8px;font-size:14px;font-weight:800;color:var(--ink)}
+.dz-sinal a::after{content:"Abrir o Sinal →";font-size:14px;font-weight:800;color:var(--ink);margin-top:2px}

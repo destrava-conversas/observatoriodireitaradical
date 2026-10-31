@@ -1824,6 +1824,25 @@
     function cut(){ var b=h.querySelector('#hl-dz img')||h.querySelector('.hl-box'); if(!b) return; var hr=h.getBoundingClientRect(), br=b.getBoundingClientRect(); h.style.setProperty('--hl-cut', Math.round(br.top-hr.top+br.height/2)+'px'); }
     cut(); window.addEventListener('resize', cut); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(cut); window.addEventListener('load', cut);
   })();
+
+  /* ===== Link direto para uma ação: ?pauta=g&gov=c&acao=hash (usado pelos dossiês) ===== */
+  function acaoId(t){ var h=5381; for(var i=0;i<t.length;i++){ h=((h*33)^t.charCodeAt(i))>>>0; } return h.toString(36); }
+  window.__acaoId=acaoId;
+  (function(){ if(PAGE!=='home') return; var sp=null; try{ sp=new URLSearchParams(location.search); }catch(e){} if(!sp||!sp.get('acao')) return;
+    var g=sp.get('pauta'), c=sp.get('gov'), id=sp.get('acao');
+    setTimeout(function(){
+      var f=$('top-foco'), q=$('top-pais'); if(!f||!q) return;
+      if(g){ f.value=g; f.dispatchEvent(new Event('change',{bubbles:true})); }
+      if(c){ q.value=c; q.dispatchEvent(new Event('change',{bubbles:true})); }
+      setTimeout(function(){
+        if(typeof BLK!=='undefined' && BLK.acoes) setBlk('acoes', true);
+        var hit=null; [].slice.call(document.querySelectorAll('#list-contra > li.item, #list-pro > li.item')).forEach(function(li){ var p=li.querySelector('p'); if(!hit && p && acaoId(p.textContent)===id) hit=li; });
+        if(!hit){ var r=$('resumo'); if(r) r.scrollIntoView({block:'start'}); return; }
+        var ul=hit.parentNode; if(ul.classList.contains('collapsed')){ var mb=$(ul.id==='list-contra'?'more-contra':'more-pro'); if(mb && !mb.hidden) mb.click(); }
+        setTimeout(function(){ hit.scrollIntoView({block:'center'}); hit.classList.remove('bs-flash'); void hit.offsetWidth; hit.classList.add('bs-flash'); },120);
+      },250);
+    },200);
+  })();
   /* ===== Home: os quatro dossiês ===== */
   (function(){ var ul=document.getElementById('hl-dz'); if(!ul||!PD.DOSSIES) return;
     PD.DOSSIES.forEach(function(d){

@@ -51,6 +51,19 @@ def provas(k):
     return sn, ac
 
 
+def acao_id(s):
+    h = 5381
+    for ch in s:
+        h = ((h * 33) ^ ord(ch)) & 0xFFFFFFFF
+    n, out = h, ''
+    while True:
+        n, r = divmod(n, 36)
+        out = '0123456789abcdefghijklmnopqrstuvwxyz'[r] + out
+        if not n:
+            break
+    return out
+
+
 def olho_img(d, cls=''):
     return '<img%s src="../../img/olhos/olho-%s.jpg" alt="" width="1080" height="300">' % (cls, d['olho'])
 
@@ -84,8 +97,9 @@ for D in DOS:
                 links = '; '.join('<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>' % (E(u), E(nm)) for nm, u in (a.get('links') or [])[:3])
                 ol = ('<p class="dz-ol"><b>Outro lado:</b> ' + E(a['note']) + '</p>') if a.get('note') else ''
                 fl = ('<p class="dz-f">Fontes: ' + links + '</p>') if links else ''
-                b.append('      <li class="dz-i dz-acao"><span class="dz-m">%s · pauta %s</span><p>%s</p>%s%s</li>\n'
-                         % (E(str(a.get('y') or '')), E(GN.get(a['g'], a['g'])), E(a['t']), ol, fl))
+                go = '<a class="dz-go" href="../../?pauta=%s&amp;gov=%s&amp;acao=%s#acoes">Ver na pauta %s →</a>' % (a['g'], a['c'], acao_id(a['t']), E(GN.get(a['g'], a['g'])))
+                b.append('      <li class="dz-i dz-acao"><span class="dz-m">%s · pauta %s</span><p>%s</p>%s%s%s</li>\n'
+                         % (E(str(a.get('y') or '')), E(GN.get(a['g'], a['g'])), E(a['t']), ol, fl, go))
             b.append('    </ol>\n')
     b.append('  </section>\n')
     if False and D.get('rsp'):
