@@ -2064,3 +2064,9 @@ header.hero-x.hero-lente{padding-bottom:40px}
 .dz-jump{margin:4px 0 0}
 .dz-jump a{font-weight:800;font-size:15px;color:var(--ink)}
 @media (max-width:760px){.dz-s .dz-sl{font-size:17px}.dz-sp li{font-size:16px}}
+
+.pg-h h1{white-space:normal;text-wrap:balance;overflow-wrap:break-word}
+.dz-crumb{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px}
+.dz-crumb .dz-next{margin-left:auto;font-weight:800;color:var(--ink);text-decoration:none;border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;background:var(--surface)}
+.dz-crumb .dz-next:hover{border-color:var(--ink)}
+@media (max-width:480px){.dz-nl{display:none}.dz-crumb .dz-next{padding:5px 11px;font-size:14px}}
