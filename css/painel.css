@@ -2162,3 +2162,5 @@ html.pk .hl-subf{margin-top:16px}
 .selpill .res-gov{flex:none}
 @media (max-width:420px){.selpill.has-gov{font-size:15px}.hl-suba .tf-rankbtn,.hl-suba .tf-reset{font-size:13px;padding:0 11px;min-height:36px}.hl-suba{gap:6px;flex-wrap:nowrap}}
 @media (max-width:420px){.selpill.has-gov{font-size:14px;padding:6px 12px;gap:2px}.selpill .rg-k{margin-right:2px}.selpill .res-gov{padding-right:22px;background-position:right 4px center}}
+html.pbgov .pickbar.is-pick .pb-sel{display:none}
+html.pbgov .pickbar.is-pick .pb-gov{max-width:none;flex:1;margin-right:8px}

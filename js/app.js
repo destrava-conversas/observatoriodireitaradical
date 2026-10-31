@@ -544,7 +544,7 @@
       var s=window.__resGov; if(!s){ s=window.__resGov=document.createElement('select'); s.className='res-gov'; s.setAttribute('aria-label','Trocar o governo');
         [].slice.call(tp.options).forEach(function(o){ if(!o.value) return; var n=document.createElement('option'); n.value=o.value; n.textContent=o.value==='all'?'Todos os governos':o.textContent; s.appendChild(n); });
         s.addEventListener('change', function(){ tp.value=s.value; tp.dispatchEvent(new Event('change',{bubbles:true})); }); }
-      sp.innerHTML=''; sp.appendChild(el('span','rg-k','Resultados com:')); s.value=state.c; sp.appendChild(s); sp.classList.add('has-gov'); })();
+      sp.innerHTML=''; sp.appendChild(el('span','rg-k','Filtrar por governo:')); s.value=state.c; sp.appendChild(s); sp.classList.add('has-gov'); })();
     var cLab = state.c==='all' ? 'Todos os governos' : cname(state.c);
     $('ctx-sel').textContent = gn + ' · ' + cLab;
     (function(){ var box=$('sel-crit'); box.innerHTML=''; var t = state.g==='all' ? '' : (CRITERIA[state.g] || ''); box.hidden = !t; if(!t) return;
@@ -1854,17 +1854,17 @@
     hs.appendChild(opt('all','Todas as pautas'));
     GROUPS.concat(THEMES).sort(byOrder).forEach(function(x){ hs.appendChild(opt(x.k,x.n)); });
     function reduce(){ return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
-    hs.addEventListener('change', function(){ if(!hs.value) return; if(tp){ tp.value='all'; } state.c='all'; tf.value=hs.value; tf.dispatchEvent(new Event('change',{bubbles:true}));
+    hs.addEventListener('change', function(){ if(!hs.value) return; tf.value=hs.value; tf.dispatchEvent(new Event('change',{bubbles:true}));
       setTimeout(function(){ var r=$('result'); if(r) r.scrollIntoView({behavior:reduce()?'auto':'smooth', block:'start'}); },80); });
     var H=document.documentElement;
     /* o governo vira um subfiltro, logo abaixo da pauta */
-    /* na barra fixa do topo, o governo também pode ser trocado */
-    (function(){ var pb=$('pb-sel'); if(!pb||!tp) return; var g=document.createElement('select'); g.id='pb-gov'; g.className='pb-gov'; g.setAttribute('aria-label','Trocar o governo');
-      [].slice.call(tp.options).forEach(function(o){ if(!o.value) return; var n=document.createElement('option'); n.value=o.value; n.textContent=o.value==='all'?'Todos':o.textContent; g.appendChild(n); });
+    /* na barra fixa do topo, a pauta pode ser trocada a qualquer momento */
+    (function(){ var pb=$('pb-sel'); if(!pb) return; var g=document.createElement('select'); g.id='pb-pauta'; g.className='pb-gov'; g.setAttribute('aria-label','Trocar a pauta');
+      [].slice.call(hs.options).forEach(function(o){ if(!o.value) return; var n=document.createElement('option'); n.value=o.value; n.textContent=o.textContent; g.appendChild(n); });
       pb.parentNode.insertBefore(g, pb.nextSibling); H.classList.add('pbgov');
-      function sync(){ g.value=tp.value||'all'; } sync();
-      g.addEventListener('change', function(){ tp.value=g.value; tp.dispatchEvent(new Event('change',{bubbles:true})); });
-      tp.addEventListener('change', sync); })();
+      function sync(){ if(tf.value) g.value=tf.value; } sync();
+      g.addEventListener('change', function(){ hs.value=g.value; hs.dispatchEvent(new Event('change',{bubbles:true})); });
+      tf.addEventListener('change', function(){ setTimeout(sync,0); }); })();
     (function(){ var ss=$('hl-subs'), sa=$('hl-suba'); if(!ss||!tp) return; ss.appendChild(tp); var rk=$('tf-rank'), rs=$('top-clear'); if(rk) sa.appendChild(rk); if(rs) sa.appendChild(rs); H.classList.add('subf'); })();
     function mark(){ var on=!!(tf.value && state.picked!==false); H.classList.toggle('pk', !!tf.value); if(tf.value){ if(hs.value!==tf.value) hs.value=tf.value; } else { hs.selectedIndex=0; } }
     tf.addEventListener('change', function(){ setTimeout(mark,0); });
