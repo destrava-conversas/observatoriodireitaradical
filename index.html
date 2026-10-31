@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://destrava-conversas.com.br/observatoriodireitaradical/og-observatorio.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/painel.css?v=20261031e">
+<link rel="stylesheet" href="css/painel.css?v=20261031f">
 </head>
 <body>
 <div class="pickbar" id="pickbar" role="region" aria-label="Seleção atual" hidden>
@@ -41,7 +41,7 @@
     <nav class="nav" id="nav" aria-label="Seções da página">
       <a class="ext lula-only" href="economia/" title="Economia do Brasil: Bolsonaro e Lula 3 lado a lado" aria-label="E a Economia? Bolsonaro e Lula 3 lado a lado">E a Economia?</a>
       <a href="#topo" data-top>Início</a>
-      <a href="#result">Escolher pauta</a>
+      <a href="#hl-pauta" data-pauta>Escolher pauta</a>
       <a href="#resumo" class="nav-pick">O que eles fizeram</a>
       <a href="#comparacao" class="nav-pick lula-only">Compare com Lula</a>
       <a href="#rank" data-rank>Ranking das pautas</a>
@@ -73,8 +73,8 @@
       <figcaption class="rg-t">O que separa não é ser de esquerda ou de direita. É atacar as regras do jogo. <a href="quem-sao-eles/">Quem são eles →</a></figcaption>
     </figure>
     <div class="hl-blk hl-pb">
-      <p class="hl-k">Comece por uma pauta que lhe importa</p>
-      <div class="hl-pills" id="hl-pills" role="group" aria-label="Pautas"></div>
+      <label class="hl-k" for="hl-pauta">Comece por uma pauta que lhe importa</label>
+      <div class="hl-sel"><select id="hl-pauta"></select></div>
     </div>
     <div class="hl-blk hl-dzb">
       <p class="hl-or">ou abra um dos quatro dossiês: os sinais de alerta de <i>Como as democracias morrem</i></p>
@@ -90,10 +90,9 @@
 
   <section id="result" aria-live="polite" aria-label="Resultado da seleção">
     <div class="panel">
-      <p class="tf-or"><span>ou escolha</span></p>
       <div class="tf" id="tf" role="group" aria-label="Filtros: pauta e governo">
         <label class="tf-f tf-main"><span class="tf-l">1. Pauta</span><select id="top-foco" aria-label="Pauta"></select></label>
-        <label class="tf-f tf-sub"><span class="tf-l">2. Governo <span class="tf-opt">(opcional)</span></span><select id="top-pais" aria-label="Governo (opcional)"></select></label>
+        <label class="tf-f tf-sub"><span class="tf-l">Ver por governo</span><select id="top-pais" aria-label="Governo (opcional)"></select></label>
         <button type="button" class="reset-pauta tf-reset" id="top-clear" disabled aria-label="Reiniciar pauta: limpar os filtros e voltar ao início" title="Limpar os filtros"><span aria-hidden="true">↺</span><span class="rp-t">Reiniciar<span class="rp-long"> pauta</span></span></button>
       </div>
       <button type="button" class="tf-rankbtn" id="tf-rank" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h11M4 18h6"/></svg>Ranking de todas as pautas</button>
@@ -263,14 +262,14 @@
   </footer>
 </main>
 
-<script src="data/base.js?v=20261031e"></script>
-<script src="data/acoes.js?v=20261031e"></script>
-<script src="data/fontes.js?v=20261031e"></script>
-<script src="data/sinais.js?v=20261031e"></script>
-<script src="data/dossies.js?v=20261031e"></script>
-<script src="data/rede.js?v=20261031e"></script>
-<script src="data/flavio.js?v=20261031e"></script>
-<script src="js/app.js?v=20261031e"></script>
+<script src="data/base.js?v=20261031f"></script>
+<script src="data/acoes.js?v=20261031f"></script>
+<script src="data/fontes.js?v=20261031f"></script>
+<script src="data/sinais.js?v=20261031f"></script>
+<script src="data/dossies.js?v=20261031f"></script>
+<script src="data/rede.js?v=20261031f"></script>
+<script src="data/flavio.js?v=20261031f"></script>
+<script src="js/app.js?v=20261031f"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

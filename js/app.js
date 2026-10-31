@@ -1843,6 +1843,19 @@
       },250);
     },200);
   })();
+
+  /* ===== Home: a pauta é escolhida no topo; o governo, no resultado ===== */
+  (function(){ var hs=$('hl-pauta'), tf=$('top-foco'), tp=$('top-pais'); if(!hs||!tf) return;
+    function opt(v,t){ var o=document.createElement('option'); o.value=v; o.textContent=t; return o; }
+    var ph=opt('','Escolha uma pauta'); ph.disabled=true; ph.selected=true; hs.appendChild(ph);
+    GROUPS.concat(THEMES).sort(byOrder).forEach(function(x){ hs.appendChild(opt(x.k,x.n)); });
+    hs.appendChild(opt('all','Todas as pautas'));
+    function reduce(){ return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+    hs.addEventListener('change', function(){ if(!hs.value) return; if(tp){ tp.value='all'; } state.c='all'; tf.value=hs.value; tf.dispatchEvent(new Event('change',{bubbles:true}));
+      setTimeout(function(){ var r=$('result'); if(r) r.scrollIntoView({behavior:reduce()?'auto':'smooth', block:'start'}); },80); });
+    tf.addEventListener('change', function(){ if(tf.value && hs.value!==tf.value) hs.value=tf.value; });
+    document.querySelectorAll('[data-pauta]').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); var b=$('burger'); if(b && b.getAttribute('aria-expanded')==='true') b.click(); hs.scrollIntoView({behavior:reduce()?'auto':'smooth', block:'center'}); setTimeout(function(){ hs.focus({preventScroll:true}); },350); }); });
+  })();
   /* ===== Home: os quatro dossiês ===== */
   (function(){ var ul=document.getElementById('hl-dz'); if(!ul||!PD.DOSSIES) return;
     PD.DOSSIES.forEach(function(d){

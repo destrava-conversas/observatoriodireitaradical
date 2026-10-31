@@ -2096,3 +2096,10 @@ header.hero-x.hero-lente{padding-bottom:40px}
 .rg-t{margin:12px 0 0;font-size:15px;line-height:1.45;color:#D6DDEE}
 .rg-t a{color:#A6F36A;font-weight:800;white-space:nowrap}
 @media (max-width:520px){.rg-p{font-size:11.5px;gap:6px}.rg-leg{font-size:10px;letter-spacing:.04em}.rg-t{font-size:14px}.rg-gap{width:14px}.rg-lb{margin-left:14px}}
+
+/* home: seletor de pauta no topo */
+.hl-sel{width:100%;max-width:520px;margin:0 auto;position:relative}
+.hl-sel select{width:100%;appearance:none;-webkit-appearance:none;font:inherit;font-size:18px;font-weight:700;color:#0A1A3F;background:#A6F36A var(--chv) no-repeat right 18px center/18px;border:0;border-radius:999px;min-height:56px;padding:0 52px 0 24px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.hl-sel select:focus-visible{outline:3px solid #fff;outline-offset:3px}
+label.hl-k{display:block;text-align:center}
+#result .tf-main{display:none}
