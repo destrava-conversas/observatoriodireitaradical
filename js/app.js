@@ -1855,6 +1855,8 @@
     hs.addEventListener('change', function(){ if(!hs.value) return; if(tp){ tp.value='all'; } state.c='all'; tf.value=hs.value; tf.dispatchEvent(new Event('change',{bubbles:true}));
       setTimeout(function(){ var r=$('result'); if(r) r.scrollIntoView({behavior:reduce()?'auto':'smooth', block:'start'}); },80); });
     var H=document.documentElement;
+    /* o governo vira um subfiltro, logo abaixo da pauta */
+    (function(){ var ss=$('hl-subs'), sa=$('hl-suba'); if(!ss||!tp) return; ss.appendChild(tp); var rk=$('tf-rank'), rs=$('top-clear'); if(rk) sa.appendChild(rk); if(rs) sa.appendChild(rs); H.classList.add('subf'); })();
     function mark(){ var on=!!(tf.value && state.picked!==false); H.classList.toggle('pk', !!tf.value); if(tf.value){ if(hs.value!==tf.value) hs.value=tf.value; } else { hs.selectedIndex=0; } }
     tf.addEventListener('change', function(){ setTimeout(mark,0); });
     var clr=$('top-clear'); if(clr) clr.addEventListener('click', function(){ setTimeout(function(){ H.classList.remove('pk'); hs.selectedIndex=0; },0); });

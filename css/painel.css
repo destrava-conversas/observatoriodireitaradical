@@ -2117,3 +2117,21 @@ label.hl-k{display:block;text-align:center}
 .topbar .rsp-btn{gap:8px}
 .topbar .rsp-btn .dot{width:8px;height:8px;border-radius:50%;background:#A6F36A;flex:none}
 html:not(.pk) header.hero-lente ~ #result{display:none}
+
+/* subfiltro de governo, preso ao seletor de pauta */
+.hl-subf{display:none}
+html.pk .hl-subf{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:520px;margin:14px auto 0}
+.hl-subl{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.hl-subs{width:100%;max-width:420px}
+.hl-subs select{width:100%;appearance:none;-webkit-appearance:none;font:inherit;font-size:16px;font-weight:700;color:var(--ink);background:var(--surface) var(--chv) no-repeat right 16px center/16px;border:2px solid #A6F36A;border-radius:999px;min-height:48px;padding:0 44px 0 20px;cursor:pointer}
+.hl-suba{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.hl-suba .tf-rankbtn,.hl-suba .tf-reset{margin:0;min-height:38px;padding:0 14px;font-size:14px;border-radius:999px}
+html.subf #result > .panel{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hl-subs select{background-color:#1E2433;color:#fff}}
+:root[data-theme="dark"] .hl-subs select{background-color:#1E2433;color:#fff}
+.hl-subs #top-pais{width:100%;appearance:none;-webkit-appearance:none;font:inherit;font-size:16px;font-weight:700;color:var(--ink);background:var(--surface) var(--chv) no-repeat right 16px center/16px;border:2px solid #A6F36A;border-radius:999px;min-height:48px;height:auto;padding:0 44px 0 20px;box-shadow:none}
+:root[data-theme="dark"] .hl-subs #top-pais{background-color:#1E2433;color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hl-subs #top-pais{background-color:#1E2433;color:#fff}}
+.hl-suba button,.hl-suba .tf-rankbtn,.hl-suba .reset-pauta{background:transparent!important;border:1.5px solid var(--line)!important;color:var(--ink)!important;font-weight:700;box-shadow:none}
+.hl-suba button:hover{border-color:var(--ink)!important}
+.hl-suba svg{width:15px;height:15px}
