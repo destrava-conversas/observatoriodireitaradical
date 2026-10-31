@@ -81,7 +81,7 @@ a{color:var(--link)}
 .nav a.ext:hover{background:#155FA3}
 .nav a.sub{font-weight:500;font-size:15px;color:var(--muted)}
 .nav .sep{display:block;height:1px;background:var(--line);margin:6px 12px}
-@media (max-width:760px){.tb{padding:0 14px;font-size:14px}.tb.bus{padding:0 16px;min-width:56px;justify-content:center}.tb.bus .l{display:none}.nav a{font-size:17px;padding:13px 14px}}
+@media (max-width:760px){.tb{padding:0 14px;font-size:14px}.tb.bus{padding:0 16px;min-width:56px;justify-content:center}.tb.bus .l{display:none}.nav a{font-size:16px;padding:10px 12px}}
 .totop{position:fixed;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:120;width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#0A1A3F;border:2px solid #A6F36A;color:#A6F36A;box-shadow:0 6px 18px rgba(0,0,0,.28);text-decoration:none;font-size:22px;font-weight:700}
 .totop[hidden]{display:none}
 .totop:hover{background:#13213F}
@@ -168,7 +168,7 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 :focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 `;
 
-const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">';
+const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">';
 
 function head({ title, desc, canonical, image, imgW, imgH, rel, type }) {
   return `<!doctype html>
@@ -214,6 +214,7 @@ const topbar = (rel, here) => `<header class="top" id="topo"><div class="top-in"
 <a class="ext lula-only" href="${rel}economia/" hidden>E a Economia?</a>
 <a href="${rel}">Início</a>
 <a href="${rel}#result">Escolher pauta</a>
+<a href="${rel}#rank">Ranking das pautas</a>
 <span class="sep" aria-hidden="true"></span>
 <a href="${rel}quem-sao-eles/">Quem são eles</a>
 <a href="${rel}dossies/">Dossiês</a>

@@ -117,11 +117,17 @@ crit = '''  <section id="criterios" aria-labelledby="h-crit">
     <dl class="crit-list" id="crit-list"></dl>
   </section>
 '''
+
+_dz = json.loads(re.search(r'PD\.DOSSIES = (\[.*?\n\]);', open(P('data', 'dossies.js'), encoding='utf-8').read(), re.S).group(1))
+dzsec = '  <section id="dossies-criterio" aria-labelledby="h-dzc">\n    <h2 id="h-dzc">Critérios dos dossiês</h2>\n' \
+    '    <p>Os quatro dossiês seguem os sinais de alerta de comportamento autoritário de Steven Levitsky e Daniel Ziblatt, em <i>Como as democracias morrem</i>. Uma prova entra quando responde à pergunta do dossiê, com fonte e outro lado: pode ser um Sinal ou uma ação de governo já registrada nas pautas. A mesma ação aparece uma vez na pauta e, se couber, também no dossiê.</p>\n' \
+    '    <dl class="crit-list">\n' + ''.join('      <dt><a href="../dossies/%s/">%s</a></dt><dd><b>%s</b> %s%s</dd>\n' % (d['slug'], html.escape(d['n']), html.escape(d['q']), html.escape(d['qd']), (' <i>Ampliação declarada:</i> ' + html.escape(d['amp'])) if d.get('amp') else '') for d in _dz) + \
+    '    </dl>\n    <p>As duas ampliações são escolhas editoriais do painel, declaradas aqui para quem quiser conferir. Desinformação só entra quando for sistemática, e não uma fala isolada. Atos coletivos, como assédio eleitoral, exigem fonte institucional com números.</p>\n  </section>\n'
 page('metodo/', 'metodo', 'Método e critérios · ' + BRAND,
      'Por que um observatório, como olhamos, os critérios de cada pauta, as regras de fonte, a privacidade e a lista completa de fontes do painel.',
      'Método e critérios',
      'Por que o painel existe, como cada ação é escolhida e classificada, quais fontes valem e como tratamos seus dados.',
-     frag('_obs.html') + crit + frag('_info.html'))
+     frag('_obs.html') + crit + dzsec + frag('_info.html'))
 
 # Se te disserem…
 page('se-te-disserem/', 'respostas', 'Se te disserem… · ' + BRAND,
