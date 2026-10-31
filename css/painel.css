@@ -2070,3 +2070,7 @@ header.hero-x.hero-lente{padding-bottom:40px}
 .dz-crumb .dz-next{margin-left:auto;font-weight:800;color:var(--ink);text-decoration:none;border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;background:var(--surface)}
 .dz-crumb .dz-next:hover{border-color:var(--ink)}
 @media (max-width:480px){.dz-nl{display:none}.dz-crumb .dz-next{padding:5px 11px;font-size:14px}}
+
+.dz-stick{position:fixed;left:0;right:0;top:var(--hdr,60px);z-index:40;background:var(--obs-navy,#0A1A3F);color:#fff;border-bottom:1px solid rgba(255,255,255,.14);padding:10px clamp(16px,4vw,48px);font-size:16px;line-height:1.2;box-shadow:0 6px 16px rgba(10,26,63,.18)}
+.dz-stick span{color:#A6F36A;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.dz-stick b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800}

@@ -120,9 +120,10 @@ for D in DOS:
     f = P(slug, 'index.html')
     doc = open(f, encoding='utf-8').read()
     doc = re.sub(r'(href|src)="\.\./(?!\.\./)', r'\1="../../', doc)
-    nx = DOS[(DOS.index(D) + 1) % len(DOS)]
-    doc = doc.replace('<header class="pg-h">\n', '<header class="pg-h">\n    ' +
-                      '<p class="pg-crumb dz-crumb"><a class="dz-next" href="__DZ__%s/">Próximo<span class="dz-nl"> dossiê</span>: %s →</a></p>\n' % (nx['slug'], E(nx['n'])), 1)
+    stick = ('<div class="dz-stick" id="dz-stick" aria-hidden="true" hidden><span>Dossiê:</span> <b>%s</b></div>\n'
+             '<script>(function(){var h=document.querySelector(".pg-h h1"),s=document.getElementById("dz-stick");if(!h||!s||!("IntersectionObserver" in window))return;'
+             'new IntersectionObserver(function(e){s.hidden=e[0].isIntersecting;},{rootMargin:"-70px 0px 0px 0px"}).observe(h);})();</script>\n') % E(D['n'])
+    doc = doc.replace('</main>', stick + '</main>', 1)
     doc = doc.replace('href="__DZ__', 'href="../')  # links entre dossiês
     open(f, 'w', encoding='utf-8').write(doc)
 print('dossiês gerados:', ', '.join(x['slug'] for x in DOS))
