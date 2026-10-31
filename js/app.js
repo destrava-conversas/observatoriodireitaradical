@@ -558,17 +558,15 @@
     renderSplit();
     var sub = '';
     var subC = null;
-    ALLC.forEach(function(c){ if(c.k===state.c){ subC = c; sub = c.ctrl ? 'Governo Lula, 2023 a 2025: centro-esquerda usado como régua, não como equivalente' : (c.sub || (c.p+' sob '+c.n+', '+c.s)); } });
+    ALLC.forEach(function(c){ if(c.k===state.c){ subC = c; sub = c.ctrl ? 'Governo Lula, 2023 a 2025: centro-esquerda usado como régua, não como equivalente' : (c.p+', '+c.s); } });
     var ss = $('sel-sub'); ss.textContent = '';
-    if(subC && !subC.ctrl && sub.indexOf(subC.n) >= 0){
-      var ix = sub.indexOf(subC.n);
-      ss.appendChild(document.createTextNode(sub.slice(0,ix)));
-      var la = el('a','parca-link',subC.n); la.href = QUEM+'#parca-'+subC.k; la.title = 'Ver quem é '+subC.n+' e a ligação com Flávio';
+    if(subC && !subC.ctrl){
+      var la = el('a','parca-link',subC.p); la.href = QUEM+'#parca-'+subC.k; la.title = 'Ver quem é '+subC.n+' e a ligação com Flávio';
       ss.appendChild(la);
-      ss.appendChild(document.createTextNode(sub.slice(ix+subC.n.length)));
+      ss.appendChild(document.createTextNode(', '+subC.s));
     } else if(!subC){
-      ss.appendChild(document.createTextNode('Soma de '));
-      var lp = el('a','parca-link','todos os governos'); lp.href = QUEM || '#parcas'; lp.title = 'Ver quem são e como se ligam';
+      ss.appendChild(document.createTextNode('Soma dos '));
+      var lp = el('a','parca-link',COUNTRIES.length+' governos observados'); lp.href = QUEM || '#parcas'; lp.title = 'Ver quem são e como se ligam';
       ss.appendChild(lp);
     } else ss.textContent = sub;
     $('n-contra').textContent = t.contra; (function(){ [['go-contra',t.contra],['go-pro',t.pro]].forEach(function(x){ var a=$(x[0]); if(!a) return; if(x[1]>0){ a.removeAttribute('aria-disabled'); a.setAttribute('title','Ver as ações'); } else { a.setAttribute('aria-disabled','true'); a.removeAttribute('title'); } }); })();
