@@ -1818,6 +1818,12 @@
     });
   });
 
+
+  /* Home: o azul do topo vai até a metade da caixa de busca */
+  (function(){ var h=document.querySelector('header.hero-lente'), b=h&&h.querySelector('.hl-box'); if(!h||!b) return;
+    function cut(){ var hr=h.getBoundingClientRect(), br=b.getBoundingClientRect(); h.style.setProperty('--hl-cut', Math.round(br.top-hr.top+br.height/2)+'px'); }
+    cut(); window.addEventListener('resize', cut); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(cut); window.addEventListener('load', cut);
+  })();
   /* ===== Home: os quatro dossiês ===== */
   (function(){ var ul=document.getElementById('hl-dz'); if(!ul||!PD.DOSSIES) return;
     PD.DOSSIES.forEach(function(d){

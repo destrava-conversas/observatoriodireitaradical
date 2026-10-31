@@ -2015,3 +2015,16 @@ html[data-page="respostas"] .pg-h h1{color:var(--rsp-ink)}
 .hl-dz .q{font-size:15px;line-height:1.4;color:#D6DDEE}
 .hl-dz .c{margin-top:auto;padding-top:6px;font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#A6F36A}
 .hl-dz .u{font-size:13px;line-height:1.35;color:#C9D3EA}
+/* home: azul só até a metade da busca; o resto em fundo claro */
+header.hero-x.hero-lente{background:linear-gradient(to bottom,var(--obs-navy) 0,var(--obs-navy) var(--hl-cut,46%),var(--surface) var(--hl-cut,46%),var(--surface) 100%)}
+.hero-lente .hl-blk .hl-or{color:var(--muted)}
+.hero-lente .hl-blk .hl-or i{color:var(--ink)}
+.hero-lente .hl-box{box-shadow:0 6px 22px rgba(10,26,63,.18)}
+.hl-dz a,.hl-sl a{background:var(--obs-navy);border-color:var(--obs-navy)}
+.hl-dz a:hover,.hl-sl a:hover{background:var(--obs-navy);border-color:var(--obs-acc)}
+.hl-dz a:focus-visible,.hl-sl a:focus-visible,.hl-sall:focus-visible,.hl-pill:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.hl-pill{background:var(--obs-navy);border-color:var(--obs-navy);color:var(--obs-acc)}
+.hl-pill:hover{background:#132A5E}
+.hl-pill.all{background:var(--obs-acc);border-color:var(--obs-acc);color:var(--obs-navy)}
+:root[data-theme="dark"] .hl-dz a,:root[data-theme="dark"] .hl-sl a,:root[data-theme="dark"] .hl-pill:not(.all){border-color:rgba(255,255,255,.22)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hl-dz a,:root:not([data-theme="light"]) .hl-sl a,:root:not([data-theme="light"]) .hl-pill:not(.all){border-color:rgba(255,255,255,.22)}}
