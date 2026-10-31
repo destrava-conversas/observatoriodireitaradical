@@ -122,7 +122,7 @@ for D in DOS:
     doc = re.sub(r'(href|src)="\.\./(?!\.\./)', r'\1="../../', doc)
     nx = DOS[(DOS.index(D) + 1) % len(DOS)]
     doc = doc.replace('<p class="pg-crumb"><a href="../../">← Painel completo</a></p>',
-                      '<p class="pg-crumb dz-crumb"><a href="../../">← Painel completo</a><a class="dz-next" href="__DZ__%s/">Próximo<span class="dz-nl"> dossiê</span>: %s →</a></p>' % (nx['slug'], E(nx['n'])))
+                      '<p class="pg-crumb dz-crumb"><a class="dz-next" href="__DZ__%s/">Próximo<span class="dz-nl"> dossiê</span>: %s →</a></p>' % (nx['slug'], E(nx['n'])))
     doc = doc.replace('href="__DZ__', 'href="../')  # links entre dossiês
     open(f, 'w', encoding='utf-8').write(doc)
 print('dossiês gerados:', ', '.join(x['slug'] for x in DOS))
@@ -135,5 +135,10 @@ for D in DOS:
                  % (D['slug'], D['olho'], E(D['n']), E(D['q']), len(sn) + len(ac)))
 body = ('  <ul class="dzc">' + ''.join(cards) + '</ul>\n'
         '  <section class="dz-s"><h2>Como os dossiês funcionam</h2><p>Cada dossiê responde a uma pergunta do livro de Steven Levitsky e Daniel Ziblatt. Uma prova entra quando responde a essa pergunta, com fonte e outro lado: pode ser um <a href="../sinais/">Sinal</a> (um fato, uma fala, uma decisão) ou uma ação de governo já registrada nas pautas. Notícia que não responde a nenhuma pergunta não entra.</p></section>\n')
+_ = None
 page('dossies/', 'dossies', 'Dossiês · ' + BRAND, 'Os quatro sinais de alerta de Como as democracias morrem e as provas de cada um, com fonte e outro lado.',
      'Dossiês', 'Os quatro sinais de alerta de Levitsky e Ziblatt, em <i>Como as democracias morrem</i>, e as provas que o painel reuniu para cada um.', body)
+
+f = P('dossies', 'index.html'); doc = open(f, encoding='utf-8').read()
+doc = doc.replace('    <p class="pg-crumb"><a href="../">← Painel completo</a></p>\n', '')
+open(f, 'w', encoding='utf-8').write(doc)
