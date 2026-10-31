@@ -2164,3 +2164,15 @@ html.pk .hl-subf{margin-top:16px}
 @media (max-width:420px){.selpill.has-gov{font-size:14px;padding:6px 12px;gap:2px}.selpill .rg-k{margin-right:2px}.selpill .res-gov{padding-right:22px;background-position:right 4px center}}
 html.pbgov .pickbar.is-pick .pb-sel{display:none}
 html.pbgov .pickbar.is-pick .pb-gov{max-width:none;flex:1;margin-right:8px}
+/* cards de dossiê brancos: imagem, nome, número de evidências e seta */
+.hl-dz a,.dzc a{background:var(--surface)!important;color:var(--ink)!important;border:1.5px solid var(--line)!important;box-shadow:0 6px 18px rgba(10,26,63,.10)}
+.hl-dz a:hover,.dzc a:hover{border-color:var(--ink)!important}
+.hl-dz .t,.dzc .dt{position:relative;padding-right:40px}
+.hl-dz b,.dzc b{color:var(--ink)}
+.hl-dz .c,.dzc em{color:#15803D!important}
+.dzc .dt>span{color:var(--muted)!important}
+.hl-dz .ar{position:absolute;right:12px;bottom:10px;font-size:20px;font-weight:800;color:var(--ink)}
+.dzc em span{position:absolute;right:14px;bottom:12px;font-size:20px;color:var(--ink)}
+:root[data-theme="dark"] .hl-dz .c,:root[data-theme="dark"] .dzc em{color:#A6F36A!important}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hl-dz .c,:root:not([data-theme="light"]) .dzc em{color:#A6F36A!important}}
+.dz-sinal a::after{content:"→";font-size:18px}

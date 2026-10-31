@@ -93,7 +93,7 @@ main{max-width:880px;margin:0 auto;padding:20px 16px 48px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 20px}
 @media (min-width:700px){.card{padding:30px 34px}}
 .hd{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:0 0 12px;font-size:14px;color:var(--muted)}
-.num{font-weight:800;color:var(--ink);background:var(--acc);color:#0A1A3F;border-radius:999px;padding:2px 10px;font-size:13px;letter-spacing:.02em}
+.num{font-weight:800;background:#4338CA;color:#fff;border-radius:999px;padding:2px 10px;font-size:13px;letter-spacing:.02em}
 .kind{font-weight:700}
 .tag{display:inline-block;font-size:12.5px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:1px 9px;color:var(--muted);text-decoration:none}
 a.tag:hover{border-color:var(--ink)}
@@ -135,9 +135,9 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .list-h1{font-size:clamp(30px,5vw,44px);margin:6px 0 8px}
 .filt{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;margin:14px 0 6px;scrollbar-width:thin}
 .chip{font:inherit;flex:none;font-size:14.5px;font-weight:700;min-height:40px;padding:0 15px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
-.chip[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
-:root[data-theme="dark"] .chip[aria-pressed="true"]{background:var(--acc);color:#0A1A3F;border-color:var(--acc)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip[aria-pressed="true"]{background:var(--acc);color:#0A1A3F;border-color:var(--acc)}}
+.chip[aria-pressed="true"]{background:#4338CA;color:#fff;border-color:#4338CA}
+:root[data-theme="dark"] .chip[aria-pressed="true"]{background:#4338CA;color:#fff;border-color:#4338CA}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip[aria-pressed="true"]{background:#4338CA;color:#fff;border-color:#4338CA}}
 .chip small{font-weight:600;opacity:.75;margin-left:4px}
 .q{width:100%;font:inherit;font-size:16px;padding:12px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
 .sl{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px}
@@ -254,7 +254,7 @@ function hdHTML(n, linkTags, rel) {
   let h = `<span class="num">Sinal ${n.n}</span>`;
   if (n.tipo) h += `<span class="kind">${esc(n.tipo)}</span>`;
   if (!isVS(n)) h += `<time datetime="${n.d}">${esc(ndate(n))}</time>`;
-  (n.tags || []).forEach(t => { h += linkTags ? `<a class="tag" href="${rel}?q=${encodeURIComponent(t)}">${esc(t)}</a>` : `<span class="tag">${esc(t)}</span>`; });
+  (n.tags || []).forEach(t => { h += `<span class="tag">${esc(t)}</span>`; });
   (n.alerta || []).forEach(k => { h += `<span class="alerta">⚠ ${esc(ALERTA[k])}</span>`; });
   return h;
 }
@@ -283,7 +283,7 @@ ${n.bolso ? `<div class="bolso"><p class="bolso-k">Argumento de bolso <span>para
 ${n.why ? `<p class="why"><b>${esc(n.wl || 'Por que ler:')}</b> ${esc(n.why)}</p>` : ''}
 <p class="src">${srcLbl}: ${n.src.map(s => `<a href="${esc(s[1])}" target="_blank" rel="noopener noreferrer">${esc(s[0])}</a>`).join('; ')}</p>
 ${(n.rsp ? [].concat(n.rsp) : []).map(rspOf).filter(Boolean).map(r => `<section class="stds" id="${r.id}"><p class="stds-k">Se te disserem</p><p class="stds-q">${r.q}</p><p class="stds-ak">Responda</p><p class="stds-a">${r.a}</p>${r.d}<p class="stds-s">${r.s}</p><div class="stds-b"><button class="btn" type="button" data-copy="${r.c}" data-ok="Resposta copiada" data-lbl="Copiar resposta">${ICON_COPY}<span>Copiar resposta</span></button><a class="btn o" href="${rel}se-te-disserem/img/${r.id}.png" download="se-te-disserem-${r.id}.png">${ICON_IMG}Baixar imagem</a></div></section>`).join('\n')}
-${(n.dossie || []).length ? `<p class="dzp">Prova do dossiê ${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' e ')}</p>` : ''}
+${(n.dossie || []).length ? `<p class="dzp">Evidência do dossiê ${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' e ')}</p>` : ''}
 <div class="acts">
 <a class="btn" href="https://wa.me/?text=${encodeURIComponent(shareTxt)}" target="_blank" rel="noopener noreferrer">${ICON_WA}Mandar no WhatsApp</a>
 <button class="btn o" type="button" data-copy="${esc(url(n))}">${ICON_LINK}<span>Copiar link</span></button>
@@ -319,7 +319,7 @@ function listPage() {
     return `<li data-f="${f}" data-i="${esc(idx.normalize('NFD').replace(/[̀-ͯ]/g, ''))}"><a href="${n.n}/"><div class="hd">${hdHTML(n, false, rel)}</div><p class="t">${esc(n.t)}</p><p class="d">${esc(highlight(n))}</p><p class="dzs">${dz}</p></a></li>`;
   }).join('\n');
   const cards = DOSSIES.map(d => `<li data-k="${d.k}"><a href="${rel}dossies/${d.slug}/"><img src="${rel}img/olhos/olho-${d.olho}.jpg" alt="" width="1080" height="300" loading="lazy"><span class="dt"><b>${esc(d.n)}</b><span>${esc(d.q)}</span><em>Abrir o dossiê →</em></span></a></li>`).join('');
-  const desc = 'Os fatos que servem de prova nos quatro dossiês do painel (os sinais de alerta de Como as democracias morrem), com fonte e outro lado.';
+  const desc = 'Os fatos que servem de evidência nos quatro dossiês do painel (os sinais de alerta de Como as democracias morrem), com fonte e outro lado.';
   return head({ title: 'Sinais · ' + BRAND, desc, canonical: BASE + 'sinais/', image: BASE + 'og-observatorio.jpg', imgW: 1200, imgH: 630, rel, type: 'website' }) + `
 <style>
 .dzc{list-style:none;margin:14px 0 6px;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media (min-width:900px){.dzc{grid-template-columns:repeat(4,1fr)}}@media (max-width:420px){.dzc{grid-template-columns:1fr}}
@@ -332,14 +332,14 @@ function listPage() {
 .dzc em{font-style:normal;font-weight:800;font-size:13px;color:var(--acc);margin-top:auto;padding-top:4px}
 .dzc li.on a{border-color:var(--acc)}
 .sl .dzs{margin:8px 0 0;display:flex;flex-wrap:wrap;gap:6px}
-.dzt{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:2px 10px;background:#0A1A3F;color:var(--acc)}
+.dzt{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:2px 10px;background:#4338CA;color:#fff}
 .h2s{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-size:24px;margin:28px 0 4px}
 </style>
 <body>
 ${topbar(rel, 'lista')}
 <main>
 <h1 class="list-h1">Sinais</h1>
-<p class="lead">Os fatos que entraram como prova em pelo menos um dos <a href="${rel}dossies/">quatro dossiês</a>, com fonte e outro lado. Toque num Sinal para abrir a página dele e compartilhar.</p>
+<p class="lead">Os fatos que entraram como evidência em pelo menos um dos <a href="${rel}dossies/">quatro dossiês</a>, com fonte e outro lado. Toque num Sinal para abrir a página dele e compartilhar.</p>
 <div class="filt" role="group" aria-label="Filtrar Sinais por dossiê">
 <button class="chip" type="button" data-k="all" aria-pressed="true">Todos<small>${L.length}</small></button>
 ${DOSSIES.map(d => `<button class="chip" type="button" data-k="${d.k}" aria-pressed="false">${esc(d.n)}<small>${cnt(d.k)}</small></button>`).join('\n')}

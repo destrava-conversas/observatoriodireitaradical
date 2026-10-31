@@ -78,7 +78,7 @@ for D in DOS:
     amp = ('<p class="dz-amp"><b>Ampliação declarada:</b> ' + E(D['amp']) + '</p>') if D.get('amp') else ''
     pts = ''.join('<li>' + (('<b>' + E(x.split(': ', 1)[0]) + ':</b> ' + E(x.split(': ', 1)[1])) if (': ' in x and len(x.split(': ', 1)[0]) <= 26) else E(x)) + '</li>' for x in D.get('sp', []))
     pass  # síntese removida a pedido do Ces (31/10)
-    b.append('  <section class="dz-pv" aria-labelledby="h-pv"><h2 id="h-pv">As provas <span class="dz-n">%d</span></h2>\n' % (len(sn) + len(ac)))
+    b.append('  <section class="dz-pv" aria-labelledby="h-pv"><h2 id="h-pv">As evidências <span class="dz-n">%d</span></h2>\n' % (len(sn) + len(ac)))
     if sn:
         b.append('    <h3 class="dz-h3">Sinais <span>%d</span></h3>\n    <ol class="dz-list">\n' % len(sn))
         for n in sn:
@@ -132,13 +132,13 @@ print('dossiês gerados:', ', '.join(x['slug'] for x in DOS))
 cards = []
 for D in DOS:
     sn, ac = provas(D['k'])
-    cards.append('<li><a href="%s/"><img src="../img/olhos/olho-%s.jpg" alt="" width="1080" height="300"><span class="dt"><b>%s</b><span>%s</span><em>%d provas · abrir o dossiê →</em></span></a></li>'
-                 % (D['slug'], D['olho'], E(D['n']), E(D['q']), len(sn) + len(ac)))
+    cards.append('<li><a href="%s/"><img src="../img/olhos/olho-%s.jpg" alt="" width="1080" height="300"><span class="dt"><b>%s</b><em>%d evidências <span aria-hidden="true">→</span></em></span></a></li>'
+                 % (D['slug'], D['olho'], E(D['n']), len(sn) + len(ac)))
 body = ('  <ul class="dzc">' + ''.join(cards) + '</ul>\n'
-        '  <section class="dz-s"><h2>Como os dossiês funcionam</h2><p>Cada dossiê responde a uma pergunta do livro de Steven Levitsky e Daniel Ziblatt. Uma prova entra quando responde a essa pergunta, com fonte e outro lado: pode ser um <a href="../sinais/">Sinal</a> (um fato, uma fala, uma decisão) ou uma ação de governo já registrada nas pautas. Notícia que não responde a nenhuma pergunta não entra.</p></section>\n')
+        '  <section class="dz-s"><h2>Como os dossiês funcionam</h2><p>Cada dossiê responde a uma pergunta do livro de Steven Levitsky e Daniel Ziblatt. Uma evidência entra quando responde a essa pergunta, com fonte e outro lado: pode ser um <a href="../sinais/">Sinal</a> (um fato, uma fala, uma decisão) ou uma ação de governo já registrada nas pautas. Notícia que não responde a nenhuma pergunta não entra.</p></section>\n')
 _ = None
-page('dossies/', 'dossies', 'Dossiês · ' + BRAND, 'Os quatro sinais de alerta de Como as democracias morrem e as provas de cada um, com fonte e outro lado.',
-     'Dossiês', 'Os quatro sinais de alerta de Levitsky e Ziblatt, em <i>Como as democracias morrem</i>, e as provas que o painel reuniu para cada um.', body)
+page('dossies/', 'dossies', 'Dossiês · ' + BRAND, 'Os quatro sinais de alerta de Como as democracias morrem e as evidências de cada um, com fonte e outro lado.',
+     'Dossiês', 'Os quatro sinais de alerta de Levitsky e Ziblatt, em <i>Como as democracias morrem</i>, e as evidências que o painel reuniu para cada um.', body)
 
 f = P('dossies', 'index.html'); doc = open(f, encoding='utf-8').read()
 doc = doc.replace('    <p class="pg-crumb"><a href="../">← Painel completo</a></p>\n', '')

@@ -271,7 +271,7 @@
     function opt(v,t){ var o=document.createElement('option'); o.value=v; o.textContent=t; return o; }
     var ph1 = opt('','Filtrar por governo'); ph1.disabled = true; tp.appendChild(ph1);
     tp.appendChild(opt('all','Todos os governos'));
-    COUNTRIES.forEach(function(c){ tp.appendChild(opt(c.k, c.n)); });
+    COUNTRIES.slice().sort(function(a,b){ if(a.k==='bb') return -1; if(b.k==='bb') return 1; return a.n.localeCompare(b.n,'pt'); }).forEach(function(c){ tp.appendChild(opt(c.k, c.n)); });
     var ph2 = opt('','Escolha a pauta'); ph2.disabled = true; tf.appendChild(ph2);
     tf.appendChild(opt('all','Todas as pautas'));
     GROUPS.concat(THEMES).sort(byOrder).forEach(function(x){ tf.appendChild(opt(x.k,x.n)); });
@@ -1880,7 +1880,7 @@
       var li=document.createElement('li'), a=document.createElement('a'); a.href='dossies/'+d.slug+'/';
       var img=document.createElement('img'); img.src='img/olhos/olho-'+d.olho+'.jpg'; img.alt=''; img.width=1080; img.height=300; img.loading='lazy'; a.appendChild(img);
       var t=el('span','t'); t.appendChild(el('b','',d.n));
-      t.appendChild(el('span','c',(sn.length+na)+' provas'));
+      t.appendChild(el('span','c',(sn.length+na)+' evidências')); t.appendChild(el('span','ar','→'));
       a.appendChild(t); li.appendChild(a); ul.appendChild(li);
     });
     window.dispatchEvent(new Event('resize'));
