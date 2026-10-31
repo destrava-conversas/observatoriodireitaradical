@@ -398,7 +398,7 @@
     g.textBaseline='alphabetic';
   }
   var PANEL_URL = 'https://destrava-conversas.com.br/observatoriodireitaradical/';
-  var PAGE = document.documentElement.getAttribute('data-page') || 'home', ROOT = PAGE==='home' ? '' : '../';
+  var PAGE = document.documentElement.getAttribute('data-page') || 'home', ROOT = PAGE==='home' ? '' : (PAGE==='dossie' ? '../../' : '../');
   var QUEM = PAGE==='quem' ? '' : ROOT+'quem-sao-eles/';
   function copyText(i){
     var who = cname(i.c) + (i.y ? ', ' + i.y : '');
@@ -1817,6 +1817,20 @@
       setTab(x, !open);
     });
   });
+
+  /* ===== Home: os quatro dossiês ===== */
+  (function(){ var ul=document.getElementById('hl-dz'); if(!ul||!PD.DOSSIES) return;
+    PD.DOSSIES.forEach(function(d){
+      var sn=NEWS.filter(function(n){ return (n.dossie||[]).indexOf(d.k)>=0; }).sort(function(a,b){ return a.d<b.d?1:a.d>b.d?-1:(a.n<b.n?1:-1); });
+      var seen={}, na=0; A.forEach(function(a){ if((a.dossie||[]).indexOf(d.k)<0) return; var key=a.c+'|'+a.t; if(seen[key]) return; seen[key]=1; na++; });
+      var li=document.createElement('li'), a=document.createElement('a'); a.href='dossies/'+d.slug+'/';
+      var img=document.createElement('img'); img.src='img/olhos/olho-'+d.olho+'.jpg'; img.alt=''; img.width=1080; img.height=300; img.loading='lazy'; a.appendChild(img);
+      var t=el('span','t'); t.appendChild(el('b','',d.n)); t.appendChild(el('span','q',d.q));
+      t.appendChild(el('span','c',(sn.length+na)+' provas'));
+      if(sn[0]) t.appendChild(el('span','u','Última: Sinal '+sn[0].n+' · '+(sn[0].t.length>78?sn[0].t.slice(0,76).replace(/\s+\S*$/,'')+'…':sn[0].t)));
+      a.appendChild(t); li.appendChild(a); ul.appendChild(li);
+    });
+  })();
   /* ===== Busca ===== */
   (function(){
     var btn=$('busca-btn'), box=$('busca'), inp=$('busca-q'), res=$('busca-res'), st=$('busca-st'), cl=$('busca-x');

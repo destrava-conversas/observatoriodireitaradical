@@ -90,6 +90,7 @@ def page(slug, key, title, desc, h1, lead, body, extra_top=''):
 <script src="../data/fontes.js?v={ver}"></script>
 <script src="../data/sinais.js?v={ver}"></script>
 <script src="../data/rede.js?v={ver}"></script>
+<script src="../data/dossies.js?v={ver}"></script>
 <script src="../data/flavio.js?v={ver}"></script>
 <script src="../js/app.js?v={ver}"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -130,6 +131,9 @@ page('se-te-disserem/', 'respostas', 'Se te disserem… · ' + BRAND,
      'Se te disserem…',
      'Frases que circulam e a resposta curta, com dado e fonte, para usar numa conversa. O assunto é o fato, não a pessoa.',
      frag('_respostas.html'))
+
+# Dossiês
+exec(open(P('tools','paginas','dossies.py'),encoding='utf-8').read())
 
 # itens de Flávio para a busca da home
 fl = re.search(r'<section class="px-sec" id="px-flavio">(.*?)</section>', quem, re.S).group(1)
