@@ -76,7 +76,8 @@ for D in DOS:
     b.append('  <section class="dz-q" aria-labelledby="h-q"><p class="dz-k" id="h-q">A pergunta</p>'
              '<p class="dz-qt">' + E(D['q']) + '</p><p class="dz-qd">' + E(D['qd']) + '</p></section>\n')
     amp = ('<p class="dz-amp"><b>Ampliação declarada:</b> ' + E(D['amp']) + '</p>') if D.get('amp') else ''
-    b.append('  <section class="dz-s" aria-labelledby="h-s"><h2 id="h-s">O que as provas mostram</h2><p>' + E(D['s']) + '</p>' + amp + '</section>\n')
+    pts = ''.join('<li>' + (('<b>' + E(x.split(': ', 1)[0]) + ':</b> ' + E(x.split(': ', 1)[1])) if (': ' in x and len(x.split(': ', 1)[0]) <= 26) else E(x)) + '</li>' for x in D.get('sp', []))
+    b.append('  <section class="dz-s" aria-labelledby="h-s"><h2 id="h-s">O que as provas mostram</h2><p class="dz-sl">' + E(D.get('sl') or D['s']) + '</p>' + (('<ul class="dz-sp">' + pts + '</ul>') if pts else '') + amp + '<p class="dz-jump"><a href="#h-pv">Ir direto para as provas ↓</a></p></section>\n')
     b.append('  <section class="dz-pv" aria-labelledby="h-pv"><h2 id="h-pv">As provas <span class="dz-n">%d</span></h2>\n' % (len(sn) + len(ac)))
     if sn:
         b.append('    <h3 class="dz-h3">Sinais <span>%d</span></h3>\n    <ol class="dz-list">\n' % len(sn))
