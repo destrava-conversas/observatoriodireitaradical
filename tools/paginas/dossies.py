@@ -74,10 +74,10 @@ for D in DOS:
     b = []
     b.append('  <figure class="dz-olho">' + olho_img(D) + '</figure>\n')
     b.append('  <section class="dz-q" aria-labelledby="h-q"><p class="dz-k" id="h-q">A pergunta</p>'
-             '<p class="dz-qt">' + E(D['q']) + '</p><p class="dz-qd">' + E(D['qd']) + '</p></section>\n')
+             '<p class="dz-qt">' + E(D['q']) + '</p><p class="dz-qd">Adaptado de <i>Como as democracias morrem</i>, de Steven Levitsky e Daniel Ziblatt.</p></section>\n')
     amp = ('<p class="dz-amp"><b>Ampliação declarada:</b> ' + E(D['amp']) + '</p>') if D.get('amp') else ''
     pts = ''.join('<li>' + (('<b>' + E(x.split(': ', 1)[0]) + ':</b> ' + E(x.split(': ', 1)[1])) if (': ' in x and len(x.split(': ', 1)[0]) <= 26) else E(x)) + '</li>' for x in D.get('sp', []))
-    b.append('  <section class="dz-s" aria-labelledby="h-s"><h2 id="h-s">O que as provas mostram</h2><p class="dz-sl">' + E(D.get('sl') or D['s']) + '</p>' + (('<ul class="dz-sp">' + pts + '</ul>') if pts else '') + amp + '</section>\n')
+    pass  # síntese removida a pedido do Ces (31/10)
     b.append('  <section class="dz-pv" aria-labelledby="h-pv"><h2 id="h-pv">As provas <span class="dz-n">%d</span></h2>\n' % (len(sn) + len(ac)))
     if sn:
         b.append('    <h3 class="dz-h3">Sinais <span>%d</span></h3>\n    <ol class="dz-list">\n' % len(sn))
@@ -115,7 +115,7 @@ for D in DOS:
     b.append('  <nav class="dz-nav" aria-label="Outros dossiês"><p class="dz-k">Outros dossiês</p><div>' + nav + '</div></nav>\n')
     slug = 'dossies/' + D['slug'] + '/'
     page(slug, 'dossie', D['n'] + ' · Dossiê · ' + BRAND, D['q'] + ' ' + D['qd'], 'Dossiê: ' + E(D['n']),
-         'Um dos quatro sinais de alerta de Levitsky e Ziblatt, em <i>Como as democracias morrem</i>. Cada prova tem fonte e outro lado.',
+         '',
          ''.join(b))
     f = P(slug, 'index.html')
     doc = open(f, encoding='utf-8').read()

@@ -79,8 +79,7 @@ def page(slug, key, title, desc, h1, lead, body, extra_top=''):
 {extra_top}{fix_top(topbar, key)}<main class="wrap pg">
   <header class="pg-h">
     <h1>{h1}</h1>
-    <p class="pg-lead">{lead}</p>
-    <p class="upd">{upd}</p>
+{('    <p class="pg-lead">'+lead+'</p>\n') if lead else ''}    <p class="upd">{upd}</p>
   </header>
 {body}{svgdefs}{footer}</main>
 

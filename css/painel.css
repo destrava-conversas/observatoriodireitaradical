@@ -2074,3 +2074,7 @@ header.hero-x.hero-lente{padding-bottom:40px}
 .dz-stick{position:fixed;left:0;right:0;top:var(--hdr,60px);z-index:40;background:var(--obs-navy,#0A1A3F);color:#fff;border-bottom:1px solid rgba(255,255,255,.14);padding:10px clamp(16px,4vw,48px);font-size:16px;line-height:1.2;box-shadow:0 6px 16px rgba(10,26,63,.18)}
 .dz-stick span{color:#A6F36A;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
 .dz-stick b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800}
+.dz-qd{font-size:14.5px!important;color:#AEB9D6!important}
+:root[data-theme="dark"] .dz-i{border-left-color:#A6F36A}
+:root[data-theme="dark"] .dz-n,:root[data-theme="dark"] .dz-h3 span,:root[data-theme="dark"] .dz-gov span{background:#A6F36A;color:#0A1A3F}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .dz-i{border-left-color:#A6F36A}:root:not([data-theme="light"]) .dz-n,:root:not([data-theme="light"]) .dz-h3 span,:root:not([data-theme="light"]) .dz-gov span{background:#A6F36A;color:#0A1A3F}}
