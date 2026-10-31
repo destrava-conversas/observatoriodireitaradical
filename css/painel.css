@@ -2135,3 +2135,13 @@ html.subf #result > .panel{display:none}
 .hl-suba button,.hl-suba .tf-rankbtn,.hl-suba .reset-pauta{background:transparent!important;border:1.5px solid var(--line)!important;color:var(--ink)!important;font-weight:700;box-shadow:none}
 .hl-suba button:hover{border-color:var(--ink)!important}
 .hl-suba svg{width:15px;height:15px}
+
+/* barra fixa: governo trocável */
+.pb-gov{display:none}
+html.pbgov .pickbar.is-pick .pb-gov{display:inline-block;appearance:none;-webkit-appearance:none;font:inherit;font-size:15px;font-weight:800;color:inherit;background:transparent var(--chv) no-repeat right 10px center/14px;border:1.5px solid #A6F36A;border-radius:999px;min-height:38px;padding:0 32px 0 14px;max-width:52vw;cursor:pointer}
+html.pbgov .pickbar .pb-sel .pb-dot,html.pbgov .pickbar .pb-sel .pb-k:nth-of-type(2),html.pbgov .pickbar .pb-sel #pb-c{display:none}
+:root[data-theme="dark"] html.pbgov .pb-gov,:root[data-theme="dark"] .pb-gov{filter:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pb-gov{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 9l7 7 7-7'/%3E%3C/svg%3E")}}
+:root[data-theme="dark"] .pb-gov{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 9l7 7 7-7'/%3E%3C/svg%3E")}
+.pb-gov option{color:#1A2430}
+@media (max-width:520px){html.pbgov .pickbar.is-pick .pb-gov{max-width:40vw;font-size:14px;padding:0 28px 0 12px}html.pbgov .pickbar .pb-reset .rp-t{display:none}html.pbgov .pickbar .pb-reset{padding:0 12px}}

@@ -1856,6 +1856,13 @@
       setTimeout(function(){ var r=$('result'); if(r) r.scrollIntoView({behavior:reduce()?'auto':'smooth', block:'start'}); },80); });
     var H=document.documentElement;
     /* o governo vira um subfiltro, logo abaixo da pauta */
+    /* na barra fixa do topo, o governo também pode ser trocado */
+    (function(){ var pb=$('pb-sel'); if(!pb||!tp) return; var g=document.createElement('select'); g.id='pb-gov'; g.className='pb-gov'; g.setAttribute('aria-label','Trocar o governo');
+      [].slice.call(tp.options).forEach(function(o){ if(!o.value) return; var n=document.createElement('option'); n.value=o.value; n.textContent=o.value==='all'?'Todos':o.textContent; g.appendChild(n); });
+      pb.parentNode.insertBefore(g, pb.nextSibling); H.classList.add('pbgov');
+      function sync(){ g.value=tp.value||'all'; } sync();
+      g.addEventListener('change', function(){ tp.value=g.value; tp.dispatchEvent(new Event('change',{bubbles:true})); });
+      tp.addEventListener('change', sync); })();
     (function(){ var ss=$('hl-subs'), sa=$('hl-suba'); if(!ss||!tp) return; ss.appendChild(tp); var rk=$('tf-rank'), rs=$('top-clear'); if(rk) sa.appendChild(rk); if(rs) sa.appendChild(rs); H.classList.add('subf'); })();
     function mark(){ var on=!!(tf.value && state.picked!==false); H.classList.toggle('pk', !!tf.value); if(tf.value){ if(hs.value!==tf.value) hs.value=tf.value; } else { hs.selectedIndex=0; } }
     tf.addEventListener('change', function(){ setTimeout(mark,0); });
