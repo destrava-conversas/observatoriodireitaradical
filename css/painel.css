@@ -2079,21 +2079,20 @@ header.hero-x.hero-lente{padding-bottom:40px}
 :root[data-theme="dark"] .dz-n,:root[data-theme="dark"] .dz-h3 span,:root[data-theme="dark"] .dz-gov span{background:#A6F36A;color:#0A1A3F}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .dz-i{border-left-color:#A6F36A}:root:not([data-theme="light"]) .dz-n,:root:not([data-theme="light"]) .dz-h3 span,:root:not([data-theme="light"]) .dz-gov span{background:#A6F36A;color:#0A1A3F}}
 
-/* home: régua do espectro */
-.hl-rg{display:block;width:100%;max-width:760px;margin:30px auto 0;color:#fff;text-decoration:none;text-align:center}
-.rg-bar{display:flex;align-items:stretch;gap:0;height:40px}
-.rg-a,.rg-b{display:flex;align-items:center;justify-content:space-around;border-radius:999px;font-style:normal}
-.rg-a{flex:3;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.28);color:#D6DDEE}
-.rg-b{flex:2;background:#A6F36A;color:#0A1A3F}
-.rg-a i,.rg-b i{font-style:normal;font-weight:800;font-size:13.5px;letter-spacing:.01em;white-space:nowrap;padding:0 4px}
-.rg-cut{width:18px;flex:none;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.7) 0 4px,transparent 4px 8px) center/2px 100% no-repeat}
-.rg-leg{display:flex;margin-top:6px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.rg-la{flex:3;color:#AEB9D6}.rg-lb{flex:2;margin-left:18px;color:#A6F36A}
-.rg-t{display:block;margin-top:12px;font-size:15.5px;line-height:1.45;color:#D6DDEE}
-.rg-t b{color:#A6F36A;white-space:nowrap}
-.hl-rg:hover .rg-t b{text-decoration:underline}
-.hl-rg:focus-visible{outline:3px solid #fff;outline-offset:6px;border-radius:12px}
-@media (max-width:520px){.rg-bar{height:auto;flex-direction:column;gap:0}.rg-a,.rg-b{padding:8px 6px}.rg-cut{width:100%;height:16px;background:repeating-linear-gradient(to right,rgba(255,255,255,.7) 0 4px,transparent 4px 8px) center/100% 2px no-repeat}
-  .rg-leg{display:none}.rg-a::after{content:"disputa dentro das regras"}.rg-a,.rg-b{flex-wrap:wrap;row-gap:2px}
-  .rg-a::after,.rg-b::after{flex-basis:100%;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
-  .rg-a::after{color:#AEB9D6}.rg-b::after{content:"o que o painel observa";color:#0A1A3F;opacity:.8}}
+/* home: régua do espectro (diagrama, não botão) */
+.hl-rg{width:100%;max-width:760px;margin:28px auto 0;color:#fff;text-align:center}
+.rg-ax{position:relative;display:flex;align-items:flex-start;padding-top:14px}
+.rg-ax::before{content:"";position:absolute;left:0;right:0;top:20px;height:2px;background:rgba(255,255,255,.35)}
+.rg-p{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:#C9D3EA;line-height:1.15}
+.rg-p i{width:14px;height:14px;border-radius:50%;background:#0A1A3F;border:2px solid rgba(255,255,255,.6);position:relative;z-index:1}
+.rg-p.on{color:#A6F36A}
+.rg-p.on i{background:#A6F36A;border-color:#A6F36A}
+.rg-gap{flex:none;width:22px;position:relative;z-index:1;height:40px;margin-top:-8px;background:#0A1A3F;border-left:2px dashed rgba(255,255,255,.7)}
+.rg-ax .rg-p.on::before{content:"";position:absolute;top:6px;height:4px;left:0;right:0;background:#A6F36A}
+.rg-ax .rg-p.on:last-child::before{right:50%}
+.rg-ax .rg-p.on:nth-of-type(4)::before{left:50%}
+.rg-leg{display:flex;margin-top:8px;font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+.rg-la{flex:3;color:#8E9BBF}.rg-lb{flex:2;margin-left:22px;color:#A6F36A}
+.rg-t{margin:12px 0 0;font-size:15px;line-height:1.45;color:#D6DDEE}
+.rg-t a{color:#A6F36A;font-weight:800;white-space:nowrap}
+@media (max-width:520px){.rg-p{font-size:11.5px;gap:6px}.rg-leg{font-size:10px;letter-spacing:.04em}.rg-t{font-size:14px}.rg-gap{width:14px}.rg-lb{margin-left:14px}}
