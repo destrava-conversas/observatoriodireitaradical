@@ -44,6 +44,16 @@ O painel tem duas frentes: Pautas de governo (ações que pioraram ou melhoraram
 - "Se te disserem…" deixa de ser frente própria e vira o fecho de cada dossiê.
 - Visual: Regras do jogo = raio na pupila; Adversário como inimigo = mira; Violência = olho vermelho com espinhos; Liberdades = risco cortando o olho.
 
+## Formato do Sinal (desde 1/11/2026)
+Cada Sinal em data/sinais.js tem, além dos campos antigos (t, s, why, src, bolso, bf, destaque, alerta, etapa, tags):
+- `dossie`: lista com um ou mais de "regras", "inimigo", "violencia", "liberdades". Obrigatório: sem dossiê, o Sinal não entra.
+- `tc`: título curto e objetivo, dizendo o comportamento e não a notícia (ex.: "Descumpre o STF e foge"). Pode ser ácido, mas exato: "criminoso" só para quem foi condenado; não afirmar o que a Justiça não confirmou.
+- `r`: "o que é", em uma ou duas frases.
+- `ol` e `olk`: uma linha de outro lado (`olk`: "Outro lado") ou, em fato já resolvido, a situação (`olk`: "Situação", ex.: "barrada", "concretizada", "condenação"). Se não houver resposta pública, deixar sem `ol`.
+- `rsp` (opcional): id de uma resposta de "Se te disserem…" (tools/paginas/_respostas.html) que esse Sinal justifica.
+O texto longo (`t`, `s`, `why`) continua obrigatório: aparece recolhido em "Detalhes e atualizações" e guarda o histórico. Atualizações entram no fim de `s` ("Atualização (data): …"), sem apagar o que havia; `tc`, `r` e `ol` são revistos se o quadro mudar.
+Imagens: tools/render-sinais.js gera sinal-NNN.png (escura) e sinal-NNN-claro.png (clara) com `tc` e `r`, além do og.jpg com `tc`.
+
 ## O que não entra
 Boato, post sem confirmação, vida pessoal, previsão, ataque pessoal, conteúdo que só reproduz a provocação sem o fato que a contradiz.
 
