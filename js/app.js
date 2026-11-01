@@ -1676,16 +1676,16 @@
     var fl=[]; if(o.fonte){ g.font='400 22px '+S; fl=wrapLines(g, o.fonte, maxW).slice(0,3); }
     var fTop=FT-34-fl.length*30, bottom=fTop-(fl.length?30:0);
     /* título e texto: encolhem juntos até caber */
-    var hs=o.title?54:0, ts=o.title?50:54, T=[], X=[], LH=1.42;
+    var big=!!(o.title && o.title.length<=70 && o.text), hs=o.title?(big?84:54):0, ts=o.title?(big?46:50):54, T=[], X=[], LH=1.42, TW=big?'800 ':'600 ';
     function lay(){
       var h=0; T=[]; X=[];
-      if(o.title){ g.font='600 '+hs+'px '+S; T=wrapLines(g, o.title, maxW); h+=T.length*hs*1.18+44; }
+      if(o.title){ g.font=TW+hs+'px '+S; T=wrapLines(g, o.title, maxW); h+=T.length*hs*1.18+44; }
       g.font='400 '+ts+'px '+S; X=wrapLines(g, o.text, maxW-36).map(function(t){ return {t:t}; });
       (o.extra||[]).forEach(function(e){ wrapLines(g, e, maxW-62).forEach(function(t,i){ X.push({t:t, b:i===0, x:1}); }); });
       h+=(o.label?50:0)+X.length*ts*LH; return h;
     }
     while(lay()>bottom-y && ts>28){ ts-=2; if(hs>38) hs-=1; }
-    if(T.length){ g.font='600 '+hs+'px '+S; g.fillStyle='#FFFFFF'; T.forEach(function(l,i){ g.fillText(l, P, y+hs*0.95+i*hs*1.18); }); y+=T.length*hs*1.18+44; }
+    if(T.length){ g.font=TW+hs+'px '+S; g.fillStyle='#FFFFFF'; T.forEach(function(l,i){ g.fillText(l, P, y+hs*0.95+i*hs*1.18); }); y+=T.length*hs*1.18+44; }
     var bh=(o.label?50:0)+X.length*ts*LH, ty=y+Math.max(0,(bottom-y-bh)/2);
     g.fillStyle=o.kc; g.fillRect(P, ty, 5, bh);
     if(o.label){ g.font='600 22px '+S; ls('2.6px'); g.fillText(String(o.label).toUpperCase(), P+36, ty+24); ls('0px'); ty+=50; }
@@ -1711,7 +1711,7 @@
   function newsCanvas(n){
     var vs=n.tipo==='Você sabia?', al=(n.alerta||[]);
     return olhoCanvas({olho:olhoDe(n), kick:'Sinal '+(n.n||'')+' · '+(vs?'Você sabia? · ':'')+ndate(n), kc:vs?'#8FD3EE':'#F5A35C',
-      alerta:al.map(function(k){ return ALERTA[k]; }).join(' · '), title:n.t, text:newsHighlight(n)});
+      alerta:al.map(function(k){ return ALERTA[k]; }).join(' · '), title:n.tc||n.t, text:n.r||newsHighlight(n)});
   }
 
   function fichaCanvas(k){

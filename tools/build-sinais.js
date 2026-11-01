@@ -147,6 +147,18 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .sl .t{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;font-size:19px;line-height:1.25;margin:0}
 .sl .d{margin:6px 0 0;font-size:15px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .empty{color:var(--muted)}
+.card .dzp{margin:0 0 8px;display:flex;flex-wrap:wrap;gap:6px}
+.dzt,.card a.dzt{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:3px 11px;background:#4338CA;color:#fff!important;text-decoration:none}
+.card .dzp .dzt{text-decoration:none}
+.card .meta{display:flex;align-items:center;gap:10px;margin:8px 0 0;font-size:14px;color:var(--muted)}
+.rr{font-size:19px;line-height:1.5;margin:14px 0 8px}
+.ol{font-size:16px;line-height:1.5;margin:0 0 14px;padding:10px 14px;border-left:4px solid var(--line);color:var(--muted)}
+.ol b{color:var(--ink)}
+.det{margin:18px 0 8px;border:1px solid var(--line);border-radius:12px;padding:0 16px}
+.det summary{cursor:pointer;font-weight:800;padding:14px 0;list-style-position:inside}
+.det[open] summary{border-bottom:1px solid var(--line);margin-bottom:12px}
+.det .dt-t{font-weight:800;font-size:17px;line-height:1.35;margin:10px 0 6px}
+.det .hd{margin:0 0 6px}
 .sbox{display:flex;gap:8px}
 .sbox .q{flex:1;min-width:0}
 .sgo{font:inherit;font-weight:800;font-size:16px;border:0;border-radius:999px;padding:0 20px;min-height:48px;background:#4338CA;color:#fff;cursor:pointer}
@@ -275,12 +287,14 @@ function hdHTML(n, linkTags, rel) {
 function sinalPage(n, i) {
   const rel = '../../';
   const hl = highlight(n);
-  const title = 'Sinal ' + n.n + ': ' + n.t;
-  const desc = hl.length > 180 ? hl.slice(0, 177).replace(/\s+\S*$/, '') + '…' : hl;
+  const T = n.tc || n.t;
+  const title = 'Sinal ' + n.n + ': ' + T;
+  const hl0 = n.r || hl;
+  const desc = hl0.length > 180 ? hl0.slice(0, 177).replace(/\s+\S*$/, '') + '…' : hl0; const _d = hl.length > 180 ? hl.slice(0, 177).replace(/\s+\S*$/, '') + '…' : hl;
   const prev = byNum[i - 1], next = byNum[i + 1];
   const srcLbl = n.tipo === 'Vídeo' ? 'Assistir em' : (n.tipo === 'Podcast' ? 'Ouvir em' : (n.src.length > 1 ? 'Fontes' : 'Fonte'));
   const bolsoTxt = n.bolso ? n.bolso + (n.bf ? ' Fonte: ' + n.bf + '.' : '') + '\n' + url(n) : '';
-  const shareTxt = n.bolso ? 'Sinal ' + n.n + ': ' + n.t + '\n\n' + n.bolso + (n.bf ? ' (Fonte: ' + n.bf + ')' : '') + '\n\nOutro lado e fontes: ' + url(n) : 'Sinal ' + n.n + ': ' + n.t + '\n\n' + hl + '\n\nOutro lado e fontes: ' + url(n);
+  const shareTxt = n.bolso ? 'Sinal ' + n.n + ': ' + T + '\n\n' + n.bolso + (n.bf ? ' (Fonte: ' + n.bf + ')' : '') + '\n\nOutro lado e fontes: ' + url(n) : 'Sinal ' + n.n + ': ' + T + '\n\n' + hl0 + '\n\nOutro lado e fontes: ' + url(n);
   const dcls = isAlerta(n) ? ' al' : (isVS(n) ? ' vs' : '');
   return head({ title, desc, canonical: url(n), image: url(n) + 'og.jpg', imgW: 1200, imgH: 630, rel }) + `
 <body>
@@ -288,20 +302,19 @@ ${topbar(rel, 'sinal')}
 <main>
 <p class="crumb"><a href="${rel}sinais/">← Todos os Sinais</a></p>
 <article class="card">
-<div class="hd">${hdHTML(n, true, rel)}</div>
-<h1>${esc(n.t)}</h1>
-${n.bolso ? '' : `<p class="dest${dcls}">${esc(hl)}</p>`}
+${(n.dossie || []).length ? `<p class="dzp">${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a class="dzt" href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' ')}</p>` : ''}
+<h1>${esc(T)}</h1>
+<p class="meta"><span class="num">Sinal ${n.n}</span>${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}</p>
+${n.tc ? `<p class="rr">${esc(n.r)}</p>${n.ol ? `<p class="ol"><b>${esc(n.olk || 'Outro lado')}:</b> ${esc(n.ol)}</p>` : ''}` : `<p class="dest${dcls}">${esc(hl)}</p>`}
 ${n.bolso ? `<div class="bolso"><p class="bolso-k">Argumento de bolso <span>para usar numa conversa</span></p><p class="bolso-t">${esc(n.bolso)}${n.bf ? ` <span class="bolso-f">Fonte: ${esc(n.bf)}.</span>` : ''}</p><button class="btn bolso-b" type="button" data-copy="${esc(bolsoTxt)}" data-ok="Argumento copiado" data-lbl="Copiar argumento">${ICON_COPY}<span>Copiar argumento</span></button><a class="btn o bolso-dl" href="argumento-${n.n}.png" download="argumento-sinal-${n.n}.png">${ICON_IMG}Baixar imagem</a></div>` : ''}
-<p class="txt">${esc(n.s)}</p>
-${n.why ? `<p class="why"><b>${esc(n.wl || 'Por que ler:')}</b> ${esc(n.why)}</p>` : ''}
-<p class="src">${srcLbl}: ${n.src.map(s => `<a href="${esc(s[1])}" target="_blank" rel="noopener noreferrer">${esc(s[0])}</a>`).join('; ')}</p>
 ${(n.rsp ? [].concat(n.rsp) : []).map(rspOf).filter(Boolean).map(r => `<section class="stds" id="${r.id}"><p class="stds-k">Se te disserem</p><p class="stds-q">${r.q}</p><p class="stds-ak">Responda</p><p class="stds-a">${r.a}</p>${r.d}<p class="stds-s">${r.s}</p><div class="stds-b"><button class="btn" type="button" data-copy="${r.c}" data-ok="Resposta copiada" data-lbl="Copiar resposta">${ICON_COPY}<span>Copiar resposta</span></button><a class="btn o" href="${rel}se-te-disserem/img/${r.id}.png" download="se-te-disserem-${r.id}.png">${ICON_IMG}Baixar imagem</a></div></section>`).join('\n')}
-${(n.dossie || []).length ? `<p class="dzp">Evidência do dossiê ${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' e ')}</p>` : ''}
+<p class="src">${srcLbl}: ${n.src.map(s => `<a href="${esc(s[1])}" target="_blank" rel="noopener noreferrer">${esc(s[0])}</a>`).join('; ')}</p>
 <div class="acts">
 <a class="btn" href="https://wa.me/?text=${encodeURIComponent(shareTxt)}" target="_blank" rel="noopener noreferrer">${ICON_WA}Mandar no WhatsApp</a>
 <button class="btn o" type="button" data-copy="${esc(url(n))}">${ICON_LINK}<span>Copiar link</span></button>
 <a class="btn o" href="sinal-${n.n}.png" download="sinal-${n.n}.png">${ICON_IMG}Baixar imagem</a>
 </div>
+<details class="det"${n.tc ? '' : ' open'}><summary>Detalhes e atualizações</summary><div class="hd">${hdHTML(n, true, rel)}</div><p class="dt-t">${esc(n.t)}</p><p class="txt">${esc(n.s)}</p>${n.why ? `<p class="why"><b>${esc(n.wl || 'Por que ler:')}</b> ${esc(n.why)}</p>` : ''}</details>
 <figure class="img"><img src="sinal-${n.n}.png" width="1080" height="1350" loading="lazy" alt="Imagem para compartilhar do Sinal ${n.n}: ${esc(n.t)}"><figcaption>Imagem pronta para Instagram e Stories.</figcaption></figure>
 </article>
 <nav class="pn" aria-label="Outros Sinais">
@@ -327,9 +340,9 @@ function listPage() {
   const cnt = k => L.filter(n => (n.dossie || []).indexOf(k) >= 0).length;
   const items = L.map(n => {
     const f = ['all'].concat(n.dossie || []).join(' ');
-    const idx = (n.n + ' ' + parseInt(n.n, 10) + ' ' + n.t + ' ' + n.s + ' ' + (n.tags || []).join(' ') + ' ' + (n.destaque || '')).toLowerCase();
+    const idx = (n.n + ' ' + parseInt(n.n, 10) + ' ' + (n.tc || '') + ' ' + (n.r || '') + ' ' + n.t + ' ' + n.s + ' ' + (n.tags || []).join(' ') + ' ' + (n.destaque || '')).toLowerCase();
     const dz = (n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? '<span class="dzt">' + esc(d.n) + '</span>' : ''; }).join('');
-    return `<li data-f="${f}" data-i="${esc(idx.normalize('NFD').replace(/[̀-ͯ]/g, ''))}"><a href="${n.n}/"><div class="hd">${hdHTML(n, false, rel)}</div><p class="t">${esc(n.t)}</p><p class="d">${esc(highlight(n))}</p><p class="dzs">${dz}</p></a></li>`;
+    return `<li data-f="${f}" data-i="${esc(idx.normalize('NFD').replace(/[̀-ͯ]/g, ''))}"><a href="${n.n}/"><div class="hd"><span class="num">Sinal ${n.n}</span>${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}</div><p class="t">${esc(n.tc || n.t)}</p><p class="d">${esc(n.r || highlight(n))}</p><p class="dzs">${dz}</p></a></li>`;
   }).join('\n');
   const cards = DOSSIES.map(d => `<li data-k="${d.k}"><a href="${rel}dossies/${d.slug}/"><img src="${rel}img/olhos/olho-${d.olho}.jpg" alt="" width="1080" height="300" loading="lazy"><span class="dt"><b>${esc(d.n)}</b><span>${esc(d.q)}</span><em>Abrir o dossiê →</em></span></a></li>`).join('');
   const desc = 'Os fatos que servem de evidência nos quatro dossiês do painel (os sinais de alerta de Como as democracias morrem), com fonte e outro lado.';

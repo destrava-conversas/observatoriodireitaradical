@@ -82,9 +82,9 @@ for D in DOS:
     if sn:
         b.append('    <h3 class="dz-h3">Sinais <span>%d</span></h3>\n    <ol class="dz-list">\n' % len(sn))
         for n in sn:
-            dst = ('<span class="dz-d">' + E(n['destaque']) + '</span>') if n.get('destaque') else ''
+            dst = ('<span class="dz-d">' + E(n.get('r') or n['destaque']) + '</span>') if (n.get('r') or n.get('destaque')) else ''
             b.append('      <li class="dz-i dz-sinal"><a href="../../sinais/%s/"><span class="dz-m">Sinal %s · %s</span><b>%s</b>%s</a></li>\n'
-                     % (n['n'], n['n'], E(_nd(n)), E(n['t']), dst))
+                     % (n['n'], n['n'], E(_nd(n)), E(n.get('tc') or n['t']), dst))
         b.append('    </ol>\n')
     if ac:
         b.append('    <h3 class="dz-h3">Ações de governo <span>%d</span></h3>\n' % len(ac))

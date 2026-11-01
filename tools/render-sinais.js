@@ -44,7 +44,7 @@ body{width:1200px;height:630px;background:#0A1A3F;color:#fff;font-family:'Public
 </style></head><body>
 <div class="top"><div class="br"><span class="eye"><i></i></span><span>Painel Observatório da<br><b>Direita Radical e Extrema</b></span></div></div>
 <div class="mid"><div class="k"><span>${esc(kick)}</span>${(n.alerta || []).map(k => '<span class="al">⚠ ' + esc(ALERTA[k]) + '</span>').join('')}</div>
-<div class="d" id="d">${esc(highlight(n))}</div></div>
+<div class="d" id="d">${esc(n.tc || highlight(n))}</div></div>
 <div class="ft"><span>destrava-conversas.com.br</span><span class="cta">Outro lado e fontes no painel</span></div>
 <script>(function(){var d=document.getElementById('d'),m=document.querySelector('.mid'),s=60;d.style.fontSize=s+'px';while(s>30&&(m.scrollHeight>m.clientHeight+1)){s-=2;d.style.fontSize=s+'px';}})();</script>
 </body></html>`;
