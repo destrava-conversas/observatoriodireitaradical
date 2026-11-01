@@ -1663,11 +1663,11 @@
     g.textBaseline='alphabetic';
     /* rodapé: logo, nome e site alinhados pela base */
     var FT=H-170, base=H-56;
-    g.fillStyle=K.ln; g.fillRect(0,FT,W,2);
+    if(L){ g.fillStyle='#0A1A3F'; g.fillRect(0,FT,W,H-FT); } else { g.fillStyle=K.ln; g.fillRect(0,FT,W,2); }
     logoMark(g, 72, base-2, 82);
-    g.fillStyle=K.tx; g.font='600 24px '+S; g.fillText('Painel Observatório da', 174, base-40);
-    g.fillStyle=K.gr; g.font='600 34px '+S; g.fillText('Direita Radical e Extrema', 174, base);
-    g.fillStyle=K.tx; g.font='600 29px '+S; g.textAlign='right'; g.fillText('destrava-conversas.com.br', W-72, base); g.textAlign='left';
+    g.fillStyle='#FFFFFF'; g.font='600 24px '+S; g.fillText('Painel Observatório da', 174, base-40);
+    g.fillStyle='#A6F36A'; g.font='600 34px '+S; g.fillText('Direita Radical e Extrema', 174, base);
+    g.fillStyle='#FFFFFF'; g.font='600 29px '+S; g.textAlign='right'; g.fillText('destrava-conversas.com.br', W-72, base); g.textAlign='left';
     /* chamada */
     var y=FH+72, kick=String(o.kick||'').toUpperCase();
     g.font='600 23px '+S; ls('2.8px'); g.fillStyle=o.kc; g.fillText(kick, P, y); var kx=P+g.measureText(kick).width;
