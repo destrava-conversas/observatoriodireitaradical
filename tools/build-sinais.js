@@ -147,6 +147,16 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .sl .t{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;font-size:19px;line-height:1.25;margin:0}
 .sl .d{margin:6px 0 0;font-size:15px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .empty{color:var(--muted)}
+.sbox{display:flex;gap:8px}
+.sbox .q{flex:1;min-width:0}
+.sgo{font:inherit;font-weight:800;font-size:16px;border:0;border-radius:999px;padding:0 20px;min-height:48px;background:#4338CA;color:#fff;cursor:pointer}
+.sgo:hover{background:#3730A3}
+.shint{margin:6px 0 0;font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.sclr{font:inherit;font-size:13.5px;font-weight:700;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:3px 12px;cursor:pointer}
+.sl mark{background:#FFE58A;color:#1A2430;border-radius:3px;padding:0 1px}
+:root[data-theme="dark"] .sl mark{background:#7A5C00;color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sl mark{background:#7A5C00;color:#fff}}
+.sl-st{scroll-margin-top:80px}
 .stds{margin:20px 0 6px;border-radius:14px;padding:18px 20px;background:#EEEDFB;border-left:6px solid #4338CA}
 :root[data-theme="dark"] .stds{background:#1F1D3A}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .stds{background:#1F1D3A}}
@@ -347,8 +357,9 @@ ${topbar(rel, 'lista')}
 <button class="chip" type="button" data-k="all" aria-pressed="true">Todos<small>${L.length}</small></button>
 ${DOSSIES.map(d => `<button class="chip" type="button" data-k="${d.k}" aria-pressed="false">${esc(d.n)}<small>${cnt(d.k)}</small></button>`).join('\n')}
 </div>
-<label for="q" class="lead" style="display:block;margin:4px 0 6px">Buscar nos Sinais</label>
-<input id="q" class="q" type="search" placeholder="número, nome ou assunto" autocomplete="off">
+<form id="sform" class="sform" role="search"><label for="q" class="lead" style="display:block;margin:4px 0 6px">Buscar nos Sinais</label>
+<div class="sbox"><input id="q" class="q" type="search" placeholder="número, nome ou assunto" autocomplete="off" enterkeyhint="search"><button type="submit" class="sgo">Buscar</button></div>
+<p class="shint">Digite e toque em Buscar (ou Enter). <button type="button" id="sclr" class="sclr" hidden>Limpar busca</button></p></form>
 <p id="st" class="sl-st" role="status" aria-live="polite"></p>
 <p id="none" class="empty" hidden>Nenhum Sinal encontrado.</p>
 <ul class="sl" id="sl">
@@ -356,17 +367,8 @@ ${items}
 </ul>
 </main>
 ${foot(rel)}
-<script>
-(function(){var k='all',st=document.getElementById('st'),q=document.getElementById('q'),lis=[].slice.call(document.querySelectorAll('#sl li')),none=document.getElementById('none'),chips=[].slice.call(document.querySelectorAll('.chip'));
-var LB=${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, ' do dossiê ' + d.n])))},SL=${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, d.slug])))};
-function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').trim();}
-function run(){var t=norm(q.value),n=0,num=/^\\d{1,3}$/.test(t)?('000'+t).slice(-3):null;lis.forEach(function(li){var ok=li.getAttribute('data-f').split(' ').indexOf(k)>=0&&(!t||(num?li.getAttribute('data-i').indexOf(num+' ')===0:t.split(/\\s+/).every(function(w){return li.getAttribute('data-i').indexOf(w)>=0;})));li.hidden=!ok;if(ok)n++;});none.hidden=n>0;none.innerHTML=(!t&&SL[k])?'Ainda não há Sinais neste dossiê. Por enquanto, as provas dele são ações de governo: <a href="../dossies/'+SL[k]+'/">abrir o dossiê</a>.':'Nenhum Sinal encontrado.';st.textContent=(n===1?'1 Sinal':n+' Sinais')+(LB[k]||'')+(t?' para “'+q.value.trim()+'”':'')+'.';}
-function pop(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;var v=lis.filter(function(li){return !li.hidden;}),i=0;v.forEach(function(li){li.classList.remove('pop');});void document.body.offsetWidth;v.slice(0,10).forEach(function(li){li.style.setProperty('--d',(i++*35)+'ms');li.classList.add('pop');});st.classList.remove('flash');void st.offsetWidth;st.classList.add('flash');}
-chips.forEach(function(c){c.addEventListener('click',function(){k=c.getAttribute('data-k');chips.forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false');});run();pop();try{history.replaceState(null,'',k==='all'?location.pathname:'#'+k);}catch(e){}});});
-q.addEventListener('input',run);run();
-var h=location.hash.slice(1);if(h){var c=chips.filter(function(x){return x.getAttribute('data-k')===h;})[0];if(c)c.click();}
-})();
-</script>
+<script>window.SB={LB:${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, ' do dossiê ' + d.n])))},SL:${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, d.slug])))}};</script>
+<script src="${rel}js/sinais-busca.js?v=20261031b"></script>
 </body>
 </html>
 `;
