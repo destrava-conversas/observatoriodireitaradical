@@ -1621,7 +1621,7 @@
     });
   }
   window.__fxItemCanvas=fxItemCanvas;
-  window.__sinalCanvas=function(n){ return newsCanvas(n); };
+  window.__sinalCanvas=function(n, light){ return newsCanvas(n, light); };
   /* imagem do argumento de bolso e das respostas de "Se te disserem…": o = {kick, quote, label, text, fonte} */
   /* Imagens de compartilhar no modelo do olho: faixa com a variação do olho no topo, fundo azul,
      texto leve em Public Sans e assinatura no rodapé. As faixas ficam em img/olhos (tools/build-olhos.js). */
@@ -1656,20 +1656,22 @@
     var W=1080, H=1350, P=80, FH=300, maxW=W-2*P, S="'Public Sans','Segoe UI',Arial,sans-serif";
     var c=document.createElement('canvas'); c.width=W; c.height=H; var g=c.getContext('2d');
     var ls=function(v){ if('letterSpacing' in g) g.letterSpacing=v; };
-    g.fillStyle='#0A1A3F'; g.fillRect(0,0,W,H);
+    var L=!!o.light, K={bg:L?'#FFFFFF':'#0A1A3F', ln:L?'#D3DAE1':'#22386E', tx:L?'#0A1A3F':'#FFFFFF', gr:L?'#15803D':'#A6F36A', bd:L?'#26323F':'#DCE3F0', ft:L?'#4A5663':'#9AA8C2', al:L?'#B42318':'#FF8A80'};
+    if(L){ o.kc=({'#F5A35C':'#B5520B','#8FD3EE':'#0B6B8F','#B4A9FF':'#4338CA','#F2A33A':'#B5520B'})[o.kc]||'#0A1A3F'; }
+    g.fillStyle=K.bg; g.fillRect(0,0,W,H);
     var im=OLHOS[o.olho]||OLHOS['padrao-a']; if(im) g.drawImage(im,0,0,W,FH);
     g.textBaseline='alphabetic';
     /* rodapé: logo, nome e site alinhados pela base */
     var FT=H-170, base=H-56;
-    g.fillStyle='#22386E'; g.fillRect(0,FT,W,2);
+    g.fillStyle=K.ln; g.fillRect(0,FT,W,2);
     logoMark(g, 72, base-2, 82);
-    g.fillStyle='#FFFFFF'; g.font='600 24px '+S; g.fillText('Painel Observatório da', 174, base-40);
-    g.fillStyle='#A6F36A'; g.font='600 34px '+S; g.fillText('Direita Radical e Extrema', 174, base);
-    g.fillStyle='#FFFFFF'; g.font='600 29px '+S; g.textAlign='right'; g.fillText('destrava-conversas.com.br', W-72, base); g.textAlign='left';
+    g.fillStyle=K.tx; g.font='600 24px '+S; g.fillText('Painel Observatório da', 174, base-40);
+    g.fillStyle=K.gr; g.font='600 34px '+S; g.fillText('Direita Radical e Extrema', 174, base);
+    g.fillStyle=K.tx; g.font='600 29px '+S; g.textAlign='right'; g.fillText('destrava-conversas.com.br', W-72, base); g.textAlign='left';
     /* chamada */
     var y=FH+72, kick=String(o.kick||'').toUpperCase();
     g.font='600 23px '+S; ls('2.8px'); g.fillStyle=o.kc; g.fillText(kick, P, y); var kx=P+g.measureText(kick).width;
-    if(o.alerta){ var at='⚠ '+String(o.alerta).toUpperCase(), aw=g.measureText(at).width; g.fillStyle='#FF8A80'; if(kx+22+aw > W-P){ y+=36; g.fillText(at, P, y); kx=P+aw; } else { g.fillText(at, kx+22, y); kx+=22+aw; } }
+    if(o.alerta){ var at='⚠ '+String(o.alerta).toUpperCase(), aw=g.measureText(at).width; g.fillStyle=K.al; if(kx+22+aw > W-P){ y+=36; g.fillText(at, P, y); kx=P+aw; } else { g.fillText(at, kx+22, y); kx+=22+aw; } }
     if(o.tag){ var tg=String(o.tag).toUpperCase(); g.font='600 21px '+S; ls('1.8px'); var tw=g.measureText(tg).width; g.fillStyle=o.kc; roundRect(g, kx+18, y-25, tw+26, 36, 6); g.fill(); g.fillStyle='#0A1A3F'; g.fillText(tg, kx+31, y); }
     ls('0px'); y+=30;
     /* fonte, logo acima da linha do rodapé */
@@ -1685,13 +1687,13 @@
       h+=(o.label?50:0)+X.length*ts*LH; return h;
     }
     while(lay()>bottom-y && ts>28){ ts-=2; if(hs>38) hs-=1; }
-    if(T.length){ g.font=TW+hs+'px '+S; g.fillStyle='#FFFFFF'; T.forEach(function(l,i){ g.fillText(l, P, y+hs*0.95+i*hs*1.18); }); y+=T.length*hs*1.18+44; }
+    if(T.length){ g.font=TW+hs+'px '+S; g.fillStyle=K.tx; T.forEach(function(l,i){ g.fillText(l, P, y+hs*0.95+i*hs*1.18); }); y+=T.length*hs*1.18+44; }
     var bh=(o.label?50:0)+X.length*ts*LH, ty=y+Math.max(0,(bottom-y-bh)/2);
     g.fillStyle=o.kc; g.fillRect(P, ty, 5, bh);
     if(o.label){ g.font='600 22px '+S; ls('2.6px'); g.fillText(String(o.label).toUpperCase(), P+36, ty+24); ls('0px'); ty+=50; }
-    g.font='400 '+ts+'px '+S; g.fillStyle='#DCE3F0';
+    g.font='400 '+ts+'px '+S; g.fillStyle=K.bd;
     X.forEach(function(l,i){ var yy=ty+ts*1.05+i*ts*LH; if(l.b){ g.beginPath(); g.arc(P+44, yy-ts*0.33, 6, 0, Math.PI*2); g.fill(); } g.fillText(l.t, P+36+(l.x?26:0), yy); });
-    if(fl.length){ g.font='400 22px '+S; g.fillStyle='#9AA8C2'; fl.forEach(function(l,i){ g.fillText(l, P, fTop+22+i*30); }); }
+    if(fl.length){ g.font='400 22px '+S; g.fillStyle=K.ft; fl.forEach(function(l,i){ g.fillText(l, P, fTop+22+i*30); }); }
     return c;
   }
   /* argumento de bolso (Sinal ou Ação) e respostas de "Se te disserem…" */
@@ -1708,10 +1710,10 @@
     var m=String(n.s||'').match(/“([^”]{20,240})”/); if(m) return '“'+m[1].replace(/[.,;:]$/,'')+'”';
     var f=String(n.s||'').split(/(?<=[.!?])\s+/); var t=f[0]||''; if(t.length<40 && f[1]) t+=' '+f[1]; return t;
   }
-  function newsCanvas(n){
+  function newsCanvas(n, light){
     var vs=n.tipo==='Você sabia?', al=(n.alerta||[]);
     return olhoCanvas({olho:olhoDe(n), kick:'Sinal '+(n.n||'')+' · '+(vs?'Você sabia? · ':'')+ndate(n), kc:vs?'#8FD3EE':'#F5A35C',
-      alerta:al.map(function(k){ return ALERTA[k]; }).join(' · '), title:n.tc||n.t, text:n.r||newsHighlight(n)});
+      alerta:al.map(function(k){ return ALERTA[k]; }).join(' · '), title:n.tc||n.t, text:n.r||newsHighlight(n), light:!!light});
   }
 
   function fichaCanvas(k){

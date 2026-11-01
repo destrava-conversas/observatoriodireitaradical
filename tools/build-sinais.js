@@ -312,7 +312,8 @@ ${(n.rsp ? [].concat(n.rsp) : []).map(rspOf).filter(Boolean).map(r => `<section 
 <div class="acts">
 <a class="btn" href="https://wa.me/?text=${encodeURIComponent(shareTxt)}" target="_blank" rel="noopener noreferrer">${ICON_WA}Mandar no WhatsApp</a>
 <button class="btn o" type="button" data-copy="${esc(url(n))}">${ICON_LINK}<span>Copiar link</span></button>
-<a class="btn o" href="sinal-${n.n}.png" download="sinal-${n.n}.png">${ICON_IMG}Baixar imagem</a>
+<a class="btn o" href="sinal-${n.n}.png" download="sinal-${n.n}.png">${ICON_IMG}Imagem escura</a>
+<a class="btn o" href="sinal-${n.n}-claro.png" download="sinal-${n.n}-claro.png">${ICON_IMG}Imagem clara</a>
 </div>
 <details class="det"${n.tc ? '' : ' open'}><summary>Detalhes e atualizações</summary><div class="hd">${hdHTML(n, true, rel)}</div><p class="dt-t">${esc(n.t)}</p><p class="txt">${esc(n.s)}</p>${n.why ? `<p class="why"><b>${esc(n.wl || 'Por que ler:')}</b> ${esc(n.why)}</p>` : ''}</details>
 <figure class="img"><img src="sinal-${n.n}.png" width="1080" height="1350" loading="lazy" alt="Imagem para compartilhar do Sinal ${n.n}: ${esc(n.t)}"><figcaption>Imagem pronta para Instagram e Stories.</figcaption></figure>

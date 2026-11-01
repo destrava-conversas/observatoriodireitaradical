@@ -81,6 +81,8 @@ function serve() {
     const data = await panel.evaluate(num => { const n = window.PD.NEWS.find(x => x.n === num); if (!n) return "ERR:" + window.PD.NEWS.length + ":" + JSON.stringify(window.PD.NEWS[0]).slice(0,120); return window.__sinalCanvas(n).toDataURL('image/png'); }, n.n);
     if (data.startsWith('ERR')) { console.log(data); continue; }
     fs.writeFileSync(path.join(dir, 'sinal-' + n.n + '.png'), Buffer.from(data.split(',')[1], 'base64'));
+    const dl = await panel.evaluate(num => window.__sinalCanvas(window.PD.NEWS.find(x => x.n === num), true).toDataURL('image/png'), n.n);
+    fs.writeFileSync(path.join(dir, 'sinal-' + n.n + '-claro.png'), Buffer.from(dl.split(',')[1], 'base64'));
     process.stdout.write(n.n + ' ');
   }
   console.log('\nImagens de Sinais geradas:', todo.length);
