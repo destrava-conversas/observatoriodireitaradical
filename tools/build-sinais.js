@@ -180,6 +180,8 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .stds ul{margin:6px 0 8px;padding-left:20px;font-size:15.5px;line-height:1.45}
 .stds-s{margin:6px 0 10px;font-size:13.5px;color:var(--muted)}
 .stds-b{display:flex;flex-wrap:wrap;gap:8px}
+.pz{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:3px 11px;background:var(--line);color:var(--ink)}
+.pz.br{background:#0E7A3D;color:#fff}
 .selo{display:inline-block;margin-left:10px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 10px;background:#FDE68A;color:#713F12}
 .selo.ok{background:#A6F36A;color:#0A1A3F}
 .conv{margin:22px 0 10px;border-radius:16px;padding:20px 20px 8px;background:var(--surface);border:1px solid var(--line)}
@@ -328,7 +330,7 @@ ${topbar(rel, 'sinal')}
 <main>
 <p class="crumb"><a href="${rel}sinais/">← Todos os Sinais</a></p>
 <article class="card">
-${(n.dossie || []).length ? `<p class="dzp">${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a class="dzt" href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' ')}</p>` : ''}
+${(n.dossie || []).length ? `<p class="dzp">${(n.pais || []).map(x => `<span class="pz${x === 'Brasil' ? ' br' : ''}">${esc(x)}</span>`).join(' ')} ${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a class="dzt" href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' ')}</p>` : ''}
 <h1>${esc(T)}</h1>
 <p class="meta"><span class="num">Sinal ${n.n}</span>${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}${n.selo ? `<span class="selo${/barrad|contid/i.test(n.selo) ? ' ok' : ''}">${esc(n.selo)}</span>` : ''}</p>
 ${n.tc ? `<p class="rr">${esc(n.r)}</p>${n.ol ? `<p class="ol"><b>${esc(n.olk || 'Outro lado')}:</b> ${esc(n.ol)}</p>` : ''}` : `<p class="dest${dcls}">${esc(hl)}</p>`}
@@ -370,7 +372,9 @@ function listPage() {
     const f = ['all'].concat(n.dossie || []).join(' ');
     const idx = (n.n + ' ' + parseInt(n.n, 10) + ' ' + (n.tc || '') + ' ' + (n.r || '') + ' ' + n.t + ' ' + n.s + ' ' + (n.tags || []).join(' ') + ' ' + (n.destaque || '')).toLowerCase();
     const dz = (n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? '<span class="dzt">' + esc(d.n) + '</span>' : ''; }).join('');
-    return `<li data-f="${f}" data-i="${esc(idx.normalize('NFD').replace(/[̀-ͯ]/g, ''))}"><a href="${n.n}/"><div class="hd"><span class="num">Sinal ${n.n}</span>${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}</div><p class="t">${esc(n.tc || n.t)}</p><p class="d">${esc(n.r || highlight(n))}</p><p class="dzs">${dz}</p></a></li>`;
+    const ps = n.pais || [], pf = (ps.indexOf('Brasil') >= 0 ? 'br ' : '') + (ps.some(x => x !== 'Brasil') ? 'ex' : '');
+    const pz = ps.map(x => `<span class="pz${x === 'Brasil' ? ' br' : ''}">${esc(x)}</span>`).join('');
+    return `<li data-f="${f}" data-p="all ${pf.trim()}" data-i="${esc(idx.normalize('NFD').replace(/[̀-ͯ]/g, ''))}"><a href="${n.n}/"><div class="hd"><span class="num">Sinal ${n.n}</span>${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}</div><p class="t">${esc(n.tc || n.t)}</p><p class="d">${esc(n.r || highlight(n))}</p><p class="dzs">${pz}${dz}</p></a></li>`;
   }).join('\n');
   const cards = DOSSIES.map(d => `<li data-k="${d.k}"><a href="${rel}dossies/${d.slug}/"><img src="${rel}img/olhos/olho-${d.olho}.jpg" alt="" width="1080" height="300" loading="lazy"><span class="dt"><b>${esc(d.n)}</b><span>${esc(d.q)}</span><em>Abrir o dossiê →</em></span></a></li>`).join('');
   const desc = 'Os fatos que servem de evidência nos quatro dossiês do painel (os sinais de alerta de Como as democracias morrem), com fonte e outro lado.';
@@ -387,6 +391,9 @@ function listPage() {
 .dzc li.on a{border-color:var(--acc)}
 .sl .dzs{margin:8px 0 0;display:flex;flex-wrap:wrap;gap:6px}
 .dzt{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:2px 10px;background:#4338CA;color:#fff}
+.pz{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:2px 10px;background:var(--line);color:var(--ink)}
+.pz.br{background:#0E7A3D;color:#fff}
+.filt.fp{margin-top:-4px}
 .h2s{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-size:24px;margin:28px 0 4px}
 </style>
 <body>
@@ -397,6 +404,11 @@ ${topbar(rel, 'lista')}
 <div class="filt" role="group" aria-label="Filtrar Sinais por dossiê">
 <button class="chip" type="button" data-k="all" aria-pressed="true">Todos<small>${L.length}</small></button>
 ${DOSSIES.map(d => `<button class="chip" type="button" data-k="${d.k}" aria-pressed="false">${esc(d.n)}<small>${cnt(d.k)}</small></button>`).join('\n')}
+</div>
+<div class="filt fp" role="group" aria-label="Filtrar Sinais por país">
+<button class="chip pchip" type="button" data-p="all" aria-pressed="true">Todos os países</button>
+<button class="chip pchip" type="button" data-p="br" aria-pressed="false">Brasil<small>${L.filter(n => (n.pais || []).indexOf('Brasil') >= 0).length}</small></button>
+<button class="chip pchip" type="button" data-p="ex" aria-pressed="false">Outros países<small>${L.filter(n => (n.pais || []).some(x => x !== 'Brasil')).length}</small></button>
 </div>
 <form id="sform" class="sform" role="search"><label for="q" class="lead" style="display:block;margin:4px 0 6px">Buscar nos Sinais</label>
 <div class="sbox"><input id="q" class="q" type="search" placeholder="número, nome ou assunto" autocomplete="off" enterkeyhint="search"><button type="submit" class="sgo">Buscar</button></div>
@@ -409,7 +421,7 @@ ${items}
 </main>
 ${foot(rel)}
 <script>window.SB={LB:${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, ' do dossiê ' + d.n])))},SL:${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, d.slug])))}};</script>
-<script src="${rel}js/sinais-busca.js?v=20261031b"></script>
+<script src="${rel}js/sinais-busca.js?v=20261101b"></script>
 </body>
 </html>
 `;

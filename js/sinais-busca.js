@@ -4,9 +4,9 @@
    - se nenhum Sinal tem todas as palavras, mostra os que têm parte delas, avisando. */
 (function () {
   var C = window.SB || {}, LB = C.LB || {}, SL = C.SL || {};
-  var k = 'all', st = document.getElementById('st'), q = document.getElementById('q'), form = document.getElementById('sform'),
+  var k = 'all', pk = 'all', LP = { br: ' do Brasil', ex: ' de outros países' }, pchips = [].slice.call(document.querySelectorAll('.pchip')), st = document.getElementById('st'), q = document.getElementById('q'), form = document.getElementById('sform'),
     clr = document.getElementById('sclr'), ul = document.getElementById('sl'), none = document.getElementById('none'),
-    lis = [].slice.call(document.querySelectorAll('#sl li')), chips = [].slice.call(document.querySelectorAll('.chip'));
+    lis = [].slice.call(document.querySelectorAll('#sl li')), chips = [].slice.call(document.querySelectorAll('.chip:not(.pchip)'));
   var ORIG = lis.slice(), TERMS = [], ACTIVE = '';
   var STOP = 'a o e as os de da do das dos em no na nos nas um uma uns umas por para com sem que se ao aos sobre entre ou mas foi ser ele ela eles elas seu sua quem como qual quando onde ja mais menos muito tem ter ha nao sim isso esse essa este esta fez faz fazem fizeram diz disse dizem foram sao era tinha'.split(' ');
   var SYN = { golpe: ['golpista', 'golpistas', 'trama'], golpista: ['golpe', 'trama'], fuga: ['saida', 'deixou', 'deixa', 'exilio', 'exilado', 'fugiu'], exilio: ['exilado', 'exilados', 'fuga'], exilado: ['exilio', 'fuga'],
@@ -48,7 +48,8 @@
       return a + out + txt.slice(pos);
     });
   }
-  function inDossie(li) { return li.getAttribute('data-f').split(' ').indexOf(k) >= 0; }
+  function inDossie(li) { return li.getAttribute('data-f').split(' ').indexOf(k) >= 0 && (li.getAttribute('data-p') || 'all').split(' ').indexOf(pk) >= 0; }
+  function lb() { return LP[pk] ? LP[pk] + (LB[k] || '').replace(' do dossiê', ' no dossiê') : (LB[k] || ''); }
   function paint(list, ts) {
     lis.forEach(function (li) { var t = li.querySelector('.t'), d = li.querySelector('.d'); if (t) t.innerHTML = mark(li._T, ts); if (d) d.innerHTML = mark(li._D, ts); });
     list.forEach(function (li) { ul.appendChild(li); });
@@ -71,9 +72,9 @@
       paint(list, ts);
     }
     none.hidden = n > 0;
-    none.innerHTML = (!v && SL[k]) ? 'Ainda não há Sinais neste dossiê. Por enquanto, as evidências dele são ações de governo: <a href="../dossies/' + SL[k] + '/">abrir o dossiê</a>.'
-      : 'Nenhum Sinal encontrado para “' + v.replace(/</g, '&lt;') + '”' + (LB[k] ? LB[k] : '') + '. Tente outra palavra, ou veja <a href="#" data-all>todos os Sinais</a>.';
-    var lbl = (n === 1 ? '1 Sinal' : n + ' Sinais') + (LB[k] || '');
+    none.innerHTML = (!v && SL[k] && pk === 'all') ? 'Ainda não há Sinais neste dossiê. Por enquanto, as evidências dele são ações de governo: <a href="../dossies/' + SL[k] + '/">abrir o dossiê</a>.'
+      : 'Nenhum Sinal encontrado para “' + v.replace(/</g, '&lt;') + '”' + lb() + '. Tente outra palavra, ou veja <a href="#" data-all>todos os Sinais</a>.';
+    var lbl = (n === 1 ? '1 Sinal' : n + ' Sinais') + lb();
     st.innerHTML = v ? (partial ? 'Nenhum Sinal tem todas as palavras. Mostrando ' + lbl + ' com parte delas para “' + v.replace(/</g, '&lt;') + '”.' : lbl + ' para “' + v.replace(/</g, '&lt;') + '”.') : lbl + '.';
     clr.hidden = !v;
     st.classList.remove('flash'); void st.offsetWidth; st.classList.add('flash');
@@ -89,8 +90,9 @@
   form.addEventListener('submit', function (e) { e.preventDefault(); ACTIVE = q.value.trim(); run(true); q.blur(); });
   q.addEventListener('input', function () { if (!q.value.trim() && ACTIVE) { ACTIVE = ''; run(false); } });
   clr.addEventListener('click', function () { q.value = ''; ACTIVE = ''; run(false); q.focus(); });
-  none.addEventListener('click', function (e) { if (e.target.closest('[data-all]')) { e.preventDefault(); q.value = ''; ACTIVE = ''; k = 'all'; chips.forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-k') === 'all' ? 'true' : 'false'); }); run(false); } });
+  none.addEventListener('click', function (e) { if (e.target.closest('[data-all]')) { e.preventDefault(); q.value = ''; ACTIVE = ''; k = 'all'; pk = 'all'; pchips.forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-p') === 'all' ? 'true' : 'false'); }); chips.forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-k') === 'all' ? 'true' : 'false'); }); run(false); } });
   chips.forEach(function (c) { c.addEventListener('click', function () { k = c.getAttribute('data-k'); chips.forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); }); run(false); try { history.replaceState(null, '', k === 'all' ? location.pathname : '#' + k); } catch (e) {} }); });
+  pchips.forEach(function (c) { c.addEventListener('click', function () { pk = c.getAttribute('data-p'); pchips.forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); }); run(false); }); });
   run(false);
   var h = location.hash.slice(1); if (h) { var c = chips.filter(function (x) { return x.getAttribute('data-k') === h; })[0]; if (c) c.click(); }
 })();
