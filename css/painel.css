@@ -2187,7 +2187,6 @@ html.pbgov .pickbar.is-pick .pb-gov{max-width:none;flex:1;margin-right:8px}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header.hero-x.hero-lente{background:linear-gradient(to bottom,var(--obs-navy) 0,var(--obs-navy) var(--hl-cut,46%),var(--surface) var(--hl-cut,46%),var(--surface) 100%)}}
 :root:not([data-theme="dark"]) .hl-dz a,:root:not([data-theme="dark"]) .dzc a{box-shadow:none}
 
-/* Frase acima do título da home */
-.hl-k{margin:28px 0 0;font-family:'Public Sans',system-ui,sans-serif;font-weight:700;font-size:clamp(15px,1.5vw,19px);letter-spacing:.02em;color:var(--obs-acc)}
-.hl-k + h1.hl-t{margin-top:10px}
-@media (max-width:720px){.hl-k{margin-top:20px;font-size:15px}.hl-k + h1.hl-t{margin-top:8px}}
+/* Frase abaixo do título da home, antes da régua: leve, em caixa baixa */
+.hero-lente .hl-sub{margin:14px auto 0;font-family:'Public Sans',system-ui,sans-serif;font-weight:500;font-size:clamp(17px,1.6vw,21px);line-height:1.4;letter-spacing:0;text-transform:none;color:#D6DDEE;text-wrap:balance}
+@media (max-width:720px){.hero-lente .hl-sub{margin-top:10px;font-size:16px}}
