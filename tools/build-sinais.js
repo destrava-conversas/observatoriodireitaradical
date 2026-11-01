@@ -180,6 +180,21 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .stds ul{margin:6px 0 8px;padding-left:20px;font-size:15.5px;line-height:1.45}
 .stds-s{margin:6px 0 10px;font-size:13.5px;color:var(--muted)}
 .stds-b{display:flex;flex-wrap:wrap;gap:8px}
+.selo{display:inline-block;margin-left:10px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 10px;background:#FDE68A;color:#713F12}
+.selo.ok{background:#A6F36A;color:#0A1A3F}
+.conv{margin:22px 0 10px;border-radius:16px;padding:20px 20px 8px;background:var(--surface);border:1px solid var(--line)}
+.cv-h{margin:0 0 14px;font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;font-size:24px;line-height:1.15}
+.cv-k{margin:0 0 6px;font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#4338CA}
+:root[data-theme="dark"] .cv-k{color:#B4A9FF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cv-k{color:#B4A9FF}}
+.cv-i{margin:0 0 14px;padding:14px 16px;border-radius:12px;background:var(--ground);border:1px solid var(--line)}
+.cv-i p{margin:0 0 10px;font-size:16.5px;line-height:1.5}
+.cv-i .cv-q{font-weight:800;font-size:18px;line-height:1.35}
+.cv-quem ul{margin:0 0 6px;padding-left:18px}
+.cv-quem li{margin:0 0 7px;font-size:15.5px;line-height:1.45}
+.cv-quem li a{white-space:nowrap}
+.cv-i .btn{margin:0 8px 8px 0}
+.cv-i .cv-s{font-size:13.5px;color:var(--muted)}
 .dzp{margin:14px 0 0;font-size:15px;font-weight:700}
 .dzp a{color:inherit}
 .sl-st{margin:10px 0 0;font-size:14.5px;font-weight:700;color:var(--muted);border-radius:8px;padding:2px 0}
@@ -271,6 +286,17 @@ ${NAVJS}
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>`;
 
 const ICON_WA = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg>';
+
+/* Bloco "Para destravar a conversa": quem é quem, em uma frase, se te disserem, fatos que costumam aparecer, pergunta para abrir. */
+function convHTML(n, rel, bolsoTxt) {
+  const c = n.conv, L = (h) => h ? h.replace(/^~\//, rel) : '';
+  const quem = (n.quem || []).length ? `<div class="cv-i cv-quem"><p class="cv-k">Quem é quem nesta história</p><ul>${n.quem.map(q => `<li><b>${esc(q[0])}:</b> ${esc(q[1])}${q[2] ? ` <a href="${esc(L(q[2]))}">${esc(q[3] || 'Saiba mais')} →</a>` : ''}</li>`).join('')}</ul></div>` : '';
+  const frase = n.bolso ? `<div class="cv-i"><p class="cv-k">Em uma frase</p><p>${esc(n.bolso)}${n.bf ? ` <span class="cv-s">Fonte: ${esc(n.bf)}.</span>` : ''}</p><button class="btn" type="button" data-copy="${esc(bolsoTxt)}" data-ok="Frase copiada" data-lbl="Copiar frase">${ICON_COPY}<span>Copiar frase</span></button><a class="btn o" href="argumento-${n.n}.png" download="argumento-sinal-${n.n}.png">${ICON_IMG}Baixar imagem</a></div>` : '';
+  const sd = c.obj ? `<div class="cv-i"><p class="cv-k">Se te disserem</p><p class="cv-q">“${esc(c.obj)}”</p><p>${esc(c.resp)}</p><button class="btn" type="button" data-copy="${esc(c.resp + '\n' + url(n))}" data-ok="Resposta copiada" data-lbl="Copiar resposta">${ICON_COPY}<span>Copiar resposta</span></button></div>` : '';
+  const fx = c.fatos ? `<div class="cv-i"><p class="cv-k">Fatos que costumam aparecer na conversa</p><p>${esc(c.fatos)}</p></div>` : '';
+  const pq = c.perg ? `<div class="cv-i"><p class="cv-k">Uma pergunta para abrir</p><p class="cv-q">“${esc(c.perg)}”</p><button class="btn o" type="button" data-copy="${esc(c.perg)}" data-ok="Pergunta copiada" data-lbl="Copiar pergunta">${ICON_COPY}<span>Copiar pergunta</span></button></div>` : '';
+  return `<section class="conv" id="conversa"><p class="cv-h">Para destravar a conversa</p>${quem}${frase}${sd}${fx}${pq}</section>`;
+}
 const ICON_COPY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
 const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
 const ICON_IMG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>';
@@ -304,10 +330,11 @@ ${topbar(rel, 'sinal')}
 <article class="card">
 ${(n.dossie || []).length ? `<p class="dzp">${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a class="dzt" href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' ')}</p>` : ''}
 <h1>${esc(T)}</h1>
-<p class="meta"><span class="num">Sinal ${n.n}</span>${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}</p>
+<p class="meta"><span class="num">Sinal ${n.n}</span>${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}${n.selo ? `<span class="selo${/barrad|contid/i.test(n.selo) ? ' ok' : ''}">${esc(n.selo)}</span>` : ''}</p>
 ${n.tc ? `<p class="rr">${esc(n.r)}</p>${n.ol ? `<p class="ol"><b>${esc(n.olk || 'Outro lado')}:</b> ${esc(n.ol)}</p>` : ''}` : `<p class="dest${dcls}">${esc(hl)}</p>`}
-${n.bolso ? `<div class="bolso"><p class="bolso-k">Argumento de bolso <span>para usar numa conversa</span></p><p class="bolso-t">${esc(n.bolso)}${n.bf ? ` <span class="bolso-f">Fonte: ${esc(n.bf)}.</span>` : ''}</p><button class="btn bolso-b" type="button" data-copy="${esc(bolsoTxt)}" data-ok="Argumento copiado" data-lbl="Copiar argumento">${ICON_COPY}<span>Copiar argumento</span></button><a class="btn o bolso-dl" href="argumento-${n.n}.png" download="argumento-sinal-${n.n}.png">${ICON_IMG}Baixar imagem</a></div>` : ''}
-${(n.rsp ? [].concat(n.rsp) : []).map(rspOf).filter(Boolean).map(r => `<section class="stds" id="${r.id}"><p class="stds-k">Se te disserem</p><p class="stds-q">${r.q}</p><p class="stds-ak">Responda</p><p class="stds-a">${r.a}</p>${r.d}<p class="stds-s">${r.s}</p><div class="stds-b"><button class="btn" type="button" data-copy="${r.c}" data-ok="Resposta copiada" data-lbl="Copiar resposta">${ICON_COPY}<span>Copiar resposta</span></button><a class="btn o" href="${rel}se-te-disserem/img/${r.id}.png" download="se-te-disserem-${r.id}.png">${ICON_IMG}Baixar imagem</a></div></section>`).join('\n')}
+${n.conv ? convHTML(n, rel, bolsoTxt) : ''}
+${n.bolso && !n.conv ? `<div class="bolso"><p class="bolso-k">Argumento de bolso <span>para usar numa conversa</span></p><p class="bolso-t">${esc(n.bolso)}${n.bf ? ` <span class="bolso-f">Fonte: ${esc(n.bf)}.</span>` : ''}</p><button class="btn bolso-b" type="button" data-copy="${esc(bolsoTxt)}" data-ok="Argumento copiado" data-lbl="Copiar argumento">${ICON_COPY}<span>Copiar argumento</span></button><a class="btn o bolso-dl" href="argumento-${n.n}.png" download="argumento-sinal-${n.n}.png">${ICON_IMG}Baixar imagem</a></div>` : ''}
+${(n.rsp && !n.conv ? [].concat(n.rsp) : []).map(rspOf).filter(Boolean).map(r => `<section class="stds" id="${r.id}"><p class="stds-k">Se te disserem</p><p class="stds-q">${r.q}</p><p class="stds-ak">Responda</p><p class="stds-a">${r.a}</p>${r.d}<p class="stds-s">${r.s}</p><div class="stds-b"><button class="btn" type="button" data-copy="${r.c}" data-ok="Resposta copiada" data-lbl="Copiar resposta">${ICON_COPY}<span>Copiar resposta</span></button><a class="btn o" href="${rel}se-te-disserem/img/${r.id}.png" download="se-te-disserem-${r.id}.png">${ICON_IMG}Baixar imagem</a></div></section>`).join('\n')}
 <p class="src">${srcLbl}: ${n.src.map(s => `<a href="${esc(s[1])}" target="_blank" rel="noopener noreferrer">${esc(s[0])}</a>`).join('; ')}</p>
 <div class="acts">
 <a class="btn" href="https://wa.me/?text=${encodeURIComponent(shareTxt)}" target="_blank" rel="noopener noreferrer">${ICON_WA}Mandar no WhatsApp</a>
