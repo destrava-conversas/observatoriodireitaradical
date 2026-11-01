@@ -3,7 +3,7 @@
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
-  --ground:#EEF1F4; --surface:#FFFFFF; --ink:#1A2430; --muted:#4A5663; --line:#D3DAE1;
+  --ground:#FFFFFF; --surface:#F1F4F7; --ink:#1A2430; --muted:#4A5663; --line:#D3DAE1;
   --contra:#C2570C; --contra-ink:#A64A08; --contra-soft:#FBEBDD;
   --pro:#0B6B8F; --pro-ink:#0B6B8F; --pro-soft:#DCEEF5;
   --on-ink:#FFFFFF;
@@ -2182,3 +2182,7 @@ html.pbgov .pickbar.is-pick .pb-gov{max-width:none;flex:1;margin-right:8px}
 .nav-theme .nt-k{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:auto}
 .nav-theme button{font:inherit;font-size:13.5px;font-weight:700;min-height:34px;padding:0 11px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
 .nav-theme button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+/* tema claro: fundo branco abaixo da busca, blocos levemente cinzas */
+:root:not([data-theme="dark"]) header.hero-x.hero-lente{background:linear-gradient(to bottom,var(--obs-navy) 0,var(--obs-navy) var(--hl-cut,46%),var(--ground) var(--hl-cut,46%),var(--ground) 100%)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header.hero-x.hero-lente{background:linear-gradient(to bottom,var(--obs-navy) 0,var(--obs-navy) var(--hl-cut,46%),var(--surface) var(--hl-cut,46%),var(--surface) 100%)}}
+:root:not([data-theme="dark"]) .hl-dz a,:root:not([data-theme="dark"]) .dzc a{box-shadow:none}

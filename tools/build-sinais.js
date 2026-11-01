@@ -38,7 +38,7 @@ const isVS = n => n.tipo === 'Você sabia?';
 const kicker = n => 'Sinal ' + n.n + ' · ' + (isVS(n) ? 'Você sabia? · ' : '') + ndate(n);
 
 const CSS = `
-:root{--ground:#EEF1F4;--surface:#FFFFFF;--ink:#1A2430;--muted:#4A5663;--line:#D3DAE1;--navy:#0A1A3F;--acc:#A6F36A;--link:#0B6B8F;--al-bg:#FDE2E2;--al-ink:#8A1C1C;--al-line:#F2B8B8;--hl:#FFFFFF}
+:root{--ground:#FFFFFF;--surface:#F1F4F7;--ink:#1A2430;--muted:#4A5663;--line:#D3DAE1;--navy:#0A1A3F;--acc:#A6F36A;--link:#0B6B8F;--al-bg:#FDE2E2;--al-ink:#8A1C1C;--al-line:#F2B8B8;--hl:#FFFFFF}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ground:#0B1430;--surface:#13204A;--ink:#EEF1F8;--muted:#B9C3DB;--line:#2A3A66;--link:#8FD3EE;--al-bg:#3A1717;--al-ink:#F6B4B4;--al-line:#6B2A2A;--hl:#0E1A3C}}
 :root[data-theme="dark"]{--ground:#0B1430;--surface:#13204A;--ink:#EEF1F8;--muted:#B9C3DB;--line:#2A3A66;--link:#8FD3EE;--al-bg:#3A1717;--al-ink:#F6B4B4;--al-line:#6B2A2A;--hl:#0E1A3C}
 *{box-sizing:border-box}
