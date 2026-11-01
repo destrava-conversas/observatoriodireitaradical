@@ -51,6 +51,9 @@ Cada Sinal em data/sinais.js tem, além dos campos antigos (t, s, why, src, bols
 - `r`: "o que é", em uma ou duas frases.
 - `ol` e `olk`: uma linha de outro lado (`olk`: "Outro lado") ou, em fato já resolvido, a situação (`olk`: "Situação", ex.: "barrada", "concretizada", "condenação"). Se não houver resposta pública, deixar sem `ol`.
 - `rsp` (opcional): id de uma resposta de "Se te disserem…" (tools/paginas/_respostas.html) que esse Sinal justifica.
+- `selo` (opcional): situação em destaque ao lado do número ("Em curso", "Barrada", "Contida"). "Barrada" e "Contida" ficam verdes: é a evidência de que as defesas funcionam.
+- `quem` (opcional, recomendado em casos internacionais ou com vários personagens): lista de [nome, quem é, link opcional, rótulo do link]. Dizer o cargo exato (presidente, primeiro-ministro, chefe de Estado ou de governo), desde quando e a ligação com o grupo observado. Link "~/" é relativo à raiz do painel (ex.: "~/quem-sao-eles/#px-quem").
+- `conv` (opcional): bloco "Para destravar a conversa", que substitui o argumento de bolso solto e o `rsp` naquele Sinal. Campos: `obj` (a objeção que circula de fato, entre aspas), `resp` (resposta curta, que caiba num comentário, de preferência pela sequência dos fatos), `fatos` ("Fatos que costumam aparecer na conversa": os fatos verdadeiros que o outro lado costuma citar, com fonte, recolocados na ordem dos acontecimentos; nunca "os dois lados têm razão", nunca contraprova) e `perg` (uma pergunta para abrir, que leve a pessoa a avaliar a regra, não o lado). Mesmo critério de fonte dos Sinais.
 O texto longo (`t`, `s`, `why`) continua obrigatório: aparece recolhido em "Detalhes e atualizações" e guarda o histórico. Atualizações entram no fim de `s` ("Atualização (data): …"), sem apagar o que havia; `tc`, `r` e `ol` são revistos se o quadro mudar.
 Imagens: tools/render-sinais.js gera sinal-NNN.png (escura) e sinal-NNN-claro.png (clara) com `tc` e `r`, além do og.jpg com `tc`.
 
