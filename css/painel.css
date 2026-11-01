@@ -4,16 +4,16 @@
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
   --ground:#FFFFFF; --surface:#F1F4F7; --ink:#1A2430; --muted:#4A5663; --line:#D3DAE1;
-  --contra:#C2570C; --contra-ink:#A64A08; --contra-soft:#FBEBDD;
-  --pro:#0B6B8F; --pro-ink:#0B6B8F; --pro-soft:#DCEEF5;
+  --contra:#F26B1D; --contra-ink:#C2410C; --contra-soft:#FFEDD5;
+  --pro:#06AED5; --pro-ink:#0E7490; --pro-soft:#D5F5FB;
   --on-ink:#FFFFFF;
   --eco:#6B3FA0; --eco-ink:#5B2E91; --eco-soft:#EFE8F8; --vs:#EDF0F4;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --ground:#171715; --surface:#21211F; --ink:#EEEEEA; --muted:#B4B3AC; --line:#383733;
-    --contra:#E8873F; --contra-ink:#F2A66A; --contra-soft:#2B1D12;
-    --pro:#4DB3D6; --pro-ink:#7CCBE6; --pro-soft:#12303D;
+    --contra:#FF7A2E; --contra-ink:#FFA366; --contra-soft:#33200F;
+    --pro:#22D3EE; --pro-ink:#67E8F9; --pro-soft:#0B3340;
     --on-ink:#11181F;
     --eco:#B28DE0; --eco-ink:#CDB3F2; --eco-soft:#241A33; --vs:#292826;
   }
@@ -21,8 +21,8 @@
 :root[data-theme="dark"]{
   --eco:#B28DE0; --eco-ink:#CDB3F2; --eco-soft:#241A33; --vs:#292826;
   --ground:#171715; --surface:#21211F; --ink:#EEEEEA; --muted:#B4B3AC; --line:#383733;
-  --contra:#E8873F; --contra-ink:#F2A66A; --contra-soft:#2B1D12;
-  --pro:#4DB3D6; --pro-ink:#7CCBE6; --pro-soft:#12303D;
+  --contra:#FF7A2E; --contra-ink:#FFA366; --contra-soft:#33200F;
+  --pro:#22D3EE; --pro-ink:#67E8F9; --pro-soft:#0B3340;
   --on-ink:#11181F;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -1680,12 +1680,12 @@ aside.legend{position:relative}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --ground:#0B1631; --surface:#13213F; --ink:#EEF1F6; --muted:#B7C0D3; --line:#2A3A5C; --vs:#182848;
-    --contra-soft:#2E2117; --pro-soft:#10304A; --eco-soft:#241C3D;
+    --contra-soft:#33200F; --pro-soft:#0B3340; --eco-soft:#241C3D;
   }
 }
 :root[data-theme="dark"]{
   --ground:#0B1631; --surface:#13213F; --ink:#EEF1F6; --muted:#B7C0D3; --line:#2A3A5C; --vs:#182848;
-  --contra-soft:#2E2117; --pro-soft:#10304A; --eco-soft:#241C3D;
+  --contra-soft:#33200F; --pro-soft:#0B3340; --eco-soft:#241C3D;
 }
 .topbar{background:var(--obs-navy);border-bottom-color:rgba(255,255,255,.12)}
 .brand-eye{width:44px;height:24px;border-radius:22px/12px;border:3px solid var(--obs-acc);box-sizing:border-box;display:flex;align-items:center;justify-content:center}
@@ -1958,12 +1958,12 @@ html[data-page="respostas"] .pg-h h1{color:var(--rsp-ink)}
 .item .ibolso .ib-a button:focus-visible{outline:3px solid var(--obs-navy);outline-offset:2px}
 
 /* argumento de bolso das ações: laranja quando piorou, azul-petróleo quando melhorou */
-.item .ibolso.ib-con{background:#B5520B;color:#FFFFFF}
-.item .ibolso.ib-pro{background:#0B6B8F;color:#FFFFFF}
+.item .ibolso.ib-con{background:#C2410C;color:#FFFFFF}
+.item .ibolso.ib-pro{background:#0E7490;color:#FFFFFF}
 .item .ibolso.ib-con .ib-t,.item .ibolso.ib-pro .ib-t{color:#FFFFFF}
 .item .ibolso.ib-con .ib-a .ib-cp,.item .ibolso.ib-pro .ib-a .ib-cp{background:#FFFFFF;border-color:#FFFFFF}
-.item .ibolso.ib-con .ib-a .ib-cp{color:#8A3A05}
-.item .ibolso.ib-pro .ib-a .ib-cp{color:#08516D}
+.item .ibolso.ib-con .ib-a .ib-cp{color:#9A3412}
+.item .ibolso.ib-pro .ib-a .ib-cp{color:#155E75}
 .item .ibolso.ib-con .ib-a .imgsh .cp,.item .ibolso.ib-pro .ib-a .imgsh .cp{background:transparent;border-color:#FFFFFF;color:#FFFFFF}
 .item .ibolso.ib-con .ib-a button:focus-visible,.item .ibolso.ib-pro .ib-a button:focus-visible{outline-color:#FFFFFF}
 
@@ -2190,3 +2190,8 @@ html.pbgov .pickbar.is-pick .pb-gov{max-width:none;flex:1;margin-right:8px}
 /* Frase abaixo do título da home, antes da régua: leve, em caixa baixa */
 .hero-lente .hl-sub{margin:14px auto 0;font-family:'Public Sans',system-ui,sans-serif;font-weight:500;font-size:clamp(17px,1.6vw,21px);line-height:1.4;letter-spacing:0;text-transform:none;color:#D6DDEE;text-wrap:balance}
 @media (max-width:720px){.hero-lente .hl-sub{margin-top:10px;font-size:16px}}
+
+/* Seta de piorou/melhorou: seta reta em círculo cheio, grafismo (não clicável) */
+.col.contra h3::before,.col.pro h3::before,.vs-cols .col.contra h4::before,.vs-cols .col.pro h4::before,.ex-contra .ex-h::before,.ex-pro .ex-h::before,.c-contra .l::before,.c-pro .l::before{content:"";display:inline-block;width:.95em;height:.95em;margin-right:.38em;vertical-align:-.14em;flex:none;-webkit-mask:var(--ar) center/contain no-repeat;mask:var(--ar) center/contain no-repeat}
+.col.contra h3::before,.vs-cols .col.contra h4::before,.ex-contra .ex-h::before,.c-contra .l::before{--ar:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cmask%20id%3D%22m%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M12%206.5v11M7.5%2013l4.5%204.5%204.5-4.5%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/mask%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2211%22%20fill%3D%22%23000%22%20mask%3D%22url%28%23m%29%22/%3E%3C/svg%3E");background:var(--contra)}
+.col.pro h3::before,.vs-cols .col.pro h4::before,.ex-pro .ex-h::before,.c-pro .l::before{--ar:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cmask%20id%3D%22m%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M12%2017.5v-11M7.5%2011l4.5-4.5%204.5%204.5%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/mask%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2211%22%20fill%3D%22%23000%22%20mask%3D%22url%28%23m%29%22/%3E%3C/svg%3E");background:var(--pro)}
