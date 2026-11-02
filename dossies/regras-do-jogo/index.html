@@ -23,7 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://destrava-conversas.com.br/observatoriodireitaradical/og-observatorio.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../css/painel.css?v=20261101h">
+<link rel="stylesheet" href="../../css/painel.css?v=20261101i">
 </head>
 <body>
 <div class="topbar" id="topo">
@@ -61,6 +61,8 @@
   <figure class="dz-olho"><img src="../../img/olhos/olho-regras-a.jpg" alt="" width="1080" height="300"></figure>
   <section class="dz-q" aria-labelledby="h-q"><p class="dz-k" id="h-q">A pergunta</p><p class="dz-qt">Rejeita ou enfraquece as regras democráticas?</p><p class="dz-qd">Adaptado de <i>Como as democracias morrem</i>, de Steven Levitsky e Daniel Ziblatt.</p></section>
   <section class="dz-pv" aria-labelledby="h-pv"><h2 id="h-pv">As evidências <span class="dz-n">54</span></h2>
+    <div class="dz-tg" role="group" aria-label="Mostrar evidências"><button type="button" data-t="all" aria-pressed="true">Todas <span>54</span></button><button type="button" data-t="s" aria-pressed="false">Sinais <span>35</span></button><button type="button" data-t="a" aria-pressed="false">Ações <span>19</span></button></div>
+    <div class="dz-grp" data-t="s">
     <h3 class="dz-h3 dz-h3s">Sinais <span>35</span></h3>
     <ol class="dz-list">
       <li class="dz-i dz-sinal"><a href="../../sinais/056/"><span class="dz-m">Sinal 056 · 2026</span><b>Presidente se recusa a empossar juízes eleitos pelo Parlamento</b><span class="dz-d">Nawrocki, eleito com apoio do PiS, não dá posse a quatro juízes que o Parlamento elegeu. O presidente do tribunal, que foi do governo do PiS, barrou a entrada deles e descumpriu a ordem da Corte Europeia para admiti-los.</span></a></li>
@@ -99,6 +101,8 @@
       <li class="dz-i dz-sinal"><a href="../../sinais/024/"><span class="dz-m">Sinal 024 · 2011</span><b>Escreve sozinho uma nova Constituição</b><span class="dz-d">A coalizão de Orbán aprovou, sem a oposição, uma nova Constituição, em vigor desde 2012.</span></a></li>
       <li class="dz-i dz-sinal"><a href="../../sinais/023/"><span class="dz-m">Sinal 023 · 2010 a 2011</span><b>Encolhe e ocupa o Tribunal Constitucional</b><span class="dz-d">Orbán reduziu os poderes do tribunal e ampliou a corte de 11 para 15 juízes, preenchendo as vagas sem negociar com a oposição.</span></a></li>
     </ol>
+    </div>
+    <div class="dz-grp" data-t="a">
     <h3 class="dz-h3 dz-h3a">Ações de governo <span>19</span></h3>
     <h4 class="dz-gov">Brasil · Jair Bolsonaro <span>3</span></h4>
     <ol class="dz-list">
@@ -137,7 +141,9 @@
       <li class="dz-i dz-acao"><span class="dz-m">2025 · pauta Instituições e imprensa</span><p>“Promulga, mas não aplica”: três leis aprovadas com a derrubada de vetos (emergência em deficiência, financiamento universitário e emergência pediátrica) são promulgadas com a execução suspensa “até que o Congresso defina as fontes”. Em janeiro de 2026, um juiz federal chama isso de “veto encoberto” e manda aplicar a lei de deficiência.</p><p class="dz-ol"><b>Outro lado:</b> O governo cita a Lei 24.629, que exige fonte de financiamento para novos gastos</p><p class="dz-f">Fontes: <a href="https://chequeado.com/el-explicador/ley-de-emergencia-en-discapacidad-el-gobierno-la-promulgo-pero-suspendio-su-aplicacion/" target="_blank" rel="noopener noreferrer">Chequeado</a>; <a href="https://www.baenegocios.com/politica/promulgan-la-emergencia-pediatrica-y-el-financiamiento-universitario-pero-frenan-su-aplicacion-20251021-0032.html" target="_blank" rel="noopener noreferrer">BAE Negocios</a>; <a href="https://www.lagaceta.com.ar/nota/1121300/politica/justicia-intimo-al-gobierno-reglamentar-ley-discapacidad-antes-4-febrero.html" target="_blank" rel="noopener noreferrer">La Gaceta</a></p><a class="dz-go" href="../../?pauta=instituicoes&amp;gov=ar&amp;acao=a5mc3p#acoes">Ver na pauta Instituições e imprensa →</a></li>
       <li class="dz-i dz-acao"><span class="dz-m">2025 · pauta Soberania e interferência externa</span><p>Aceita a ajuda de US$ 20 bilhões do Tesouro americano, que Trump anunciou como dependente do resultado da eleição.</p><p class="dz-ol"><b>Outro lado:</b> Discutível: a ajuda teve efeito econômico, e a condição foi dita por Trump, não por Milei</p><p class="dz-f">Fontes: <a href="https://www.aljazeera.com/news/2025/10/14/not-going-to-waste-our-time-trump-hinges-us-aid-to-argentina-on-election" target="_blank" rel="noopener noreferrer">Al Jazeera</a></p><a class="dz-go" href="../../?pauta=soberania&amp;gov=ar&amp;acao=bwq7iu#acoes">Ver na pauta Soberania e interferência externa →</a></li>
     </ol>
+    </div>
   </section>
+  <script>(function(){var bs=[].slice.call(document.querySelectorAll(".dz-tg button")),gs=[].slice.call(document.querySelectorAll(".dz-grp"));function set(t){bs.forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-t")===t?"true":"false");});gs.forEach(function(g){g.hidden=!(t==="all"||g.getAttribute("data-t")===t);});try{history.replaceState(null,"",t==="all"?location.pathname:"#"+(t==="s"?"sinais":"acoes"));}catch(e){}}bs.forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-t"));});});var h=location.hash;if(h==="#sinais")set("s");else if(h==="#acoes")set("a");})();</script>
   <section class="dz-rem" aria-labelledby="h-rem"><h2 id="h-rem">Remédios</h2><p class="dz-wip">Em pesquisa: soluções com base acadêmica e práticas de países que reverteram a erosão democrática ou estão no topo dos índices, com o medidor de cada governo observado.</p></section>
   <nav class="dz-nav" aria-label="Outros dossiês"><p class="dz-k">Outros dossiês</p><div><a href="../adversario-como-inimigo/"><img src="../../img/olhos/olho-inimigo-a.jpg" alt="" width="1080" height="300"><span>Adversário como inimigo</span></a><a href="../violencia/"><img src="../../img/olhos/olho-violencia-a.jpg" alt="" width="1080" height="300"><span>Violência</span></a><a href="../liberdades/"><img src="../../img/olhos/olho-liberdades-a.jpg" alt="" width="1080" height="300"><span>Liberdades</span></a></div></nav>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
@@ -162,14 +168,14 @@
 <script>(function(){var h=document.querySelector(".pg-h h1"),s=document.getElementById("dz-stick");if(!h||!s||!("IntersectionObserver" in window))return;new IntersectionObserver(function(e){s.hidden=e[0].isIntersecting;},{rootMargin:"-70px 0px 0px 0px"}).observe(h);})();</script>
 </main>
 
-<script src="../../data/base.js?v=20261101h"></script>
-<script src="../../data/acoes.js?v=20261101h"></script>
-<script src="../../data/fontes.js?v=20261101h"></script>
-<script src="../../data/sinais.js?v=20261101h"></script>
-<script src="../../data/rede.js?v=20261101h"></script>
-<script src="../../data/dossies.js?v=20261101h"></script>
-<script src="../../data/flavio.js?v=20261101h"></script>
-<script src="../../js/app.js?v=20261101h"></script>
+<script src="../../data/base.js?v=20261101i"></script>
+<script src="../../data/acoes.js?v=20261101i"></script>
+<script src="../../data/fontes.js?v=20261101i"></script>
+<script src="../../data/sinais.js?v=20261101i"></script>
+<script src="../../data/rede.js?v=20261101i"></script>
+<script src="../../data/dossies.js?v=20261101i"></script>
+<script src="../../data/flavio.js?v=20261101i"></script>
+<script src="../../js/app.js?v=20261101i"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

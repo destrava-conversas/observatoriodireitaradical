@@ -79,14 +79,18 @@ for D in DOS:
     pts = ''.join('<li>' + (('<b>' + E(x.split(': ', 1)[0]) + ':</b> ' + E(x.split(': ', 1)[1])) if (': ' in x and len(x.split(': ', 1)[0]) <= 26) else E(x)) + '</li>' for x in D.get('sp', []))
     pass  # síntese removida a pedido do Ces (31/10)
     b.append('  <section class="dz-pv" aria-labelledby="h-pv"><h2 id="h-pv">As evidências <span class="dz-n">%d</span></h2>\n' % (len(sn) + len(ac)))
+    if sn and ac:
+        b.append('    <div class="dz-tg" role="group" aria-label="Mostrar evidências"><button type="button" data-t="all" aria-pressed="true">Todas <span>%d</span></button><button type="button" data-t="s" aria-pressed="false">Sinais <span>%d</span></button><button type="button" data-t="a" aria-pressed="false">Ações <span>%d</span></button></div>\n' % (len(sn) + len(ac), len(sn), len(ac)))
     if sn:
+        b.append('    <div class="dz-grp" data-t="s">\n')
         b.append('    <h3 class="dz-h3 dz-h3s">Sinais <span>%d</span></h3>\n    <ol class="dz-list">\n' % len(sn))
         for n in sn:
             dst = ('<span class="dz-d">' + E(n.get('r') or n['destaque']) + '</span>') if (n.get('r') or n.get('destaque')) else ''
             b.append('      <li class="dz-i dz-sinal"><a href="../../sinais/%s/"><span class="dz-m">Sinal %s · %s</span><b>%s</b>%s</a></li>\n'
                      % (n['n'], n['n'], E(_nd(n)), E(n.get('tc') or n['t']), dst))
-        b.append('    </ol>\n')
+        b.append('    </ol>\n    </div>\n')
     if ac:
+        b.append('    <div class="dz-grp" data-t="a">\n')
         b.append('    <h3 class="dz-h3 dz-h3a">Ações de governo <span>%d</span></h3>\n' % len(ac))
         for c in ORDER:
             lst = [a for a in ac if a['c'] == c]
@@ -102,7 +106,9 @@ for D in DOS:
                 b.append('      <li class="dz-i dz-acao"><span class="dz-m">%s · pauta %s</span><p>%s</p>%s%s%s</li>\n'
                          % (E(str(a.get('y') or '')), E(GN.get(a['g'], a['g'])), E(a['t']), ol, fl, go))
             b.append('    </ol>\n')
+        b.append('    </div>\n')
     b.append('  </section>\n')
+    b.append('  <script>(function(){var bs=[].slice.call(document.querySelectorAll(".dz-tg button")),gs=[].slice.call(document.querySelectorAll(".dz-grp"));function set(t){bs.forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-t")===t?"true":"false");});gs.forEach(function(g){g.hidden=!(t==="all"||g.getAttribute("data-t")===t);});try{history.replaceState(null,"",t==="all"?location.pathname:"#"+(t==="s"?"sinais":"acoes"));}catch(e){}}bs.forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-t"));});});var h=location.hash;if(h==="#sinais")set("s");else if(h==="#acoes")set("a");})();</script>\n')
     if False and D.get('rsp'):
         lis = []
         for rid in D['rsp']:

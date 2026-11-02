@@ -2211,3 +2211,20 @@ html.pbgov .pickbar.is-pick .pb-gov{max-width:none;flex:1;margin-right:8px}
 :root:not([data-theme="light"]) .dz-h3a span,:root:not([data-theme="light"]) .dz-gov span{background:var(--contra);color:#1A0E05}
 :root:not([data-theme="light"]) .dz-sinal .dz-m{color:#B4A9FF}
 }
+
+/* Dossiês: alternar entre todas as evidências, só Sinais ou só ações */
+.dz-tg{display:inline-flex;gap:4px;padding:4px;margin:4px 0 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.dz-tg button{font:inherit;font-size:15px;font-weight:800;border:0;border-radius:999px;padding:8px 16px;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.dz-tg button span{font-size:12px;font-weight:800;border-radius:999px;padding:1px 8px;background:var(--line);color:var(--ink)}
+.dz-tg button[aria-pressed="true"]{background:var(--obs-navy);color:#fff}
+.dz-tg button[aria-pressed="true"] span{background:var(--obs-acc);color:var(--obs-navy)}
+.dz-tg button[data-t="s"][aria-pressed="true"]{background:#4338CA}
+.dz-tg button[data-t="s"][aria-pressed="true"] span{background:#fff;color:#4338CA}
+.dz-tg button[data-t="a"][aria-pressed="true"]{background:var(--contra);color:#1A0E05}
+.dz-tg button[data-t="a"][aria-pressed="true"] span{background:#1A0E05;color:#fff}
+.dz-tg button:focus-visible{outline:3px solid var(--pro);outline-offset:2px}
+:root[data-theme="dark"] .dz-tg button[data-t="all"][aria-pressed="true"]{background:var(--obs-acc);color:var(--obs-navy)}
+:root[data-theme="dark"] .dz-tg button[data-t="all"][aria-pressed="true"] span{background:var(--obs-navy);color:var(--obs-acc)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .dz-tg button[data-t="all"][aria-pressed="true"]{background:var(--obs-acc);color:var(--obs-navy)}:root:not([data-theme="light"]) .dz-tg button[data-t="all"][aria-pressed="true"] span{background:var(--obs-navy);color:var(--obs-acc)}}
+@media (max-width:420px){.dz-tg button{padding:8px 12px;font-size:14px}}
+.dz-grp[hidden]{display:none}

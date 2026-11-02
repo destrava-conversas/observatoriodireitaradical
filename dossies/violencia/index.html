@@ -23,7 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://destrava-conversas.com.br/observatoriodireitaradical/og-observatorio.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../css/painel.css?v=20261101h">
+<link rel="stylesheet" href="../../css/painel.css?v=20261101i">
 </head>
 <body>
 <div class="topbar" id="topo">
@@ -61,6 +61,8 @@
   <figure class="dz-olho"><img src="../../img/olhos/olho-violencia-a.jpg" alt="" width="1080" height="300"></figure>
   <section class="dz-q" aria-labelledby="h-q"><p class="dz-k" id="h-q">A pergunta</p><p class="dz-qt">Tolera ou estimula a violência?</p><p class="dz-qd">Adaptado de <i>Como as democracias morrem</i>, de Steven Levitsky e Daniel Ziblatt.</p></section>
   <section class="dz-pv" aria-labelledby="h-pv"><h2 id="h-pv">As evidências <span class="dz-n">15</span></h2>
+    <div class="dz-tg" role="group" aria-label="Mostrar evidências"><button type="button" data-t="all" aria-pressed="true">Todas <span>15</span></button><button type="button" data-t="s" aria-pressed="false">Sinais <span>5</span></button><button type="button" data-t="a" aria-pressed="false">Ações <span>10</span></button></div>
+    <div class="dz-grp" data-t="s">
     <h3 class="dz-h3 dz-h3s">Sinais <span>5</span></h3>
     <ol class="dz-list">
       <li class="dz-i dz-sinal"><a href="../../sinais/011/"><span class="dz-m">Sinal 011 · 16 out. 2026</span><b>Rastrear munição de facção? &quot;Detalhezinho&quot;</b><span class="dz-d">Perguntado sobre o fim da marcação das munições das polícias, que ajuda a ligar balas de facções e milícias à sua origem, Flávio respondeu: &quot;qualquer detalhezinho desse&quot;.</span></a></li>
@@ -69,6 +71,8 @@
       <li class="dz-i dz-sinal"><a href="../../sinais/043/"><span class="dz-m">Sinal 043 · 2023</span><b>Depredam os Três Poderes uma semana depois da posse</b><span class="dz-d">Em 8 de janeiro de 2023, milhares de pessoas invadiram e depredaram o Congresso, o Planalto e o STF. Mais de 800 foram condenadas.</span></a></li>
       <li class="dz-i dz-sinal"><a href="../../sinais/044/"><span class="dz-m">Sinal 044 · 2021 e 2025</span><b>Do ataque ao Capitólio ao perdão dos invasores</b><span class="dz-d">Apoiadores de Trump invadiram o Capitólio para barrar a confirmação da derrota dele. De volta ao poder, Trump perdoou cerca de 1.500 réus, cerca de 600 deles acusados de agredir policiais.</span></a></li>
     </ol>
+    </div>
+    <div class="dz-grp" data-t="a">
     <h3 class="dz-h3 dz-h3a">Ações de governo <span>10</span></h3>
     <h4 class="dz-gov">Brasil · Jair Bolsonaro <span>2</span></h4>
     <ol class="dz-list">
@@ -92,7 +96,9 @@
     <ol class="dz-list">
       <li class="dz-i dz-acao"><span class="dz-m">2023-2025 · pauta Segurança pública</span><p>Protocolo “antipiquetes” (dezembro de 2023) e repressão ao protesto de aposentados em março de 2025: 114 detidos e o fotógrafo Pablo Grillo atingido na cabeça por um cartucho de gás; a Human Rights Watch viu “uso indiscriminado e perigoso da força”, e o governo denunciou a juíza que soltou os detidos.</p><p class="dz-ol"><b>Outro lado:</b> A HRW registra que manifestantes também atiraram pedras e queimaram uma viatura</p><p class="dz-f">Fontes: <a href="https://www.lanacion.com.ar/politica/human-rights-watch-reclamo-investigar-la-represion-en-la-marcha-de-jubilados-y-cuestiono-el-nid03042025" target="_blank" rel="noopener noreferrer">La Nación</a></p><a class="dz-go" href="../../?pauta=seguranca&amp;gov=ar&amp;acao=1vhg6li#acoes">Ver na pauta Segurança pública →</a></li>
     </ol>
+    </div>
   </section>
+  <script>(function(){var bs=[].slice.call(document.querySelectorAll(".dz-tg button")),gs=[].slice.call(document.querySelectorAll(".dz-grp"));function set(t){bs.forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-t")===t?"true":"false");});gs.forEach(function(g){g.hidden=!(t==="all"||g.getAttribute("data-t")===t);});try{history.replaceState(null,"",t==="all"?location.pathname:"#"+(t==="s"?"sinais":"acoes"));}catch(e){}}bs.forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-t"));});});var h=location.hash;if(h==="#sinais")set("s");else if(h==="#acoes")set("a");})();</script>
   <section class="dz-rem" aria-labelledby="h-rem"><h2 id="h-rem">Remédios</h2><p class="dz-wip">Em pesquisa: soluções com base acadêmica e práticas de países que reverteram a erosão democrática ou estão no topo dos índices, com o medidor de cada governo observado.</p></section>
   <nav class="dz-nav" aria-label="Outros dossiês"><p class="dz-k">Outros dossiês</p><div><a href="../regras-do-jogo/"><img src="../../img/olhos/olho-regras-a.jpg" alt="" width="1080" height="300"><span>Regras do jogo</span></a><a href="../adversario-como-inimigo/"><img src="../../img/olhos/olho-inimigo-a.jpg" alt="" width="1080" height="300"><span>Adversário como inimigo</span></a><a href="../liberdades/"><img src="../../img/olhos/olho-liberdades-a.jpg" alt="" width="1080" height="300"><span>Liberdades</span></a></div></nav>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
@@ -117,14 +123,14 @@
 <script>(function(){var h=document.querySelector(".pg-h h1"),s=document.getElementById("dz-stick");if(!h||!s||!("IntersectionObserver" in window))return;new IntersectionObserver(function(e){s.hidden=e[0].isIntersecting;},{rootMargin:"-70px 0px 0px 0px"}).observe(h);})();</script>
 </main>
 
-<script src="../../data/base.js?v=20261101h"></script>
-<script src="../../data/acoes.js?v=20261101h"></script>
-<script src="../../data/fontes.js?v=20261101h"></script>
-<script src="../../data/sinais.js?v=20261101h"></script>
-<script src="../../data/rede.js?v=20261101h"></script>
-<script src="../../data/dossies.js?v=20261101h"></script>
-<script src="../../data/flavio.js?v=20261101h"></script>
-<script src="../../js/app.js?v=20261101h"></script>
+<script src="../../data/base.js?v=20261101i"></script>
+<script src="../../data/acoes.js?v=20261101i"></script>
+<script src="../../data/fontes.js?v=20261101i"></script>
+<script src="../../data/sinais.js?v=20261101i"></script>
+<script src="../../data/rede.js?v=20261101i"></script>
+<script src="../../data/dossies.js?v=20261101i"></script>
+<script src="../../data/flavio.js?v=20261101i"></script>
+<script src="../../js/app.js?v=20261101i"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
