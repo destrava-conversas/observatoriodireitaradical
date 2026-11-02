@@ -14,6 +14,7 @@ const NEWS = ctx.window.PD.NEWS.filter(n => n.n);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'data/dossies.js'), 'utf8').replace('window.PD = window.PD || {};', ''), ctx);
 const DOSSIES = ctx.window.PD.DOSSIES || [];
 const INLINE = NEWS.filter(n => (n.dossie || []).length);
+const ARQ = NEWS.filter(n => !(n.dossie || []).length).sort((a, b) => a.n < b.n ? 1 : -1);
 const RSPF = fs.readFileSync(path.join(ROOT, 'tools/paginas/_respostas.html'), 'utf8');
 const rspOf = id => { const m = RSPF.match(new RegExp('<li class="rsp-i" id="' + id + '">([\\s\\S]*?)\\n      </li>')); if (!m) return null; const b = m[1], g = re => (b.match(re) || [])[1] || '';
   return { id, q: g(/<p class="rsp-q"><span class="rsp-k">Se te disserem<\/span>([\s\S]*?)<\/p>/), a: g(/<p class="rsp-a"><span class="rsp-k">Responda<\/span>([\s\S]*?)<\/p>/), d: (b.match(/<ul class="rsp-d">[\s\S]*?<\/ul>/) || [''])[0], s: g(/<p class="rsp-s">([\s\S]*?)<\/p>/), c: g(/data-copy="([^"]*)"/) }; };
@@ -182,6 +183,8 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .stds-b{display:flex;flex-wrap:wrap;gap:8px}
 .pz{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:3px 11px;background:var(--line);color:var(--ink)}
 .pz.br{background:#0E7A3D;color:#fff}
+.arq-b{margin:0 0 16px;padding:12px 14px;border-radius:10px;background:var(--surface);border:1px dashed var(--line);font-size:15px;line-height:1.45;color:var(--muted)}
+.arq-b b{color:var(--ink)}
 .selo{display:inline-block;margin-left:10px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 10px;background:#FDE68A;color:#713F12}
 .selo.ok{background:#A6F36A;color:#0A1A3F}
 .conv{margin:22px 0 10px;border-radius:16px;padding:20px 20px 8px;background:var(--surface);border:1px solid var(--line)}
@@ -331,6 +334,7 @@ ${topbar(rel, 'sinal')}
 <p class="crumb"><a href="${rel}sinais/">← Todos os Sinais</a></p>
 <article class="card">
 ${(n.dossie || []).length ? `<p class="dzp">${(n.pais || []).map(x => `<span class="pz${x === 'Brasil' ? ' br' : ''}">${esc(x)}</span>`).join(' ')} ${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a class="dzt" href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' ')}</p>` : ''}
+${!(n.dossie || []).length ? `<p class="arq-b"><b>Este Sinal está no arquivo.</b> ${esc(n.arq || 'Não responde a nenhum dos quatro dossiês.')} O número é fixo e não é reaproveitado. <a href="${rel}sinais/#arquivo">Ver o arquivo</a></p>` : ''}
 <h1>${esc(T)}</h1>
 <p class="meta"><span class="num">Sinal ${n.n}</span>${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}${n.selo ? `<span class="selo${/barrad|contid/i.test(n.selo) ? ' ok' : ''}">${esc(n.selo)}</span>` : ''}</p>
 ${n.tc ? `<p class="rr">${esc(n.r)}</p>${n.ol ? `<p class="ol"><b>${esc(n.olk || 'Outro lado')}:</b> ${esc(n.ol)}</p>` : ''}` : `<p class="dest${dcls}">${esc(hl)}</p>`}
@@ -395,12 +399,21 @@ function listPage() {
 .pz.br{background:#0E7A3D;color:#fff}
 .filt.fp{margin-top:-4px}
 .h2s{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-size:24px;margin:28px 0 4px}
+.arq{margin-top:40px;padding-top:8px;border-top:1px solid var(--line)}
+.arq .h2s small{font-size:14px;font-weight:800;border-radius:999px;padding:2px 9px;background:var(--line);color:var(--ink);vertical-align:middle}
+.arq-l{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
+.arq-l a{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding:10px 14px;border-radius:10px;border:1px dashed var(--line);color:var(--ink);text-decoration:none}
+.arq-l a:hover{border-style:solid;border-color:var(--muted)}
+.arq-l .num{grid-row:span 2;align-self:start;white-space:nowrap;font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;background:var(--line)!important;color:var(--ink)!important;margin-top:2px}
+.arq-l .t{font-weight:700;font-size:15.5px;line-height:1.35}
+.arq-l .why{font-size:13.5px;color:var(--muted)}
 </style>
 <body>
 ${topbar(rel, 'lista')}
 <main>
 <h1 class="list-h1">Sinais</h1>
 <p class="lead">Os fatos que entraram como evidência em pelo menos um dos <a href="${rel}dossies/">quatro dossiês</a>, com fonte e outro lado. Toque num Sinal para abrir a página dele e compartilhar.</p>
+<p class="lead" style="font-size:15px">${L.length} Sinais nos dossiês · <a href="#arquivo">${ARQ.length} no arquivo</a>. A numeração vai até ${byNum[byNum.length - 1].n} porque os números são fixos.</p>
 <div class="filt" role="group" aria-label="Filtrar Sinais por dossiê">
 <button class="chip" type="button" data-k="all" aria-pressed="true">Todos<small>${L.length}</small></button>
 ${DOSSIES.map(d => `<button class="chip" type="button" data-k="${d.k}" aria-pressed="false">${esc(d.n)}<small>${cnt(d.k)}</small></button>`).join('\n')}
@@ -418,6 +431,13 @@ ${DOSSIES.map(d => `<button class="chip" type="button" data-k="${d.k}" aria-pres
 <ul class="sl" id="sl">
 ${items}
 </ul>
+<section class="arq" id="arquivo" aria-labelledby="h-arq">
+<h2 class="h2s" id="h-arq">Arquivo <small>${ARQ.length}</small></h2>
+<p class="lead">Registros anteriores aos dossiês. Continuam no ar porque já foram compartilhados, mas não entram na contagem: não respondem a nenhuma das quatro perguntas. O número de cada Sinal é fixo e nunca é reaproveitado.</p>
+<ul class="arq-l">
+${ARQ.map(n => `<li><a href="${n.n}/"><span class="num">Sinal ${n.n}</span><span class="t">${esc(n.tc || n.t)}</span><span class="why">${esc(n.arq || '')}</span></a></li>`).join('\n')}
+</ul>
+</section>
 </main>
 ${foot(rel)}
 <script>window.SB={LB:${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, ' do dossiê ' + d.n])))},SL:${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, d.slug])))}};</script>

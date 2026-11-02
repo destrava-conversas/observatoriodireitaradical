@@ -174,6 +174,8 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .stds-b{display:flex;flex-wrap:wrap;gap:8px}
 .pz{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:3px 11px;background:var(--line);color:var(--ink)}
 .pz.br{background:#0E7A3D;color:#fff}
+.arq-b{margin:0 0 16px;padding:12px 14px;border-radius:10px;background:var(--surface);border:1px dashed var(--line);font-size:15px;line-height:1.45;color:var(--muted)}
+.arq-b b{color:var(--ink)}
 .selo{display:inline-block;margin-left:10px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 10px;background:#FDE68A;color:#713F12}
 .selo.ok{background:#A6F36A;color:#0A1A3F}
 .conv{margin:22px 0 10px;border-radius:16px;padding:20px 20px 8px;background:var(--surface);border:1px solid var(--line)}
@@ -216,6 +218,14 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .pz.br{background:#0E7A3D;color:#fff}
 .filt.fp{margin-top:-4px}
 .h2s{font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-size:24px;margin:28px 0 4px}
+.arq{margin-top:40px;padding-top:8px;border-top:1px solid var(--line)}
+.arq .h2s small{font-size:14px;font-weight:800;border-radius:999px;padding:2px 9px;background:var(--line);color:var(--ink);vertical-align:middle}
+.arq-l{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
+.arq-l a{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding:10px 14px;border-radius:10px;border:1px dashed var(--line);color:var(--ink);text-decoration:none}
+.arq-l a:hover{border-style:solid;border-color:var(--muted)}
+.arq-l .num{grid-row:span 2;align-self:start;white-space:nowrap;font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;background:var(--line)!important;color:var(--ink)!important;margin-top:2px}
+.arq-l .t{font-weight:700;font-size:15.5px;line-height:1.35}
+.arq-l .why{font-size:13.5px;color:var(--muted)}
 </style>
 <body>
 <header class="top" id="topo"><div class="top-in">
@@ -243,6 +253,7 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 <main>
 <h1 class="list-h1">Sinais</h1>
 <p class="lead">Os fatos que entraram como evidência em pelo menos um dos <a href="../dossies/">quatro dossiês</a>, com fonte e outro lado. Toque num Sinal para abrir a página dele e compartilhar.</p>
+<p class="lead" style="font-size:15px">41 Sinais nos dossiês · <a href="#arquivo">15 no arquivo</a>. A numeração vai até 056 porque os números são fixos.</p>
 <div class="filt" role="group" aria-label="Filtrar Sinais por dossiê">
 <button class="chip" type="button" data-k="all" aria-pressed="true">Todos<small>41</small></button>
 <button class="chip" type="button" data-k="regras" aria-pressed="false">Regras do jogo<small>35</small></button>
@@ -303,6 +314,27 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 <li data-f="all regras" data-p="all ex" data-i="024 24 escreve sozinho uma nova constituicao a coalizao de orban aprovou, sem a oposicao, uma nova constituicao, em vigor desde 2012. hungria: coalizao de orban aprova sozinha uma nova constituicao nova constituicao, a lei fundamental, aprovada em abril de 2011 pela coalizao governista e em vigor desde 1º de janeiro de 2012. orban eleicoes e regras a coalizao de orban aprovou sozinha uma nova constituicao, em vigor desde 2012."><a href="024/"><div class="hd"><span class="num">Sinal 024</span><time datetime="2011-01-01">2011</time></div><p class="t">Escreve sozinho uma nova Constituição</p><p class="d">A coalizão de Orbán aprovou, sem a oposição, uma nova Constituição, em vigor desde 2012.</p><p class="dzs"><span class="pz">Hungria</span><span class="dzt">Regras do jogo</span></p></a></li>
 <li data-f="all regras" data-p="all ex" data-i="023 23 encolhe e ocupa o tribunal constitucional orban reduziu os poderes do tribunal e ampliou a corte de 11 para 15 juizes, preenchendo as vagas sem negociar com a oposicao. hungria: governo de orban reduz e ocupa o tribunal constitucional emenda de 2010 reduz as competencias do tribunal constitucional e, em 2011, a corte passa de 11 para 15 juizes, com as vagas preenchidas pela coalizao governista sem negociar com a oposicao. orban eleicoes e regras orban reduziu os poderes do tribunal constitucional e ampliou a corte de 11 para 15 juizes, preenchendo as vagas sem negociar com a oposicao."><a href="023/"><div class="hd"><span class="num">Sinal 023</span><time datetime="2010-01-01">2010 a 2011</time></div><p class="t">Encolhe e ocupa o Tribunal Constitucional</p><p class="d">Orbán reduziu os poderes do tribunal e ampliou a corte de 11 para 15 juízes, preenchendo as vagas sem negociar com a oposição.</p><p class="dzs"><span class="pz">Hungria</span><span class="dzt">Regras do jogo</span></p></a></li>
 </ul>
+<section class="arq" id="arquivo" aria-labelledby="h-arq">
+<h2 class="h2s" id="h-arq">Arquivo <small>15</small></h2>
+<p class="lead">Registros anteriores aos dossiês. Continuam no ar porque já foram compartilhados, mas não entram na contagem: não respondem a nenhuma das quatro perguntas. O número de cada Sinal é fixo e nunca é reaproveitado.</p>
+<ul class="arq-l">
+<li><a href="020/"><span class="num">Sinal 020</span><span class="t">O cartão corporativo da Presidência parou na pandemia?</span><span class="why">Checagem de contexto (“Você sabia?”), não um ato que responda a um dossiê.</span></a></li>
+<li><a href="019/"><span class="num">Sinal 019</span><span class="t">Quem acabou com a saidinha?</span><span class="why">Checagem de contexto (“Você sabia?”), não um ato que responda a um dossiê.</span></a></li>
+<li><a href="018/"><span class="num">Sinal 018</span><span class="t">Preso vota?</span><span class="why">Checagem de contexto (“Você sabia?”), não um ato que responda a um dossiê.</span></a></li>
+<li><a href="017/"><span class="num">Sinal 017</span><span class="t">Quanto custa um filme brasileiro?</span><span class="why">Checagem de contexto (“Você sabia?”), não um ato que responda a um dossiê.</span></a></li>
+<li><a href="016/"><span class="num">Sinal 016</span><span class="t">No Pará, Flávio promete acabar com “entraves ambientais ideológicos”</span><span class="why">Promessa de campanha, não um ato.</span></a></li>
+<li><a href="015/"><span class="num">Sinal 015</span><span class="t">Debate na Band: checagem aponta 7 falas falsas ou enganosas de Flávio em 15</span><span class="why">Desinformação pontual: só entra num dossiê quando é sistemática.</span></a></li>
+<li><a href="014/"><span class="num">Sinal 014</span><span class="t">Flávio promete comprar e congelar dívidas; nas redes, a proposta é comparada ao Plano Collor</span><span class="why">Promessa de campanha, não um ato.</span></a></li>
+<li><a href="013/"><span class="num">Sinal 013</span><span class="t">Presidente da Colômbia declara “guerra total” ao “wokismo”</span><span class="why">Retórica: entra num dossiê se virar ato.</span></a></li>
+<li><a href="012/"><span class="num">Sinal 012</span><span class="t">Na sabatina da Globo, Flávio faz afirmações que os dados não confirmam</span><span class="why">Desinformação pontual: só entra num dossiê quando é sistemática.</span></a></li>
+<li><a href="010/"><span class="num">Sinal 010</span><span class="t">Flávio vota a favor e Senado aprova o fim da 6x1 por 75 a 1</span><span class="why">Mudança de posição numa votação: não responde a nenhum dossiê.</span></a></li>
+<li><a href="009/"><span class="num">Sinal 009</span><span class="t">Em uma semana, Flávio passa de crítico a voto a favor do fim da 6x1</span><span class="why">Mudança de posição numa votação: não responde a nenhum dossiê.</span></a></li>
+<li><a href="008/"><span class="num">Sinal 008</span><span class="t">Argentina tem 32 mil empresas empregadoras a menos sob Milei</span><span class="why">Dado econômico: cabe nas pautas de governo, não nos dossiês.</span></a></li>
+<li><a href="004/"><span class="num">Sinal 004</span><span class="t">Trump chama de “inimigo” quem diz “inteligência artificial”</span><span class="why">Retórica sem efeito prático.</span></a></li>
+<li><a href="002/"><span class="num">Sinal 002</span><span class="t">Flávio e Lula vão ao segundo turno</span><span class="why">Resultado eleitoral: contexto, não evidência.</span></a></li>
+<li><a href="001/"><span class="num">Sinal 001</span><span class="t">PL elege a maior bancada da Câmara</span><span class="why">Resultado eleitoral: contexto, não evidência.</span></a></li>
+</ul>
+</section>
 </main>
 <footer class="foot">
 <p>Toda afirmação tem fonte. Conteúdo do <a href="../">Painel Observatório da Direita Radical e Extrema</a>, uma iniciativa do <a href="https://destrava-conversas.com.br/">Destrava Conversas</a>.</p>
