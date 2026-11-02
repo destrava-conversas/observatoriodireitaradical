@@ -2228,3 +2228,12 @@ html.pbgov .pickbar.is-pick .pb-gov{max-width:none;flex:1;margin-right:8px}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .dz-tg button[data-t="all"][aria-pressed="true"]{background:var(--obs-acc);color:var(--obs-navy)}:root:not([data-theme="light"]) .dz-tg button[data-t="all"][aria-pressed="true"] span{background:var(--obs-navy);color:var(--obs-acc)}}
 @media (max-width:420px){.dz-tg button{padding:8px 12px;font-size:14px}}
 .dz-grp[hidden]{display:none}
+/* Retorno visual ao alternar Todas/Sinais/Ações */
+.dz-st{margin:6px 0 2px;font-size:14.5px;font-weight:700;color:var(--muted);border-radius:6px;display:inline-block}
+.dz-st.flash{animation:dzflash .8s ease-out}
+@keyframes dzflash{0%{background:var(--obs-acc);color:var(--obs-navy);padding:2px 8px}100%{background:transparent;padding:2px 0}}
+.dz-grp.dz-in{animation:dzin .35s ease-out}
+@keyframes dzin{from{opacity:.25}to{opacity:1}}
+.dz-i.pop{animation:dzpop .45s ease-out both;animation-delay:var(--d,0ms)}
+@keyframes dzpop{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.dz-st.flash,.dz-grp.dz-in,.dz-i.pop{animation:none}}

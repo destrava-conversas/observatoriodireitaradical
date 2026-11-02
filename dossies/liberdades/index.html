@@ -23,7 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://destrava-conversas.com.br/observatoriodireitaradical/og-observatorio.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Montserrat:wght@800&amp;family=Public+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../css/painel.css?v=20261101i">
+<link rel="stylesheet" href="../../css/painel.css?v=20261101j">
 </head>
 <body>
 <div class="topbar" id="topo">
@@ -106,7 +106,7 @@
     </ol>
     </div>
   </section>
-  <script>(function(){var bs=[].slice.call(document.querySelectorAll(".dz-tg button")),gs=[].slice.call(document.querySelectorAll(".dz-grp"));function set(t){bs.forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-t")===t?"true":"false");});gs.forEach(function(g){g.hidden=!(t==="all"||g.getAttribute("data-t")===t);});try{history.replaceState(null,"",t==="all"?location.pathname:"#"+(t==="s"?"sinais":"acoes"));}catch(e){}}bs.forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-t"));});});var h=location.hash;if(h==="#sinais")set("s");else if(h==="#acoes")set("a");})();</script>
+  <script>(function(){var bs=[].slice.call(document.querySelectorAll(".dz-tg button")),gs=[].slice.call(document.querySelectorAll(".dz-grp"));var st=document.getElementById("dz-st"),N=st?st.getAttribute("data-n").split("|"):[],RM=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;function fb(t){if(!st)return;var n=t==="all"?N[0]:(t==="s"?N[1]:N[2]);st.textContent=t==="all"?"Mostrando as "+n+" evidências.":(t==="s"?"Mostrando só os "+n+" Sinais.":"Mostrando só as "+n+" ações de governo.");st.classList.remove("flash");void st.offsetWidth;st.classList.add("flash");if(RM)return;gs.forEach(function(g){if(g.hidden)return;g.classList.remove("dz-in");void g.offsetWidth;g.classList.add("dz-in");var i=0;[].slice.call(g.querySelectorAll(".dz-i")).slice(0,8).forEach(function(li){li.style.setProperty("--d",(i++*40)+"ms");li.classList.remove("pop");void li.offsetWidth;li.classList.add("pop");});});}function set(t,q){bs.forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-t")===t?"true":"false");});gs.forEach(function(g){g.hidden=!(t==="all"||g.getAttribute("data-t")===t);});try{history.replaceState(null,"",t==="all"?location.pathname:"#"+(t==="s"?"sinais":"acoes"));}catch(e){}if(!q)fb(t);}bs.forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-t"));});});var h=location.hash;if(h==="#sinais")set("s",1);else if(h==="#acoes")set("a",1);if(h==="#sinais"||h==="#acoes")fb(h==="#sinais"?"s":"a");})();</script>
   <section class="dz-rem" aria-labelledby="h-rem"><h2 id="h-rem">Remédios</h2><p class="dz-wip">Em pesquisa: soluções com base acadêmica e práticas de países que reverteram a erosão democrática ou estão no topo dos índices, com o medidor de cada governo observado.</p></section>
   <nav class="dz-nav" aria-label="Outros dossiês"><p class="dz-k">Outros dossiês</p><div><a href="../regras-do-jogo/"><img src="../../img/olhos/olho-regras-a.jpg" alt="" width="1080" height="300"><span>Regras do jogo</span></a><a href="../adversario-como-inimigo/"><img src="../../img/olhos/olho-inimigo-a.jpg" alt="" width="1080" height="300"><span>Adversário como inimigo</span></a><a href="../violencia/"><img src="../../img/olhos/olho-violencia-a.jpg" alt="" width="1080" height="300"><span>Violência</span></a></div></nav>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
@@ -131,14 +131,14 @@
 <script>(function(){var h=document.querySelector(".pg-h h1"),s=document.getElementById("dz-stick");if(!h||!s||!("IntersectionObserver" in window))return;new IntersectionObserver(function(e){s.hidden=e[0].isIntersecting;},{rootMargin:"-70px 0px 0px 0px"}).observe(h);})();</script>
 </main>
 
-<script src="../../data/base.js?v=20261101i"></script>
-<script src="../../data/acoes.js?v=20261101i"></script>
-<script src="../../data/fontes.js?v=20261101i"></script>
-<script src="../../data/sinais.js?v=20261101i"></script>
-<script src="../../data/rede.js?v=20261101i"></script>
-<script src="../../data/dossies.js?v=20261101i"></script>
-<script src="../../data/flavio.js?v=20261101i"></script>
-<script src="../../js/app.js?v=20261101i"></script>
+<script src="../../data/base.js?v=20261101j"></script>
+<script src="../../data/acoes.js?v=20261101j"></script>
+<script src="../../data/fontes.js?v=20261101j"></script>
+<script src="../../data/sinais.js?v=20261101j"></script>
+<script src="../../data/rede.js?v=20261101j"></script>
+<script src="../../data/dossies.js?v=20261101j"></script>
+<script src="../../data/flavio.js?v=20261101j"></script>
+<script src="../../js/app.js?v=20261101j"></script>
 <script data-goatcounter="https://destrava-conversas.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
