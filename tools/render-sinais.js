@@ -32,9 +32,9 @@ function ogHTML(n) {
 body{width:1200px;height:630px;background:#0A1A3F;color:#fff;font-family:'Public Sans',sans-serif;position:relative;overflow:hidden}
 .top{position:absolute;left:64px;right:64px;top:44px;display:flex;align-items:center;justify-content:space-between}
 .br{display:flex;align-items:center;gap:16px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:24px;line-height:1.12;letter-spacing:-.01em}
-.br b{color:#A6F36A}
-.eye{width:76px;height:42px;border-radius:38px/21px;border:5px solid #A6F36A;display:flex;align-items:center;justify-content:center}
-.eye i{width:20px;height:20px;border-radius:50%;background:#A6F36A}
+.br b{color:#FF7A2E}
+.eye{width:76px;height:42px;border-radius:38px/21px;border:5px solid #FFFFFF;display:flex;align-items:center;justify-content:center}
+.eye i{width:20px;height:20px;border-radius:50%;background:#FFFFFF}
 .mid{position:absolute;left:64px;right:64px;top:150px;bottom:96px;display:flex;flex-direction:column;justify-content:center;gap:22px}
 .k{font-weight:600;font-size:26px;letter-spacing:.06em;color:#C9D3EA;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .al{font-weight:800;font-size:22px;letter-spacing:.02em;background:#FDE2E2;color:#8A1C1C;border-radius:999px;padding:4px 14px}
