@@ -97,7 +97,7 @@ function serve() {
   const frag = fs.readFileSync(path.join(ROOT, 'tools/paginas/_respostas.html'), 'utf8');
   const outR = path.join(ROOT, 'se-te-disserem', 'img'); fs.mkdirSync(outR, { recursive: true });
   /* faixa do olho de cada resposta (img/olhos): a etapa ou o alerta do assunto */
-  const RSP_OLHO = { exilados: 'fuga-b', '8-de-janeiro': 'violencia-a', prorrogacao: 'regras-a', tarifas: 'fora-b' };
+  const RSP_OLHO = { exilados: 'fuga-b', '8-de-janeiro': 'violencia-a', prorrogacao: 'regras-a', tarifas: 'fora-b', 'perdeu-para-o-sistema': 'regras-a', 'demitir-por-voto': 'inimigo-a' };
   let nr = 0;
   for (const m of frag.matchAll(/<li class="rsp-i" id="([^"]+)"[^>]*>([\s\S]*?)\n      <\/li>/g)) {
     const id = m[1], body = m[2];
