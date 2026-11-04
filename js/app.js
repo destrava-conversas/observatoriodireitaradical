@@ -1628,7 +1628,7 @@ function SN(n){ return n&&n.esp ? '★ Esperança *'+n.esp : 'Sinal '+((n&&n.n)|
   /* Imagens de compartilhar no modelo do olho: faixa com a variação do olho no topo, fundo azul,
      texto leve em Public Sans e assinatura no rodapé. As faixas ficam em img/olhos (tools/build-olhos.js). */
   var OLHO_ETAPA={1:'regras',2:'regras',3:'regras',4:'violencia',5:'fora',6:'fuga',7:'anistia'};
-  var OLHO_CATS=['regras','violencia','inimigo','liberdades','fora','fuga','anistia'];
+  var OLHO_CATS=['regras','violencia','inimigo','liberdades','fora','fuga','anistia','esperanca'];
   var OLHOS={}, olhosP=null;
   function loadOlhos(){
     if(olhosP) return olhosP;
