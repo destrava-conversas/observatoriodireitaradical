@@ -13,11 +13,13 @@ vm.runInContext(fs.readFileSync(path.join(ROOT, 'data/sinais.js'), 'utf8').repla
 const NEWS = ctx.window.PD.NEWS.filter(n => n.n);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'data/dossies.js'), 'utf8').replace('window.PD = window.PD || {};', ''), ctx);
 const DOSSIES = ctx.window.PD.DOSSIES || [];
-const INLINE = NEWS.filter(n => (n.dossie || []).length);
+const INLINE = NEWS.filter(n => (n.dossie || []).length || n.esp);
 const RSPF = fs.readFileSync(path.join(ROOT, 'tools/paginas/_respostas.html'), 'utf8');
 const rspOf = id => { const m = RSPF.match(new RegExp('<li class="rsp-i" id="' + id + '">([\\s\\S]*?)\\n      </li>')); if (!m) return null; const b = m[1], g = re => (b.match(re) || [])[1] || '';
   return { id, q: g(/<p class="rsp-q"><span class="rsp-k">Se te disserem<\/span>([\s\S]*?)<\/p>/), a: g(/<p class="rsp-a"><span class="rsp-k">Responda<\/span>([\s\S]*?)<\/p>/), d: (b.match(/<ul class="rsp-d">[\s\S]*?<\/ul>/) || [''])[0], s: g(/<p class="rsp-s">([\s\S]*?)<\/p>/), c: g(/data-copy="([^"]*)"/) }; };
-const byNum = NEWS.slice().sort((a, b) => a.n < b.n ? -1 : 1);
+const byNum = NEWS.slice().sort((a, b) => (!!a.esp - !!b.esp) || (a.n < b.n ? -1 : 1));
+const LAB = n => n.esp ? '★ Esperança *' + n.esp : 'Sinal ' + n.n;
+const NUMH = n => n.esp ? `<span class="espb">★ Esperança</span><span class="num esp">*${n.esp}</span>` : `<span class="num">Sinal ${n.n}</span>`;
 
 const MESES = ['jan.', 'fev.', 'mar.', 'abr.', 'maio', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
 const MESES_L = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
@@ -35,7 +37,7 @@ const url = n => BASE + 'sinais/' + n.n + '/';
 const isRegras = n => (n.tags || []).indexOf('Eleições e regras') >= 0;
 const isAlerta = n => n.alerta && n.alerta.length;
 const isVS = n => n.tipo === 'Você sabia?';
-const kicker = n => 'Sinal ' + n.n + ' · ' + (isVS(n) ? 'Você sabia? · ' : '') + ndate(n);
+const kicker = n => n.esp ? 'Esperança *' + n.esp + ' · ' + ndate(n) : 'Sinal ' + n.n + ' · ' + (isVS(n) ? 'Você sabia? · ' : '') + ndate(n);
 
 const CSS = `
 :root{--ground:#FFFFFF;--surface:#F1F4F7;--ink:#1A2430;--muted:#4A5663;--line:#D3DAE1;--navy:#0A1A3F;--acc:#A6F36A;--link:#0B6B8F;--al-bg:#FDE2E2;--al-ink:#8A1C1C;--al-line:#F2B8B8;--hl:#FFFFFF}
@@ -182,7 +184,15 @@ html .card .bolso .btn.bolso-b{background:#0A1A3F;border-color:#0A1A3F;color:var
 .stds-b{display:flex;flex-wrap:wrap;gap:8px}
 .pz{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:3px 11px;background:var(--line);color:var(--ink)}
 .pz.br{background:#0E7A3D;color:#fff}
-.selo{display:inline-block;margin-left:10px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 10px;background:#FDE68A;color:#713F12}
+.espb{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:3px 10px;background:#FACC15;color:#422006;margin-right:8px}
+.num.esp{background:#FACC15!important;color:#422006!important}
+.espt,.card a.espt{font-size:12px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:3px 11px;background:#FACC15;color:#422006!important;text-decoration:none}
+.card.esp,.sl li.esp a{background:#FEF9C3;border-color:#FACC15;box-shadow:inset 5px 0 0 #FACC15}
+:root[data-theme="dark"] .card.esp,:root[data-theme="dark"] .sl li.esp a{background:#2B2610;border-color:#A68A0B}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .card.esp,:root:not([data-theme="light"]) .sl li.esp a{background:#2B2610;border-color:#A68A0B}}
+.chip.chip-esp[aria-pressed="true"]{background:#FACC15!important;color:#422006!important;border-color:#FACC15!important}
+.chip.chip-esp[aria-pressed="true"] small{color:#422006!important}
+.selo{display:inline-block;margin-left:10px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 10px;background:var(--line);color:var(--ink)}
 .selo.ok{background:#A6F36A;color:#0A1A3F}
 .conv{margin:22px 0 10px;border-radius:16px;padding:20px 20px 8px;background:var(--surface);border:1px solid var(--line)}
 .cv-h{margin:0 0 14px;font-family:'Bricolage Grotesque','Public Sans',sans-serif;font-weight:800;font-size:24px;line-height:1.15}
@@ -304,7 +314,7 @@ const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const ICON_IMG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>';
 
 function hdHTML(n, linkTags, rel) {
-  let h = `<span class="num">Sinal ${n.n}</span>`;
+  let h = NUMH(n);
   if (n.tipo) h += `<span class="kind">${esc(n.tipo)}</span>`;
   if (!isVS(n)) h += `<time datetime="${n.d}">${esc(ndate(n))}</time>`;
   (n.tags || []).forEach(t => { h += `<span class="tag">${esc(t)}</span>`; });
@@ -316,23 +326,23 @@ function sinalPage(n, i) {
   const rel = '../../';
   const hl = highlight(n);
   const T = n.tc || n.t;
-  const title = 'Sinal ' + n.n + ': ' + T;
+  const title = LAB(n) + ': ' + T;
   const hl0 = n.r || hl;
   const desc = hl0.length > 180 ? hl0.slice(0, 177).replace(/\s+\S*$/, '') + '…' : hl0; const _d = hl.length > 180 ? hl.slice(0, 177).replace(/\s+\S*$/, '') + '…' : hl;
-  const prev = byNum[i - 1], next = byNum[i + 1];
+  const same = x => x && !!x.esp === !!n.esp, prev = same(byNum[i - 1]) ? byNum[i - 1] : null, next = same(byNum[i + 1]) ? byNum[i + 1] : null;
   const srcLbl = n.tipo === 'Vídeo' ? 'Assistir em' : (n.tipo === 'Podcast' ? 'Ouvir em' : (n.src.length > 1 ? 'Fontes' : 'Fonte'));
   const bolsoTxt = n.bolso ? n.bolso + (n.bf ? ' Fonte: ' + n.bf + '.' : '') + '\n' + url(n) : '';
-  const shareTxt = n.bolso ? 'Sinal ' + n.n + ': ' + T + '\n\n' + n.bolso + (n.bf ? ' (Fonte: ' + n.bf + ')' : '') + '\n\nOutro lado e fontes: ' + url(n) : 'Sinal ' + n.n + ': ' + T + '\n\n' + hl0 + '\n\nOutro lado e fontes: ' + url(n);
+  const shareTxt = n.bolso ? LAB(n) + ': ' + T + '\n\n' + n.bolso + (n.bf ? ' (Fonte: ' + n.bf + ')' : '') + '\n\nOutro lado e fontes: ' + url(n) : LAB(n) + ': ' + T + '\n\n' + hl0 + '\n\nOutro lado e fontes: ' + url(n);
   const dcls = isAlerta(n) ? ' al' : (isVS(n) ? ' vs' : '');
   return head({ title, desc, canonical: url(n), image: url(n) + 'og.jpg', imgW: 1200, imgH: 630, rel }) + `
 <body>
 ${topbar(rel, 'sinal')}
 <main>
 <p class="crumb"><a href="${rel}sinais/">← Todos os Sinais</a></p>
-<article class="card">
-${(n.dossie || []).length ? `<p class="dzp">${(n.pais || []).map(x => `<span class="pz${x === 'Brasil' ? ' br' : ''}">${esc(x)}</span>`).join(' ')} ${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a class="dzt" href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' ')}</p>` : ''}
+<article class="card${n.esp ? ' esp' : ''}">
+${n.esp ? `<p class="dzp">${(n.pais || []).map(x => `<span class="pz${x === 'Brasil' ? ' br' : ''}">${esc(x)}</span>`).join(' ')} <a class="espt" href="${rel}sinais/#esperanca">★ Esperança</a></p>` : ''}${(n.dossie || []).length ? `<p class="dzp">${(n.pais || []).map(x => `<span class="pz${x === 'Brasil' ? ' br' : ''}">${esc(x)}</span>`).join(' ')} ${(n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? `<a class="dzt" href="${rel}dossies/${d.slug}/">${esc(d.n)}</a>` : ''; }).join(' ')}</p>` : ''}
 <h1>${esc(T)}</h1>
-<p class="meta"><span class="num">Sinal ${n.n}</span>${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}${n.selo ? `<span class="selo${/barrad|contid/i.test(n.selo) ? ' ok' : ''}">${esc(n.selo)}</span>` : ''}</p>
+<p class="meta">${n.esp ? `<span class="num esp">*${n.esp}</span>` : NUMH(n)}${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}${n.selo ? `<span class="selo${/barrad|contid/i.test(n.selo) ? ' ok' : ''}">${esc(n.selo)}</span>` : ''}</p>
 ${n.tc ? `<p class="rr">${esc(n.r)}</p>${n.ol ? `<p class="ol"><b>${esc(n.olk || 'Outro lado')}:</b> ${esc(n.ol)}</p>` : ''}` : `<p class="dest${dcls}">${esc(hl)}</p>`}
 ${n.conv ? convHTML(n, rel, bolsoTxt) : ''}
 ${n.bolso && !n.conv ? `<div class="bolso"><p class="bolso-k">Argumento de bolso <span>para usar numa conversa</span></p><p class="bolso-t">${esc(n.bolso)}${n.bf ? ` <span class="bolso-f">Fonte: ${esc(n.bf)}.</span>` : ''}</p><button class="btn bolso-b" type="button" data-copy="${esc(bolsoTxt)}" data-ok="Argumento copiado" data-lbl="Copiar argumento">${ICON_COPY}<span>Copiar argumento</span></button><a class="btn o bolso-dl" href="argumento-${n.n}.png" download="argumento-sinal-${n.n}.png">${ICON_IMG}Baixar imagem</a></div>` : ''}
@@ -345,11 +355,11 @@ ${(n.rsp && !n.conv ? [].concat(n.rsp) : []).map(rspOf).filter(Boolean).map(r =>
 <a class="btn o" href="sinal-${n.n}-claro.png" download="sinal-${n.n}-claro.png">${ICON_IMG}Imagem clara</a>
 </div>
 <details class="det"${n.tc ? '' : ' open'}><summary>Detalhes e atualizações</summary><div class="hd">${hdHTML(n, true, rel)}</div><p class="dt-t">${esc(n.t)}</p><p class="txt">${esc(n.s)}</p>${n.why ? `<p class="why"><b>${esc(n.wl || 'Por que ler:')}</b> ${esc(n.why)}</p>` : ''}</details>
-<figure class="img"><img src="sinal-${n.n}.png" width="1080" height="1350" loading="lazy" alt="Imagem para compartilhar do Sinal ${n.n}: ${esc(n.t)}"><figcaption>Imagem pronta para Instagram e Stories.</figcaption></figure>
+<figure class="img"><img src="sinal-${n.n}.png" width="1080" height="1350" loading="lazy" alt="Imagem para compartilhar: ${esc(LAB(n))}: ${esc(n.t)}"><figcaption>Imagem pronta para Instagram e Stories.</figcaption></figure>
 </article>
 <nav class="pn" aria-label="Outros Sinais">
-${prev ? `<a href="../${prev.n}/"><span>← Sinal ${prev.n}</span>${esc(short(prev.t))}</a>` : ''}
-${next ? `<a class="nx" href="../${next.n}/"><span>Sinal ${next.n} →</span>${esc(short(next.t))}</a>` : ''}
+${prev ? `<a href="../${prev.n}/"><span>← ${esc(LAB(prev))}</span>${esc(short(prev.t))}</a>` : ''}
+${next ? `<a class="nx" href="../${next.n}/"><span>${esc(LAB(next))} →</span>${esc(short(next.t))}</a>` : ''}
 </nav>
 <p class="crumb" style="margin-top:22px"><a href="${rel}sinais/">Todos os Sinais</a></p>
 </main>
@@ -369,12 +379,12 @@ function listPage() {
   const L = INLINE.slice().sort((a, b) => a.d < b.d ? 1 : a.d > b.d ? -1 : (a.n < b.n ? 1 : -1));
   const cnt = k => L.filter(n => (n.dossie || []).indexOf(k) >= 0).length;
   const items = L.map(n => {
-    const f = ['all'].concat(n.dossie || []).join(' ');
-    const idx = (n.n + ' ' + parseInt(n.n, 10) + ' ' + (n.tc || '') + ' ' + (n.r || '') + ' ' + n.t + ' ' + n.s + ' ' + (n.tags || []).join(' ') + ' ' + (n.destaque || '')).toLowerCase();
+    const f = ['all'].concat(n.dossie || [], n.esp ? ['esp'] : []).join(' ');
+    const idx = (n.n + ' ' + (n.esp ? 'esperanca *' + n.esp + ' ' : parseInt(n.n, 10) + ' ') + (n.tc || '') + ' ' + (n.r || '') + ' ' + n.t + ' ' + n.s + ' ' + (n.tags || []).join(' ') + ' ' + (n.destaque || '')).toLowerCase();
     const dz = (n.dossie || []).map(k => { const d = DOSSIES.find(x => x.k === k); return d ? '<span class="dzt">' + esc(d.n) + '</span>' : ''; }).join('');
     const ps = n.pais || [], pf = (ps.indexOf('Brasil') >= 0 ? 'br ' : '') + (ps.some(x => x !== 'Brasil') ? 'ex' : '');
     const pz = ps.map(x => `<span class="pz${x === 'Brasil' ? ' br' : ''}">${esc(x)}</span>`).join('');
-    return `<li data-f="${f}" data-p="all ${pf.trim()}" data-i="${esc(idx.normalize('NFD').replace(/[̀-ͯ]/g, ''))}"><a href="${n.n}/"><div class="hd"><span class="num">Sinal ${n.n}</span>${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}</div><p class="t">${esc(n.tc || n.t)}</p><p class="d">${esc(n.r || highlight(n))}</p><p class="dzs">${pz}${dz}</p></a></li>`;
+    return `<li${n.esp ? ' class="esp"' : ''} data-f="${f}" data-p="all ${pf.trim()}" data-i="${esc(idx.normalize('NFD').replace(/[̀-ͯ]/g, ''))}"><a href="${n.n}/"><div class="hd">${NUMH(n)}${isVS(n) ? '' : `<time datetime="${n.d}">${esc(ndate(n))}</time>`}</div><p class="t">${esc(n.tc || n.t)}</p><p class="d">${esc(n.r || highlight(n))}</p><p class="dzs">${pz}${dz}</p></a></li>`;
   }).join('\n');
   const cards = DOSSIES.map(d => `<li data-k="${d.k}"><a href="${rel}dossies/${d.slug}/"><img src="${rel}img/olhos/olho-${d.olho}.jpg" alt="" width="1080" height="300" loading="lazy"><span class="dt"><b>${esc(d.n)}</b><span>${esc(d.q)}</span><em>Abrir o dossiê →</em></span></a></li>`).join('');
   const desc = 'Os fatos que servem de evidência nos quatro dossiês do painel (os sinais de alerta de Como as democracias morrem), com fonte e outro lado.';
@@ -404,6 +414,7 @@ ${topbar(rel, 'lista')}
 <div class="filt" role="group" aria-label="Filtrar Sinais por dossiê">
 <button class="chip" type="button" data-k="all" aria-pressed="true">Todos<small>${L.length}</small></button>
 ${DOSSIES.map(d => `<button class="chip" type="button" data-k="${d.k}" aria-pressed="false">${esc(d.n)}<small>${cnt(d.k)}</small></button>`).join('\n')}
+<button class="chip chip-esp" id="esperanca" type="button" data-k="esp" aria-pressed="false">★ Esperança<small>${L.filter(n => n.esp).length}</small></button>
 </div>
 <div class="filt fp" role="group" aria-label="Filtrar Sinais por país">
 <button class="chip pchip" type="button" data-p="all" aria-pressed="true">Todos os países</button>
@@ -420,7 +431,7 @@ ${items}
 </ul>
 </main>
 ${foot(rel)}
-<script>window.SB={LB:${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, ' do dossiê ' + d.n])))},SL:${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, d.slug])))}};</script>
+<script>window.SB={LB:${JSON.stringify(Object.assign(Object.fromEntries(DOSSIES.map(d => [d.k, ' do dossiê ' + d.n])), { esp: ' de Esperança' }))},SL:${JSON.stringify(Object.fromEntries(DOSSIES.map(d => [d.k, d.slug])))}};</script>
 <script src="${rel}js/sinais-busca.js?v=20261101b"></script>
 </body>
 </html>

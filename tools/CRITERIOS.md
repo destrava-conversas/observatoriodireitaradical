@@ -66,3 +66,6 @@ Ação de governo observado com fonte, classificada como "piorou" ou "melhorou" 
 
 ## Se te disserem…
 Frase que circula de fato (repetida por figuras públicas ou em redes), com resposta curta que se sustenta em dado e fonte já registrados ou novos do grupo A.
+
+## Esperança (desde 4/11/2026)
+Vitórias democráticas documentadas sobre a direita radical e extrema ou sobre governos que atacam as regras do jogo: eleição perdida e reconhecida, tentativa barrada de forma definitiva, poder recuperado pelo voto. Ficam em data/sinais.js com `esp` (numeração própria, "01", "02"…), `n` = "E" + número (ex.: "E01", que também é o endereço sinais/E01/), `tipo` "Esperança" e sem `dossie`. Aparecem na lista de Sinais com o filtro "★ Esperança", cartão amarelado e o rótulo "*01". Mesmo critério de fonte e de outro lado ("Situação") dos Sinais, e o bloco de conversa (`conv`) é recomendado. Descrever cada governo derrotado com o que as fontes dizem dele, sem rótulo que elas não usem.

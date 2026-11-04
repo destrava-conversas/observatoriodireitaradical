@@ -2237,3 +2237,5 @@ html.pbgov .pickbar.is-pick .pb-gov{max-width:none;flex:1;margin-right:8px}
 .dz-i.pop{animation:dzpop .45s ease-out both;animation-delay:var(--d,0ms)}
 @keyframes dzpop{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.dz-st.flash,.dz-grp.dz-in,.dz-i.pop{animation:none}}
+/* Sinais de Esperança: amarelo */
+.news-n.esp{background:#FACC15!important;color:#422006!important}

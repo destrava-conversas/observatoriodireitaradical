@@ -11,7 +11,7 @@ const ROOT = path.join(__dirname, '..');
 const ctxv = { window: {} }; vm.createContext(ctxv);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'data/sinais.js'), 'utf8').replace('window.PD = window.PD || {};', 'var PD = window.PD = {};'), ctxv);
 const NEWS = ctxv.window.PD.NEWS.filter(n => n.n);
-const args = process.argv.slice(2), all = args.includes('--todas'), only = args.filter(a => /^\d{3}$/.test(a));
+const args = process.argv.slice(2), all = args.includes('--todas'), only = args.filter(a => /^(\d{3}|E\d{2})$/.test(a));
 const todo = NEWS.filter(n => all || (only.length ? only.includes(n.n) : !fs.existsSync(path.join(ROOT, 'sinais', n.n, 'og.jpg')) || !fs.existsSync(path.join(ROOT, 'sinais', n.n, 'sinal-' + n.n + '.png'))));
 
 
@@ -23,8 +23,8 @@ const highlight = n => n.destaque || ((n.s || '').match(/“([^”]{12,200})”/
 
 function ogHTML(n) {
   const vs = n.tipo === 'Você sabia?', al = (n.alerta || []).length;
-  const bar = al ? '#E2553F' : (vs ? '#4DB3D6' : '#E8873F');
-  const kick = 'SINAL ' + n.n + ' · ' + (vs ? 'VOCÊ SABIA? · ' : '') + ndate(n).toUpperCase();
+  const bar = n.esp ? '#FACC15' : (al ? '#E2553F' : (vs ? '#4DB3D6' : '#E8873F'));
+  const kick = n.esp ? '★ ESPERANÇA *' + n.esp + ' · ' + ndate(n).toUpperCase() : 'SINAL ' + n.n + ' · ' + (vs ? 'VOCÊ SABIA? · ' : '') + ndate(n).toUpperCase();
   return `<!doctype html><html><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Montserrat:wght@800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -90,7 +90,7 @@ function serve() {
   const png = d => Buffer.from(d.split(',')[1], 'base64');
   let nb = 0;
   for (const n of NEWS.filter(x => x.bolso)) {
-    const d = await panel.evaluate(o => window.__bolsoCanvas(o).toDataURL('image/png'), { kick: 'Argumento de bolso · Sinal ' + n.n, text: n.bolso, fonte: n.bf || '', sinal: n.n });
+    const d = await panel.evaluate(o => window.__bolsoCanvas(o).toDataURL('image/png'), { kick: 'Argumento de bolso · ' + (n.esp ? '★ Esperança *' + n.esp : 'Sinal ' + n.n), text: n.bolso, fonte: n.bf || '', sinal: n.n });
     fs.writeFileSync(path.join(ROOT, 'sinais', n.n, 'argumento-' + n.n + '.png'), png(d)); nb++;
   }
   const un = t => t.replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
